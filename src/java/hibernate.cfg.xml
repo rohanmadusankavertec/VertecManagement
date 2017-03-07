@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/vertec</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">123</property>
+    <mapping class="com.vertec.hibe.model.Agreement"/>
+    <mapping class="com.vertec.hibe.model.AgreementTemplate"/>
+    <mapping class="com.vertec.hibe.model.Business"/>
+    <mapping class="com.vertec.hibe.model.CctvCategory"/>
+    <mapping class="com.vertec.hibe.model.CctvItems"/>
+    <mapping class="com.vertec.hibe.model.CctvQuotationInfo"/>
+    <mapping class="com.vertec.hibe.model.CctvQuotationItems"/>
+    <mapping class="com.vertec.hibe.model.Customer"/>
+    <mapping class="com.vertec.hibe.model.Employee"/>
+    <mapping class="com.vertec.hibe.model.EmployeeHasEstimate"/>
+    <mapping class="com.vertec.hibe.model.EstimateCost"/>
+    <mapping class="com.vertec.hibe.model.ExtraPayment"/>
+    <mapping class="com.vertec.hibe.model.Features"/>
+    <mapping class="com.vertec.hibe.model.HardwareItem"/>
+    <mapping class="com.vertec.hibe.model.HardwareQuotation"/>
+    <mapping class="com.vertec.hibe.model.Installment"/>
+    <mapping class="com.vertec.hibe.model.Invoice"/>
+    <mapping class="com.vertec.hibe.model.InvoiceItem"/>
+    <mapping class="com.vertec.hibe.model.Issues"/>
+    <mapping class="com.vertec.hibe.model.Package"/>
+    <mapping class="com.vertec.hibe.model.PackageHasFeatures"/>
+    <mapping class="com.vertec.hibe.model.Payment"/>
+    <mapping class="com.vertec.hibe.model.PaymentDetails"/>
+    <mapping class="com.vertec.hibe.model.PaymentType"/>
+    <mapping class="com.vertec.hibe.model.Priviledge"/>
+    <mapping class="com.vertec.hibe.model.PrivilegeItem"/>
+    <mapping class="com.vertec.hibe.model.ProjectDetails"/>
+    <mapping class="com.vertec.hibe.model.ProjectExpenses"/>
+    <mapping class="com.vertec.hibe.model.ProjectHasEmployee"/>
+    <mapping class="com.vertec.hibe.model.ProjectProcess"/>
+    <mapping class="com.vertec.hibe.model.ProjectProposal"/>
+    <mapping class="com.vertec.hibe.model.Quotation"/>
+    <mapping class="com.vertec.hibe.model.QuotationHasFeatures"/>
+    <mapping class="com.vertec.hibe.model.QuotationHasPackages"/>
+    <mapping class="com.vertec.hibe.model.Service"/>
+    <mapping class="com.vertec.hibe.model.SoftwareQuotation"/>
+    <mapping class="com.vertec.hibe.model.Status"/>
+    <mapping class="com.vertec.hibe.model.SysUser"/>
+    <mapping class="com.vertec.hibe.model.UserGroup"/>
+    <mapping class="com.vertec.hibe.model.UserGroupPriviledge"/>
+    <mapping class="com.vertec.hibe.model.UserGroupPrivilegeItem"/>
+  </session-factory>
+</hibernate-configuration>
