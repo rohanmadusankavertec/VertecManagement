@@ -52,6 +52,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SysUser.findByIsActive", query = "SELECT s FROM SysUser s WHERE s.isActive = :isActive")})
 public class SysUser implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sysUserId")
+    private Collection<ActualCost> actualCostCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sysUserId")
+    private Collection<BudgetPlan> budgetPlanCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "beforeUser")
+    private Collection<UpdateLog> updateLogCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "afterUser")
+    private Collection<UpdateLog> updateLogCollection1;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sysUserSysuserId")
     private Collection<CctvQuotationInfo> cctvQuotationInfoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "addedBy")
@@ -430,6 +439,42 @@ public String getLoginStatus() {
 
     public void setCctvQuotationInfoCollection(Collection<CctvQuotationInfo> cctvQuotationInfoCollection) {
         this.cctvQuotationInfoCollection = cctvQuotationInfoCollection;
+    }
+
+    @XmlTransient
+    public Collection<ActualCost> getActualCostCollection() {
+        return actualCostCollection;
+    }
+
+    public void setActualCostCollection(Collection<ActualCost> actualCostCollection) {
+        this.actualCostCollection = actualCostCollection;
+    }
+
+    @XmlTransient
+    public Collection<BudgetPlan> getBudgetPlanCollection() {
+        return budgetPlanCollection;
+    }
+
+    public void setBudgetPlanCollection(Collection<BudgetPlan> budgetPlanCollection) {
+        this.budgetPlanCollection = budgetPlanCollection;
+    }
+
+    @XmlTransient
+    public Collection<UpdateLog> getUpdateLogCollection() {
+        return updateLogCollection;
+    }
+
+    public void setUpdateLogCollection(Collection<UpdateLog> updateLogCollection) {
+        this.updateLogCollection = updateLogCollection;
+    }
+
+    @XmlTransient
+    public Collection<UpdateLog> getUpdateLogCollection1() {
+        return updateLogCollection1;
+    }
+
+    public void setUpdateLogCollection1(Collection<UpdateLog> updateLogCollection1) {
+        this.updateLogCollection1 = updateLogCollection1;
     }
     
 }
