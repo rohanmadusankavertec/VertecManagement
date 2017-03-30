@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Ruchira
  */
 @Entity
-@Table(name = "function")
+@Table(name = "function_data")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Function1.findAll", query = "SELECT f FROM Function1 f"),
-    @NamedQuery(name = "Function1.findById", query = "SELECT f FROM Function1 f WHERE f.id = :id"),
-    @NamedQuery(name = "Function1.findByName", query = "SELECT f FROM Function1 f WHERE f.name = :name"),
-    @NamedQuery(name = "Function1.findByIsvalid", query = "SELECT f FROM Function1 f WHERE f.isvalid = :isvalid")})
-public class Function1 implements Serializable {
+    @NamedQuery(name = "FunctionData.findAll", query = "SELECT f FROM FunctionData f"),
+    @NamedQuery(name = "FunctionData.findById", query = "SELECT f FROM FunctionData f WHERE f.id = :id"),
+    @NamedQuery(name = "FunctionData.findByName", query = "SELECT f FROM FunctionData f WHERE f.name = :name"),
+    @NamedQuery(name = "FunctionData.findByIsvalid", query = "SELECT f FROM FunctionData f WHERE f.isvalid = :isvalid")})
+public class FunctionData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,16 +47,16 @@ public class Function1 implements Serializable {
     private String name;
     @Column(name = "isvalid")
     private Boolean isvalid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "functionId")
-    private Collection<CostCenter> costCenterCollection;
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private State stateId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "functionId")
+    private Collection<CostCenter> costCenterCollection;
 
-    public Function1() {
+    public FunctionData() {
     }
 
-    public Function1(Integer id) {
+    public FunctionData(Integer id) {
         this.id = id;
     }
 
@@ -84,6 +84,14 @@ public class Function1 implements Serializable {
         this.isvalid = isvalid;
     }
 
+    public State getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(State stateId) {
+        this.stateId = stateId;
+    }
+
     @XmlTransient
     public Collection<CostCenter> getCostCenterCollection() {
         return costCenterCollection;
@@ -91,14 +99,6 @@ public class Function1 implements Serializable {
 
     public void setCostCenterCollection(Collection<CostCenter> costCenterCollection) {
         this.costCenterCollection = costCenterCollection;
-    }
-
-    public State getStateId() {
-        return stateId;
-    }
-
-    public void setStateId(State stateId) {
-        this.stateId = stateId;
     }
 
     @Override
@@ -111,10 +111,10 @@ public class Function1 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Function1)) {
+        if (!(object instanceof FunctionData)) {
             return false;
         }
-        Function1 other = (Function1) object;
+        FunctionData other = (FunctionData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +123,7 @@ public class Function1 implements Serializable {
 
     @Override
     public String toString() {
-        return "com.vertec.hibe.model.Function1[ id=" + id + " ]";
+        return "com.vertec.hibe.model.FunctionData[ id=" + id + " ]";
     }
     
 }

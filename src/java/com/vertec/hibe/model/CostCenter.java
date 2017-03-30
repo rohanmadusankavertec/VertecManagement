@@ -6,9 +6,7 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -49,9 +45,7 @@ public class CostCenter implements Serializable {
     private String isvalid;
     @JoinColumn(name = "function_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Function1 functionId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costCenterId")
-    private Collection<NominalCode> nominalCodeCollection;
+    private FunctionData functionId;
 
     public CostCenter() {
     }
@@ -84,21 +78,12 @@ public class CostCenter implements Serializable {
         this.isvalid = isvalid;
     }
 
-    public Function1 getFunctionId() {
+    public FunctionData getFunctionId() {
         return functionId;
     }
 
-    public void setFunctionId(Function1 functionId) {
+    public void setFunctionId(FunctionData functionId) {
         this.functionId = functionId;
-    }
-
-    @XmlTransient
-    public Collection<NominalCode> getNominalCodeCollection() {
-        return nominalCodeCollection;
-    }
-
-    public void setNominalCodeCollection(Collection<NominalCode> nominalCodeCollection) {
-        this.nominalCodeCollection = nominalCodeCollection;
     }
 
     @Override

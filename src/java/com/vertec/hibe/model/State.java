@@ -46,7 +46,7 @@ public class State implements Serializable {
     @Column(name = "isvalid")
     private Boolean isvalid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stateId")
-    private Collection<Function1> function1Collection;
+    private Collection<FunctionData> functionDataCollection;
 
     public State() {
     }
@@ -80,12 +80,12 @@ public class State implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Function1> getFunction1Collection() {
-        return function1Collection;
+    public Collection<FunctionData> getFunctionDataCollection() {
+        return functionDataCollection;
     }
 
-    public void setFunction1Collection(Collection<Function1> function1Collection) {
-        this.function1Collection = function1Collection;
+    public void setFunctionDataCollection(Collection<FunctionData> functionDataCollection) {
+        this.functionDataCollection = functionDataCollection;
     }
 
     @Override
