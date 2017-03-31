@@ -138,7 +138,7 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="AccountReport?action=BudgetPlan">
+                    <form action="AccountReport">
 
                         <div class="item form-group" style="padding-top: 50px;">
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select State <span class="required"></span>
@@ -209,7 +209,7 @@
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select Budget Years <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="byear" id="byear" >
+                                <select class="form-control" name="catId" id="catId" >
                                     <option selected="true" disabled value="">Select Budget Years</option>
                                     <%
                                         for (String s : by) {

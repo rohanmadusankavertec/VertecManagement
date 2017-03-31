@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +14,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vertec-r
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "employee")
@@ -39,10 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByIsValid", query = "SELECT e FROM Employee e WHERE e.isValid = :isValid")})
 public class Employee implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
-    private Collection<ProjectHasEmployee> projectHasEmployeeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
-    private Collection<EmployeeHasEstimate> employeeHasEstimateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,24 +131,6 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.Employee[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<ProjectHasEmployee> getProjectHasEmployeeCollection() {
-        return projectHasEmployeeCollection;
-    }
-
-    public void setProjectHasEmployeeCollection(Collection<ProjectHasEmployee> projectHasEmployeeCollection) {
-        this.projectHasEmployeeCollection = projectHasEmployeeCollection;
-    }
-
-    @XmlTransient
-    public Collection<EmployeeHasEstimate> getEmployeeHasEstimateCollection() {
-        return employeeHasEstimateCollection;
-    }
-
-    public void setEmployeeHasEstimateCollection(Collection<EmployeeHasEstimate> employeeHasEstimateCollection) {
-        this.employeeHasEstimateCollection = employeeHasEstimateCollection;
     }
     
 }
