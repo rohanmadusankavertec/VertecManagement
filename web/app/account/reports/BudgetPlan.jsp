@@ -14,10 +14,9 @@
     String cc = (String) request.getAttribute("costcenter");
     String nc = (String) request.getAttribute("nominalCode");
     String by = (String) request.getAttribute("years");
-    List<BudgetPlan> bp = (List<BudgetPlan>) request.getAttributebpyears
-    ");
+    List<BudgetPlan> bp = (List<BudgetPlan>) request.getAttribute("bp");
 
-
+double tot=0;
 %>
 
 
@@ -110,14 +109,13 @@
                                                 for (BudgetPlan b : bp) {
                                                     if (Integer.parseInt(b.getMonth()) == 1) {
                                                         out.write(b.getAmount() + "");
+                                                        tot+=b.getAmount();
                                                         bool = false;
                                                     }
-
                                                 }
                                                 if (bool) {
                                                     out.write("0000.00");
                                                 }
-
                                             %>
                                         </td>
                                     </tr>
@@ -127,14 +125,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 2) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -143,14 +140,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 3) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -159,14 +155,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 4) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -175,14 +170,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 5) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -191,14 +185,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 6) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -207,14 +200,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 7) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -223,14 +215,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 8) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -239,14 +230,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 9) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -255,14 +245,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 10) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">
@@ -271,9 +260,9 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 11) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
@@ -287,14 +276,13 @@
                                             for (BudgetPlan b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 12) {
                                                     out.write(b.getAmount() + "");
+                                                    tot+=b.getAmount();
                                                     bool = false;
                                                 }
-
                                             }
                                             if (bool) {
                                                 out.write("0000.00");
                                             }
-
                                             %></td>
                                     </tr>
                                     <tr style="border: 1px solid black;">

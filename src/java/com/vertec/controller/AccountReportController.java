@@ -6,6 +6,7 @@
 package com.vertec.controller;
 
 import com.vertec.daoimpl.AccountReportDAOImpl;
+import com.vertec.hibe.model.BudgetPlan;
 import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.NominalCode;
@@ -136,6 +137,26 @@ public class AccountReportController extends HttpServlet {
                     }
                     jOB.put("cc", jar1);
                     response.getWriter().write(jOB.toString());
+                    break;
+                }
+                case "BudgetPlan": {
+                    String stid = request.getParameter("stateid").trim();
+                    String functionid = request.getParameter("functionid").trim();
+                    String ccId = request.getParameter("ccId").trim();
+                    String nomiId = request.getParameter("nomiId").trim();
+                    String byear = request.getParameter("byear").trim();
+                    
+                    List<BudgetPlan> bp=AccountReportDAO.getListOfYearlyBudgetPlans(Integer.parseInt(nomiId), byear);
+                    
+                    request.setAttribute("bp", bp);
+                    request.setAttribute("state", AccountReportDAO.getStateById(Integer.parseInt(stid)));
+                    request.setAttribute("functionData", AccountReportDAO.getFunctionById(Integer.parseInt(functionid)));
+                    request.setAttribute("costcenter", AccountReportDAO.getCostCenterById(Integer.parseInt(ccId)));
+                    request.setAttribute("nominalCode", AccountReportDAO.getNominalCodeById(Integer.parseInt(nomiId)));
+                    request.setAttribute("years", byear);
+                    
+                    requestDispatcher = request.getRequestDispatcher("app/account/reports/BudgetPlan.jsp");
+                    requestDispatcher.forward(request, response);
                     break;
                 }
             }
