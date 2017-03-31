@@ -6,7 +6,9 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CostCenter.findAll", query = "SELECT c FROM CostCenter c"),
     @NamedQuery(name = "CostCenter.findById", query = "SELECT c FROM CostCenter c WHERE c.id = :id"),
     @NamedQuery(name = "CostCenter.findByName", query = "SELECT c FROM CostCenter c WHERE c.name = :name"),
-    @NamedQuery(name = "CostCenter.findByIsvalid", query = "SELECT c FROM CostCenter c WHERE c.isvalid = :isvalid")})
+    @NamedQuery(name = "CostCenter.findByIsvalid", query = "SELECT c FROM CostCenter c WHERE c.isvalid = :isvalid"),
+    @NamedQuery(name = "CostCenter.findByCode", query = "SELECT c FROM CostCenter c WHERE c.code = :code")})
 public class CostCenter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,9 +49,13 @@ public class CostCenter implements Serializable {
     private String name;
     @Column(name = "isvalid")
     private Boolean isvalid;
+    @Column(name = "code")
+    private String code;
     @JoinColumn(name = "function_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private FunctionData functionId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costCenterId")
+    private Collection<NominalCode> nominalCodeCollection;
 
     public CostCenter() {
     }
@@ -79,12 +88,29 @@ public class CostCenter implements Serializable {
         this.isvalid = isvalid;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public FunctionData getFunctionId() {
         return functionId;
     }
 
     public void setFunctionId(FunctionData functionId) {
         this.functionId = functionId;
+    }
+
+    @XmlTransient
+    public Collection<NominalCode> getNominalCodeCollection() {
+        return nominalCodeCollection;
+    }
+
+    public void setNominalCodeCollection(Collection<NominalCode> nominalCodeCollection) {
+        this.nominalCodeCollection = nominalCodeCollection;
     }
 
     @Override

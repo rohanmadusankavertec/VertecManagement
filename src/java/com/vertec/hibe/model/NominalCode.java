@@ -6,9 +6,7 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,14 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "nominal_code")
@@ -34,11 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "NominalCode.findAll", query = "SELECT n FROM NominalCode n"),
     @NamedQuery(name = "NominalCode.findById", query = "SELECT n FROM NominalCode n WHERE n.id = :id"),
     @NamedQuery(name = "NominalCode.findByName", query = "SELECT n FROM NominalCode n WHERE n.name = :name"),
-    @NamedQuery(name = "NominalCode.findByIsvalid", query = "SELECT n FROM NominalCode n WHERE n.isvalid = :isvalid")})
+    @NamedQuery(name = "NominalCode.findByIsvalid", query = "SELECT n FROM NominalCode n WHERE n.isvalid = :isvalid"),
+    @NamedQuery(name = "NominalCode.findByCode", query = "SELECT n FROM NominalCode n WHERE n.code = :code")})
 public class NominalCode implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalCodeId")
-    private Collection<ActualCost> actualCostCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +45,11 @@ public class NominalCode implements Serializable {
     private String name;
     @Column(name = "isvalid")
     private Boolean isvalid;
+    @Column(name = "code")
+    private String code;
     @JoinColumn(name = "cost_center_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CostCenter costCenterId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalCodeId")
-    private Collection<BudgetPlan> budgetPlanCollection;
 
     public NominalCode() {
     }
@@ -87,21 +82,20 @@ public class NominalCode implements Serializable {
         this.isvalid = isvalid;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public CostCenter getCostCenterId() {
         return costCenterId;
     }
 
     public void setCostCenterId(CostCenter costCenterId) {
         this.costCenterId = costCenterId;
-    }
-
-    @XmlTransient
-    public Collection<BudgetPlan> getBudgetPlanCollection() {
-        return budgetPlanCollection;
-    }
-
-    public void setBudgetPlanCollection(Collection<BudgetPlan> budgetPlanCollection) {
-        this.budgetPlanCollection = budgetPlanCollection;
     }
 
     @Override
@@ -127,15 +121,6 @@ public class NominalCode implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.NominalCode[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<ActualCost> getActualCostCollection() {
-        return actualCostCollection;
-    }
-
-    public void setActualCostCollection(Collection<ActualCost> actualCostCollection) {
-        this.actualCostCollection = actualCostCollection;
     }
     
 }
