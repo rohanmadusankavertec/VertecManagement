@@ -1,4 +1,5 @@
 
+<%@page import="com.vertec.hibe.model.ActualCost"%>
 <%@page import="com.vertec.hibe.model.BudgetPlan"%>
 <%@page import="com.vertec.hibe.model.NominalCode"%>
 <%@page import="com.vertec.hibe.model.FunctionData"%>
@@ -14,7 +15,7 @@
     String cc = (String) request.getAttribute("costcenter");
     String nc = (String) request.getAttribute("nominalCode");
     String by = (String) request.getAttribute("years");
-    List<BudgetPlan> bp = (List<BudgetPlan>) request.getAttribute("bp");
+    List<ActualCost> bp = (List<ActualCost>) request.getAttribute("bp");
 
     double tot = 0;
 %>
@@ -27,7 +28,7 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Budget Plan Report
+                Actual Cost Report
                 <small>
 
                 </small>
@@ -110,7 +111,7 @@
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">
                                             <%
                                                 boolean bool = true;
-                                                for (BudgetPlan b : bp) {
+                                                for (ActualCost b : bp) {
                                                     if (Integer.parseInt(b.getMonth()) == 1) {
                                                         out.write(b.getAmount() + "");
                                                         tot += b.getAmount();
@@ -126,7 +127,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">February</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 2) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -141,7 +142,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">March</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 3) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -156,7 +157,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">April</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 4) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -171,7 +172,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">May</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 5) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -186,7 +187,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">June</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 6) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -201,7 +202,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">July</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 7) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -216,7 +217,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">August</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 8) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -231,7 +232,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">September</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 9) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -246,7 +247,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">October</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 10) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -261,7 +262,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">November</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 11) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();
@@ -277,7 +278,7 @@
                                     <tr style="border: 1px solid black;">
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;">December</td>
                                         <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (BudgetPlan b : bp) {
+                                            for (ActualCost b : bp) {
                                                 if (Integer.parseInt(b.getMonth()) == 12) {
                                                     out.write(b.getAmount() + "");
                                                     tot += b.getAmount();

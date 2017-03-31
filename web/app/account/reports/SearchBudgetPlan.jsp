@@ -138,7 +138,7 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="AccountReport?action=BudgetPlan">
+                    <form action="AccountReport?action=BudgetPlan" method="POST">
 
                         <div class="item form-group" style="padding-top: 50px;">
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select State <span class="required"></span>

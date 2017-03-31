@@ -6,6 +6,7 @@
 package com.vertec.daoimpl;
 
 
+import com.vertec.hibe.model.ActualCost;
 import com.vertec.hibe.model.BudgetPlan;
 import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.FunctionData;
@@ -28,7 +29,7 @@ public class AccountReportDAOImpl {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (session != null) {
             try {
-                Query query = session.createQuery("State.findById");
+                Query query = session.getNamedQuery("State.findById");
                 query.setParameter("id", id);
                 State csList = (State)query.uniqueResult();
                 return csList;
@@ -46,7 +47,7 @@ public class AccountReportDAOImpl {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (session != null) {
             try {
-                Query query = session.createQuery("FunctionData.findById");
+                Query query = session.getNamedQuery("FunctionData.findById");
                 query.setParameter("id", id);
                 FunctionData csList = (FunctionData)query.uniqueResult();
                 return csList;
@@ -64,7 +65,7 @@ public class AccountReportDAOImpl {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (session != null) {
             try {
-                Query query = session.createQuery("CostCenter.findById");
+                Query query = session.getNamedQuery("CostCenter.findById");
                 query.setParameter("id", id);
                 CostCenter csList = (CostCenter)query.uniqueResult();
                 return csList;
@@ -82,7 +83,7 @@ public class AccountReportDAOImpl {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (session != null) {
             try {
-                Query query = session.createQuery("NominalCode.findById");
+                Query query = session.getNamedQuery("NominalCode.findById");
                 query.setParameter("id", id);
                 NominalCode csList = (NominalCode)query.uniqueResult();
                 return csList;
@@ -313,6 +314,32 @@ public class AccountReportDAOImpl {
                 query.setParameter("ncid", ncid);
                 query.setParameter("year", year);
                 List<BudgetPlan> csList = query.list();
+                
+                return csList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    
+    }
+    public List<ActualCost> getListOfYearlyActualCost(int ncid,String year) {
+
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT c FROM ActualCost c WHERE c.nominalCodeId.id=:ncid AND c.year=:year");
+                
+                query.setParameter("ncid", ncid);
+                query.setParameter("year", year);
+                List<ActualCost> csList = query.list();
                 
                 return csList;
 
