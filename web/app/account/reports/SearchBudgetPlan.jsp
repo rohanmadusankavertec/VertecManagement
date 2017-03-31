@@ -35,7 +35,7 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="SalesReport.jsp">
+                    <form action="AccountReport">
 
                         </p>
                         <div style="padding-top: 10px;">

@@ -63,29 +63,14 @@ public class AccountReportController extends HttpServlet {
             switch (action) {
                 
                 // print customer report
-                case "printCustomer": {
+                case "SearchBudgetPlan": {
                     List<Customer> c = CustomerDAO.getListOfCustomer();
                     request.setAttribute("customer", c);
                     requestDispatcher = request.getRequestDispatcher("app/report/customer.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                 }
-                // print service report
-                case "printService": {
-                    List<Service> c = ServiceDAO.getListOfService();
-                    request.setAttribute("service", c);
-                    requestDispatcher = request.getRequestDispatcher("app/report/service.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
-                // print package report
-                case "printPackage": {
-                    List<com.vertec.hibe.model.Package> c = quotationDAOImpl.loadAllPackages();
-                    request.setAttribute("package", c);
-                    requestDispatcher = request.getRequestDispatcher("app/report/packages.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
+                
             }
         }
     }
