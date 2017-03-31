@@ -6,14 +6,11 @@
 
 package com.vertec.controller;
 
-import com.vertec.daoimpl.CustomerDAOImpl;
-import com.vertec.daoimpl.DashboardDAOImpl;
-import com.vertec.daoimpl.EmployeeDAOImpl;
-import com.vertec.daoimpl.QuotationDAOImpl;
-import com.vertec.daoimpl.ReportDAOImpl;
-import com.vertec.daoimpl.ServiceDAOImpl;
-import com.vertec.hibe.model.Customer;
-import com.vertec.hibe.model.Service;
+import com.vertec.daoimpl.AccountReportDAOImpl;
+import com.vertec.hibe.model.CostCenter;
+import com.vertec.hibe.model.FunctionData;
+import com.vertec.hibe.model.NominalCode;
+import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,12 +40,7 @@ public class AccountReportController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    private final ReportDAOImpl ReportDAO = new ReportDAOImpl();
-    private final CustomerDAOImpl CustomerDAO = new CustomerDAOImpl();
-    private final ServiceDAOImpl ServiceDAO = new ServiceDAOImpl();
-    private final EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
-    private final DashboardDAOImpl dashboardDAOImpl = new DashboardDAOImpl();
-    private final QuotationDAOImpl quotationDAOImpl = new QuotationDAOImpl();
+    private final AccountReportDAOImpl AccountReportDAO = new AccountReportDAOImpl();
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -64,9 +56,15 @@ public class AccountReportController extends HttpServlet {
                 
                 // print customer report
                 case "SearchBudgetPlan": {
-                    List<Customer> c = CustomerDAO.getListOfCustomer();
-                    request.setAttribute("customer", c);
-                    requestDispatcher = request.getRequestDispatcher("app/report/customer.jsp");
+                    List<State> s = AccountReportDAO.getListOfState();
+                    request.setAttribute("state", s);
+                    List<FunctionData> f = AccountReportDAO.getListOfFunctionData();
+                    request.setAttribute("functionData", f);
+                    List<CostCenter> c = AccountReportDAO.getListOfCostCenter();
+                    request.setAttribute("costcenter", c);
+                    List<NominalCode> n = AccountReportDAO.getListOfNominalCode();
+                    request.setAttribute("nominalCode", n);
+                    requestDispatcher = request.getRequestDispatcher("app/account/reports/SearchBudgetPlan.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                 }
