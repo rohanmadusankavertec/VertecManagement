@@ -6,8 +6,8 @@
 
 <%@page import="com.vertec.hibe.model.Agreement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="../../template/header.jsp"%>
-<%@include file="../../template/sidebar.jsp"%>
+<%@include file="../../../template/header.jsp"%>
+<%@include file="../../../template/sidebar.jsp"%>
 <script src="../js/branch.js"></script>
 <script src="../js/notAlert.js"></script>
 
