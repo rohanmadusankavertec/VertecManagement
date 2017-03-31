@@ -205,6 +205,7 @@
                     <li><a><i class="fa fa-file-text"></i>Account Plan<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="${context}/State?action=viewStatePage">Manage State</a></li>
+                            <li><a href="${context}/FunctionData?action=ManageFunctionData">Manage Function</a></li>
                         </ul>
                     </li>
                     

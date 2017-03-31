@@ -84,11 +84,17 @@
         <servlet-name>StateController</servlet-name>
         <servlet-class>com.vertec.controller.StateController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FunctionDataController</servlet-name>
+        <servlet-class>com.vertec.controller.FunctionDataController</servlet-class>
+    </servlet>
     
     
     
-    
-    
+    <servlet-mapping>
+        <servlet-name>FunctionDataController</servlet-name>
+        <url-pattern>/FunctionData</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StateController</servlet-name>
         <url-pattern>/State</url-pattern>
