@@ -6,9 +6,7 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,14 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "cost_center")
@@ -37,9 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CostCenter.findByIsvalid", query = "SELECT c FROM CostCenter c WHERE c.isvalid = :isvalid")})
 public class CostCenter implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costCenterId")
-    private Collection<NominalCode> nominalCodeCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +43,7 @@ public class CostCenter implements Serializable {
     @Column(name = "name")
     private String name;
     @Column(name = "isvalid")
-    private String isvalid;
+    private Boolean isvalid;
     @JoinColumn(name = "function_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private FunctionData functionId;
@@ -77,11 +71,11 @@ public class CostCenter implements Serializable {
         this.name = name;
     }
 
-    public String getIsvalid() {
+    public Boolean getIsvalid() {
         return isvalid;
     }
 
-    public void setIsvalid(String isvalid) {
+    public void setIsvalid(Boolean isvalid) {
         this.isvalid = isvalid;
     }
 
@@ -116,15 +110,6 @@ public class CostCenter implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.CostCenter[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<NominalCode> getNominalCodeCollection() {
-        return nominalCodeCollection;
-    }
-
-    public void setNominalCodeCollection(Collection<NominalCode> nominalCodeCollection) {
-        this.nominalCodeCollection = nominalCodeCollection;
     }
     
 }
