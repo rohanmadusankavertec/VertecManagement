@@ -146,7 +146,8 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="stateid" id="stateid" onchange="loadFunctionData();">
                                     <option selected="true" disabled value="">Select State</option>
-                                    <%                                        for (State s : state) {
+                                    <%                                        
+                                        for (State s : state) {
                                     %>
                                     <option value="<%=s.getId()%>" ><%=s.getName()%></option>
                                     <%
@@ -181,7 +182,7 @@
                                     <%
                                         for (CostCenter s : cs) {
                                     %>
-                                    <option value="<%=s.getId()%>" ><%=s.getId() + " - " + s.getName()%></option>
+                                    <option value="<%=s.getId()%>" ><%=s.getCode() + " - " + s.getName()%></option>
                                     <%
                                         }
                                     %>
@@ -198,7 +199,7 @@
                                     <%
                                         for (NominalCode s : nc) {
                                     %>
-                                    <option value="<%=s.getId()%>" ><%=s.getId() + " - " + s.getName()%></option>
+                                    <option value="<%=s.getId()%>" ><%=s.getCode()+ " - " + s.getName()%></option>
                                     <%
                                         }
                                     %>
