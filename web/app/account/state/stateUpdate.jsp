@@ -13,7 +13,7 @@
 
 
 <%
-            List<State> sList = (List<State>) request.getAttribute("state");
+            State s = (State) request.getAttribute("state");
             
 %>
 
@@ -34,7 +34,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Add New State Item<small></small></h2>
+                    <h2>Update State Item<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="State?action=saveState" method="post" class="form-horizontal form-label-left" novalidate>
+                    <form action="State?action=updateState" method="post" class="form-horizontal form-label-left" novalidate>
 
                         </p>
                         <span class="section"></span>
@@ -59,7 +59,8 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">State name<span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
+                                <input type="hidden" name="sId" value="<%=s.getId()%>"/>
+                                <input id="name" value="<%=s.getName() %>" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
                             </div>
                         </div>
                                    
@@ -85,71 +86,7 @@
         </div>
     </div>
     
-    <div class="row">
-        
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                       
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table">
-                            <thead>
-                                <tr class="headings">
-
-                                    <th>state ID </th>
-                                    <th>state Name </th>
-                                    
-                                    
-                                    <th class=" no-link last"><span class="nobr">Action</span></th>
-                                    <th class=" no-link last"><span class="nobr">Action</span></th>
-
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <%for (State s : sList) {%>
-                                <tr>
-
-                                    <td class=" "><%=s.getId() %></td>
-                                    <td class=" "><%=s.getName() %></td>
-
-                                    <td class=" last">
-                                        <form action="State?action=loadState" method="POST">
-                                            <input type="hidden" name="sId" value="<%=s.getId()%>"/>
-                                            <input type="submit" value="Update" class="btn btn-warning" name="update" />
-                                        </form>
-                                    </td>
-                                    <td class=" last">
-                                        <form action="State?action=deleteState" method="POST">
-                                            <input type="hidden" name="sId" value="<%=s.getId()%>"/>
-                                            <input type="submit" value="Delete" class="btn btn-danger" name="delete" />
-                                        </form>
-                                    </td>
-
-                                </tr>
-                                <%}%>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <br />
-        <br />
-        <br />
-
-    </div>
+    
 </div>
 
 

@@ -80,12 +80,19 @@
         <servlet-name>CctvController</servlet-name>
         <servlet-class>com.vertec.controller.CctvController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StateController</servlet-name>
+        <servlet-class>com.vertec.controller.StateController</servlet-class>
+    </servlet>
     
     
     
     
     
-    
+    <servlet-mapping>
+        <servlet-name>StateController</servlet-name>
+        <url-pattern>/State</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CctvController</servlet-name>
         <url-pattern>/CCTV</url-pattern>

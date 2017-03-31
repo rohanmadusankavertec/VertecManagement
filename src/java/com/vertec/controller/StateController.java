@@ -11,6 +11,7 @@ import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,8 +49,9 @@ public class StateController extends HttpServlet {
             switch(action){
                 
                 case "viewStatePage": {
-                    
-                    requestDispatcher = request.getRequestDispatcher("app/account/state/registerState.jsp");
+                    List<State> sList = statedao.loadAllState();
+                    request.setAttribute("state", sList);
+                    requestDispatcher = request.getRequestDispatcher("app/account/state/stateManage.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                 }
@@ -57,6 +59,7 @@ public class StateController extends HttpServlet {
                     String state = request.getParameter("name").trim();
                     State s = new State();
                     s.setName(state);
+                    s.setIsvalid(true);
                     
                     String result = statedao.saveState(s);
                     if (result.equals(VertecConstants.SUCCESS)) {
@@ -70,6 +73,61 @@ public class StateController extends HttpServlet {
                         request.getSession().setAttribute("Error_Message", "Not Added,Please Tri again");
                         response.sendRedirect("State?action=viewStatePage");
                     }
+                    break;
+                }
+                
+                case "loadState": {
+                    String stateId = request.getParameter("sId");
+                    System.out.println("....."+stateId);
+                    State state = statedao.viewStateById(Integer.parseInt(stateId));
+                    request.setAttribute("state", state);
+                    requestDispatcher = request.getRequestDispatcher("app/account/state/stateUpdate.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                    
+                }
+                
+                case "updateState": {
+                    String state = request.getParameter("name").trim();
+                    String id = request.getParameter("sId").trim();
+                    System.out.println("......"+state);
+                    State s = new State();
+                    s.setName(state);
+                    s.setId(Integer.parseInt(id));
+                    
+                    
+                    
+                    String result = statedao.updateState(s);
+                    if (result.equals(VertecConstants.UPDATED)) {
+                        request.getSession().removeAttribute("Success_Message");
+
+                        request.getSession().setAttribute("Success_Message", "Successfully Updated");
+                        response.sendRedirect("State?action=viewStatePage");
+                    } else {
+                        request.getSession().removeAttribute("Error_Message");
+
+                        request.getSession().setAttribute("Error_Message", "Not Updated,Please Tri again");
+                        response.sendRedirect("State?action=viewStatePage");
+                    }
+                    break;
+                }
+                
+                
+                case "deleteState": {
+                    String id = request.getParameter("sId").trim();
+                    String result = statedao.deleteState(Integer.parseInt(id));
+                    if (result.equals(VertecConstants.SUCCESS)) {
+                        request.getSession().removeAttribute("Success_Message");
+
+                        request.getSession().setAttribute("Success_Message", "Successfully Deleted");
+                        response.sendRedirect("State?action=viewStatePage");
+                    } else {
+                        request.getSession().removeAttribute("Error_Message");
+
+                        request.getSession().setAttribute("Error_Message", "Not Deleted,Please Tri again");
+                        response.sendRedirect("State?action=viewStatePage");
+                    }
+                    break;
                 }
             }
             

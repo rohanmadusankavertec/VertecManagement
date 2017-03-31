@@ -202,6 +202,13 @@
 
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-file-text"></i>Account Plan<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            <li><a href="${context}/State?action=viewStatePage">Manage State</a></li>
+                        </ul>
+                    </li>
+                    
+                    
                     <li><a><i class="fa fa-file-text"></i>Reports<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="${context}/Report?action=printCustomer">Customers</a>
