@@ -117,4 +117,96 @@ public class AccountReportDAOImpl {
         return null;
     
     }
+    public List<String> getListOfBudgetYears() {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT b.year FROM BudgetPlan b GROUP BY b.year");
+                List<String> csList = query.list();
+                return csList;
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        return null;
+    }
+    public List<FunctionData> getListOfFunctionDataBystate(int id) {
+
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT c FROM FunctionData c WHERE c.isvalid=:isValid AND c.stateId.id=:id");
+                query.setParameter("isValid", true);
+                query.setParameter("id", id);
+                List<FunctionData> csList = query.list();
+                
+                return csList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    
+    }
+    public List<CostCenter> getListOfCostCenterByFunctionData(int id) {
+
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT c FROM CostCenter c WHERE c.isvalid=:isValid AND c.functionId.id=:id");
+                query.setParameter("isValid", true);
+                query.setParameter("id", id);
+                List<CostCenter> csList = query.list();
+                
+                return csList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    
+    }
+    public List<NominalCode> getListOfNominalbyCostCenter(int id) {
+
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT c FROM NominalCode c WHERE c.isvalid=:isValid AND c.costCenterId.id=:id");
+                query.setParameter("isValid", true);
+                query.setParameter("id", id);
+                List<NominalCode> csList = query.list();
+                
+                return csList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    
+    }
 }
