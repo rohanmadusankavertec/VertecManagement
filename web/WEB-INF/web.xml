@@ -61,6 +61,10 @@
         <servlet-class>com.vertec.controller.ReportController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AccountReportController</servlet-name>
+        <servlet-class>com.vertec.controller.AccountReportController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ProjectDetailsController</servlet-name>
         <servlet-class>com.vertec.controller.ProjectDetailsController</servlet-class>
     </servlet>
@@ -101,6 +105,10 @@
     <servlet-mapping>
         <servlet-name>ReportController</servlet-name>
         <url-pattern>/Report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountReportController</servlet-name>
+        <url-pattern>/AccountReport</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EstimateCostController</servlet-name>
