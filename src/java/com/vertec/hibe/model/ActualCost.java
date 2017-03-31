@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ActualCost.findByDescription", query = "SELECT a FROM ActualCost a WHERE a.description = :description")})
 public class ActualCost implements Serializable {
 
+    @JoinColumn(name = "nominal_code_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private NominalCode nominalCodeId;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -158,6 +162,14 @@ public class ActualCost implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.ActualCost[ id=" + id + " ]";
+    }
+
+    public NominalCode getNominalCodeId() {
+        return nominalCodeId;
+    }
+
+    public void setNominalCodeId(NominalCode nominalCodeId) {
+        this.nominalCodeId = nominalCodeId;
     }
     
 }

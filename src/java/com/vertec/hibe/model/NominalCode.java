@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "NominalCode.findByIsvalid", query = "SELECT n FROM NominalCode n WHERE n.isvalid = :isvalid")})
 public class NominalCode implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalCodeId")
+    private Collection<ActualCost> actualCostCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,6 +127,15 @@ public class NominalCode implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.NominalCode[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ActualCost> getActualCostCollection() {
+        return actualCostCollection;
+    }
+
+    public void setActualCostCollection(Collection<ActualCost> actualCostCollection) {
+        this.actualCostCollection = actualCostCollection;
     }
     
 }
