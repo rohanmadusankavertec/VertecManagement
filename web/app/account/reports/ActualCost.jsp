@@ -15,9 +15,11 @@
     String cc = (String) request.getAttribute("costcenter");
     String nc = (String) request.getAttribute("nominalCode");
     String by = (String) request.getAttribute("years");
-    List<ActualCost> bp = (List<ActualCost>) request.getAttribute("bp");
+    List<ActualCost> ac = (List<ActualCost>) request.getAttribute("ac");
+    List<BudgetPlan> bp = (List<BudgetPlan>) request.getAttribute("bp");
 
     double tot = 0;
+    double tot2=0;
 %>
 
 
@@ -98,20 +100,48 @@
 
 
                         <center>
-                            <table style="width: 80%;border:1px solid #000 ;border-collapse: collapse;">
-                                <thead>
-                                    <tr style="border: 1px solid black; background-color: #bfc9ff;">
-                                        <th style="text-align: left;height: 25px;border: 1px solid black;padding: 10px;">Month</th>
-                                        <th style="text-align: left;height: 25px;border: 1px solid black;padding: 10px;">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">January</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">
+                            <table style="width: 100%;">
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>January</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
                                             <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 1) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
                                                 boolean bool = true;
-                                                for (ActualCost b : bp) {
+                                                for (BudgetPlan b : bp) {
                                                     if (Integer.parseInt(b.getMonth()) == 1) {
                                                         out.write(b.getAmount() + "");
                                                         tot += b.getAmount();
@@ -121,181 +151,832 @@
                                                 if (bool) {
                                                     out.write("0000.00");
                                                 }
-                                            %>
-                                        </td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">February</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 2) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">March</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 3) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">April</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 4) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">May</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 5) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">June</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 6) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">July</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 7) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">August</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 8) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">September</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 9) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">October</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 10) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">November</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 11) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
-                                                }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;">December</td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%                                            bool = true;
-                                            for (ActualCost b : bp) {
-                                                if (Integer.parseInt(b.getMonth()) == 12) {
-                                                    out.write(b.getAmount() + "");
-                                                    tot += b.getAmount();
-                                                    bool = false;
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>February</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 2) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
                                                 }
-                                            }
-                                            if (bool) {
-                                                out.write("0000.00");
-                                            }
-                                            %></td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><strong>Total Budget</strong></td>
-                                        <td style="border: 1px solid black;height: 8px;padding: 8px;"><%=tot%></td>
-                                    </tr>
-                                </tbody>
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 2) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>March</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 3) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 3) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>April</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 4) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                 bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 4) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                    
+                                    <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>May</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 5) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 5) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                    
+                                    <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>June</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 6) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 6) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>July</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 7) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 7) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>August</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 8) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 8) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>September</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 9) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 9) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>October</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 10) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                 bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 10) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                    
+                                    <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>November</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 11) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 11) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                    
+                                    <tr style="width: 100%;">
+                                    <td style="width: 100%;">
+                                        <h4>December</h4>
+
+
+                                        <table style="margin-left: 10%; width: 100%" >
+                                            <%
+                                                tot2=0;
+                                                for (ActualCost b : ac) {
+                                                    if (Integer.parseInt(b.getMonth()) == 12) {
+                                                        tot2+=b.getAmount();
+                                            %>
+
+                                            <tr>
+                                                <td style="width: 20%">
+                                                    <%=b.getReferenceNo()%>
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <%=b.getDescription()%>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <%=b.getAmount()%>
+                                                </td>
+                                            </tr>
+
+                                            <%
+                                                    }
+                                                }
+
+                                            %>
+                                            
+                                            <tr>
+                                                <td style="width: 10%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Budget Amount</strong></div>
+                                                </td>
+                                                <td style="width: 30%">
+                                                    <strong>  <%
+                                                bool = true;
+                                                for (BudgetPlan b : bp) {
+                                                    if (Integer.parseInt(b.getMonth()) == 12) {
+                                                        out.write(b.getAmount() + "");
+                                                        tot += b.getAmount();
+                                                        bool = false;
+                                                    }
+                                                }
+                                                if (bool) {
+                                                    out.write("0000.00");
+                                                }
+                                            %></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%">
+                                                </td>
+                                                <td style="width: 60%">
+                                                    <div style="float: right; margin-right: 10px;"><strong>Actual Cost</strong></div>
+                                                
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <strong>  <%=tot2%></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </tr>
                             </table>
+
+
+
+
+
                         </center>
 
 

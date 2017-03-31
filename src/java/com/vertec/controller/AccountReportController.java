@@ -166,9 +166,11 @@ public class AccountReportController extends HttpServlet {
                     String ccId = request.getParameter("ccId").trim();
                     String nomiId = request.getParameter("nomiId").trim();
                     String byear = request.getParameter("byear").trim();
+                    List<BudgetPlan> bp=AccountReportDAO.getListOfYearlyBudgetPlans(Integer.parseInt(nomiId), byear);
                     
-                    List<ActualCost> bp=AccountReportDAO.getListOfYearlyActualCost(Integer.parseInt(nomiId), byear);
+                    List<ActualCost> ac=AccountReportDAO.getListOfYearlyActualCost(Integer.parseInt(nomiId), byear);
                     
+                    request.setAttribute("ac", ac);
                     request.setAttribute("bp", bp);
                     request.setAttribute("state", AccountReportDAO.getStateById(Integer.parseInt(stid)).getName());
                     request.setAttribute("functionData", AccountReportDAO.getFunctionById(Integer.parseInt(functionid)).getName());
