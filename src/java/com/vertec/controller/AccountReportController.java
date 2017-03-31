@@ -69,6 +69,21 @@ public class AccountReportController extends HttpServlet {
                     requestDispatcher.forward(request, response);
                     break;
                 }
+                case "SearchActualCost": {
+                    List<State> s = AccountReportDAO.getListOfState();
+                    request.setAttribute("state", s);
+                    List<FunctionData> f = AccountReportDAO.getListOfFunctionData();
+                    request.setAttribute("functionData", f);
+                    List<CostCenter> c = AccountReportDAO.getListOfCostCenter();
+                    request.setAttribute("costcenter", c);
+                    List<NominalCode> n = AccountReportDAO.getListOfNominalCode();
+                    request.setAttribute("nominalCode", n);
+                    List<String> y = AccountReportDAO.getListOfBudgetYears();
+                    request.setAttribute("years", y);
+                    requestDispatcher = request.getRequestDispatcher("app/account/reports/SearchActualCost.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
                 case "getFunctionByState": {
                     String stateid = request.getParameter("stateid").trim();
 
