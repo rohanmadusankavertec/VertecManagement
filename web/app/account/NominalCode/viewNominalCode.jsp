@@ -25,7 +25,9 @@
     setTimeout("SetData()","500");
     
     function SetData(){
-        document.getElementById('stateid').value=<%=nc.getStateId().getId()%>;
+        document.getElementById('stateid').value=<%=nc.getCostCenterId().getFunctionId().getStateId().getId() %>;
+        document.getElementById('fid').value=<%=nc.getCostCenterId().getFunctionId().getId()%>;
+        document.getElementById('ccid').value=<%=nc.getCostCenterId().getId()%>;
         
         
     }
@@ -46,7 +48,7 @@
                 <div class="x_content">
                     <form action="NominalCode?action=UpNC" method="post" class="form-horizontal form-label-left" novalidate >
                         <span class="section">Function Update</span>
-                        <div class="item form-group" style="padding-top: 50px;">
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select State <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -62,7 +64,7 @@
                                 </select>                              
                             </div>
                         </div>
-                                <div class="item form-group" style="padding-top: 50px;">
+                                <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Function <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -78,7 +80,7 @@
                                 </select>                              
                             </div>
                         </div>
-                                <div class="item form-group" style="padding-top: 50px;">
+                                <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Cost Center <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -87,7 +89,7 @@
                                     <%                                        
                                         for (CostCenter s : cs) {
                                     %>
-                                    <option value="<%=s.getId()%>" ><%=s.getName()%></option>
+                                    <option value="<%=s.getId()%>" ><%=s.getCode()+" "+ s.getName()%></option>
                                     <%
                                         }
                                     %>

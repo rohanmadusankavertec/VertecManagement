@@ -57,11 +57,16 @@ public class NominalCodeController extends HttpServlet {
 
         switch (action) {
             case "ManageNominalCode": {
+                System.out.println("Calling");
                 List<State> cuList = ardao.getListOfState();
                 request.setAttribute("state", cuList);
                 List<FunctionData> fd = ardao.getListOfFunctionData();
                 request.setAttribute("fd", fd);
-                requestDispatcher = request.getRequestDispatcher("app/account/functionData/registerNominalCode.jsp");
+                List<CostCenter> cc = ardao.getListOfCostCenter();
+                request.setAttribute("costcenter", cc);
+                List<NominalCode> nc = ardao.getListOfNominalCode();
+                request.setAttribute("nominalcode", nc);
+                requestDispatcher = request.getRequestDispatcher("app/account/NominalCode/registerNominalCode.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }
@@ -76,6 +81,7 @@ public class NominalCodeController extends HttpServlet {
                 NominalCode nc =new NominalCode();
                 nc.setCode(code);
                 nc.setName(Name);
+                nc.setIsvalid(true);
                 nc.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
                 
                 String result = ncdao.saveNominalCode(nc);
@@ -111,7 +117,7 @@ public class NominalCodeController extends HttpServlet {
 
                 NominalCode nc = ardao.getNominalCodeById(cuId);
                 request.setAttribute("nc", nc);
-                requestDispatcher = request.getRequestDispatcher("app/account/functionData/viewNominalCode.jsp");
+                requestDispatcher = request.getRequestDispatcher("app/account/NominalCode/viewNominalCode.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }

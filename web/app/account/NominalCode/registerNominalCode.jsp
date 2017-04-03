@@ -109,7 +109,7 @@
                     <form action="NominalCode?action=Register" method="post" class="form-horizontal form-label-left" validate>
 
                         <span class="section">Nominal Code Registration</span>
-                        <div class="item form-group" style="padding-top: 50px;">
+                        <div class="item form-group" >
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select State <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -124,7 +124,7 @@
                                 </select>                              
                             </div>
                         </div>
-                        <div class="item form-group" style="padding-top: 50px;">
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Function <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -139,7 +139,7 @@
                                 </select>                              
                             </div>
                         </div>
-                        <div class="item form-group" style="padding-top: 50px;">
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Cost Center <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -165,7 +165,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nominal Code Name<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="nc" placeholder="Enter Nominal Code" required="required" type="text">
+                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="nc" placeholder="Enter Nominal Code Name" required="required" type="text">
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -216,8 +216,9 @@
                                 <tr>
                                     <td class=" "><%=c.getId()%></td>
                                     <td class=" "><%=c.getCostCenterId().getFunctionId().getStateId().getName()%></td>
-                                    <td class=" "><%=c.getCostCenterId().getFunctionId().getName()%></td>
-                                    <td class=" "><%=c.getName()%></td>
+                                    <td class=" "><%=c.getCostCenterId().getFunctionId().getName() %></td>
+                                    <td class=" "><%=c.getCostCenterId().getCode()+" "+c.getCostCenterId().getName()%></td>
+                                    <td class=" "><%=c.getCode()+" "+c.getName() %></td>
                                     <td class=" last"> 
                                         <form name="form1" method="post" action="NominalCode?action=UpdateNominalCode">
                                             <input type="hidden" name="ncId" value="<%=c.getId()%>"/>
