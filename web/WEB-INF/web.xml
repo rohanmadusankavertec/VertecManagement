@@ -92,7 +92,10 @@
         <servlet-name>CostCenterController</servlet-name>
         <servlet-class>com.vertec.controller.CostCenterController</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>NominalCodeController</servlet-name>
+        <servlet-class>com.vertec.controller.NominalCodeController</servlet-class>
+    </servlet>
     
     
     
@@ -100,8 +103,8 @@
     
     
     <servlet-mapping>
-        <servlet-name>CostCenterController</servlet-name>
-        <url-pattern>/CostCenter</url-pattern>
+        <servlet-name>NominalCodeController</servlet-name>
+        <url-pattern>/NominalCode</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FunctionDataController</servlet-name>
