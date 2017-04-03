@@ -11,13 +11,42 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../../../template/header.jsp"%>
 <%@include file="../../../template/sidebar.jsp"%>
-
+<script src="app/js/notAlert.js"></script>
 
 <%
             List<CostCenter> ccList = (List<CostCenter>) request.getAttribute("costcenter");
+            List<State> sList = (List<State>) request.getAttribute("state");
             
 %>
+<script type="text/javascript">
+    
+    
+    function loadFunctionData(){
+//        $("").empty();
+        var sid = document.getElementById("itemState").value;
+        alert(sid);
+        $.ajax({
+            type: "POST",
+            url: "CostCenter?action=getFunctionData&sid="+sid,
+            success: function(msg) {
+                var reply = eval('(' + msg + ')');
+                var arrLn1 = reply.functionData;
 
+
+                var fdata = document.getElementById("fdata");
+                var ihtml = "";
+                for (var f = 0; f < arrLn1.length; f++) {
+                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].fname+"</option>"
+                }
+                fdata.innerHTML = ihtml;
+
+
+            }
+        });
+        
+    }
+    
+</script>
 
 
 <div class="">
@@ -55,6 +84,31 @@
                         </p>
                         <span class="section"></span>
                         
+                        
+                        <div style="" class="item form-group">
+                            <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">State  
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" name="itemState" id="itemState"  required="required" onchange="loadFunctionData()" >
+                                    <option  value="">Select State Item</option>
+                                    <% for(State s: sList) {%>
+                                        <option value="<%=s.getId() %>"><%=s.getName() %></option>
+                                    <%}%>
+                                    
+                                </select>                              
+                            </div>
+                        </div>
+                        <div style="" class="item form-group">
+                            <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Function Data  
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" name="fdata" id="fdata"  required="required" >
+                                    <option disabled value="">Select Function Data</option>
+                                    
+                                    
+                                </select>                              
+                            </div>
+                        </div>            
                            
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center name<span class="required"></span>
@@ -113,8 +167,9 @@
                                 <tr class="headings">
 
                                     <th> ID </th>
-                                    <th>Cost Center Name </th>
-                                    <th>Cost Center Code </th>
+                                    <th> Function Data </th>
+                                    <th> Name </th>
+                                    <th>Code </th>
                                     
                                     
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
@@ -128,6 +183,7 @@
                                 <tr>
 
                                     <td class=" "><%=c.getId() %></td>
+                                    <td class=" "><%=c.getFunctionId().getName() %></td>
                                     <td class=" "><%=c.getName() %></td>
                                     <td class=" "><%=c.getCode() %></td>
 
