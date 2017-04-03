@@ -90,7 +90,7 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="itemState" id="itemState"  required="required" onchange="loadFunctionData()" >
-                                    <option  value="">Select State Item</option>
+                                    <option selected="true" disabled  value="">Select State Item</option>
                                     <% for(State s: sList) {%>
                                         <option value="<%=s.getId() %>"><%=s.getName() %></option>
                                     <%}%>
