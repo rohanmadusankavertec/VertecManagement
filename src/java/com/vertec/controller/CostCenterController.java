@@ -6,7 +6,9 @@
 package com.vertec.controller;
 
 import com.vertec.daoimpl.CostCenterDAOImpl;
+import com.vertec.daoimpl.StateDAOImpl;
 import com.vertec.hibe.model.CostCenter;
+import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -38,6 +42,7 @@ public class CostCenterController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private final CostCenterDAOImpl costcenterdao = new CostCenterDAOImpl();
+    private final StateDAOImpl statedao = new StateDAOImpl();
             
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,7 +58,9 @@ public class CostCenterController extends HttpServlet {
                 
                 case "CostCenterPage": {
                     List<CostCenter> cList = costcenterdao.loadAllCostCenter();
+                    List<State> sList = statedao.loadAllState();
                     request.setAttribute("costcenter", cList);
+                    request.setAttribute("state", sList);
                     requestDispatcher = request.getRequestDispatcher("app/account/costCenter/costCenterManage.jsp");
                     requestDispatcher.forward(request, response);
                     break;
@@ -61,10 +68,12 @@ public class CostCenterController extends HttpServlet {
                 case "saveCostCenter": {
                     String state = request.getParameter("name").trim();
                     String code = request.getParameter("code").trim();
+                    String fid = request.getParameter("fdata").trim();
                     CostCenter c = new CostCenter();
                     c.setName(state);
                     c.setCode(code);
                     c.setIsvalid(true);
+                    c.setFunctionId(new FunctionData(Integer.parseInt(fid)));
                     
                     String result = costcenterdao.saveCostCenter(c);
                     if (result.equals(VertecConstants.SUCCESS)) {
@@ -134,6 +143,28 @@ public class CostCenterController extends HttpServlet {
                         request.getSession().setAttribute("Error_Message", "Not Deleted,Please Tri again");
                         response.sendRedirect("CostCenter?action=CostCenterPage");
                     }
+                    break;
+                }
+                case "getFunctionData": {
+                    String sid = request.getParameter("sid").trim();
+                    System.out.println(".........."+sid);
+                    List<FunctionData> f = costcenterdao.getFunctionDataBySateId(Integer.parseInt(sid));
+                     
+                    JSONObject jOB = new JSONObject();
+                    JSONArray jar1 = new JSONArray();
+                    JSONObject job1 = null;
+                    for (FunctionData d : f) {
+                        System.out.println(d.getName());
+                        job1 = new JSONObject();
+                        job1.put("id", d.getId());
+                        job1.put("fname", d.getName());
+                        
+                        
+                        jar1.add(job1);
+                    }
+                    jOB.put("functionData", jar1);
+                    response.getWriter().write(jOB.toString());
+                    
                     break;
                 }
             }

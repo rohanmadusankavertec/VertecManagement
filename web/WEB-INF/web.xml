@@ -107,6 +107,10 @@
         <url-pattern>/NominalCode</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CostCenterController</servlet-name>
+        <url-pattern>/CostCenter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FunctionDataController</servlet-name>
         <url-pattern>/FunctionData</url-pattern>
     </servlet-mapping>

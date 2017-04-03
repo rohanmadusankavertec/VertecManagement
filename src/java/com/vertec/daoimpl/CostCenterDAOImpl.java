@@ -7,6 +7,7 @@ package com.vertec.daoimpl;
 
 
 import com.vertec.hibe.model.CostCenter;
+import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.State;
 import com.vertec.util.NewHibernateUtil;
 import com.vertec.util.VertecConstants;
@@ -50,6 +51,26 @@ public class CostCenterDAOImpl {
                 Query query = session.createQuery("SELECT s FROM CostCenter s WHERE s.isvalid = :isvalid");
                 query.setParameter("isvalid", true);
                 List<CostCenter> prList = query.list();
+                return prList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        return null;
+    }
+    public List<FunctionData> getFunctionDataBySateId(int sid) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT f FROM FunctionData f WHERE f.isvalid = :isvalid AND f.stateId.id=:sid");
+                query.setParameter("isvalid", true);
+                query.setParameter("sid", sid);
+                List<FunctionData> prList = query.list();
                 return prList;
 
             } catch (Exception e) {
