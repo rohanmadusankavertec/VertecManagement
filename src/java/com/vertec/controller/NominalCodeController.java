@@ -6,13 +6,10 @@
 package com.vertec.controller;
 
 import com.vertec.daoimpl.AccountReportDAOImpl;
-import com.vertec.daoimpl.FunctionDataDAOImpl;
 import com.vertec.daoimpl.NominalCodeDAOImpl;
-import com.vertec.daoimpl.ServiceDAOImpl;
 import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.NominalCode;
-import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
@@ -113,8 +110,6 @@ public class NominalCodeController extends HttpServlet {
                 request.setAttribute("costcenter", cs);
 
                 
-                
-
                 NominalCode nc = ardao.getNominalCodeById(cuId);
                 request.setAttribute("nc", nc);
                 requestDispatcher = request.getRequestDispatcher("app/account/NominalCode/viewNominalCode.jsp");
