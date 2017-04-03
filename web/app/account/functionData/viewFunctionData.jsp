@@ -36,7 +36,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="Function?action=UpFunc" method="post" class="form-horizontal form-label-left" novalidate >
+                    <form action="FunctionData?action=UpFunc" method="post" class="form-horizontal form-label-left" novalidate >
                         <span class="section">Function Update</span>
                         <div class="item form-group" style="padding-top: 50px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select State <span class="required">*</span>

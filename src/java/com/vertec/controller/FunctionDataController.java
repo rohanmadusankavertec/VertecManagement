@@ -138,12 +138,12 @@ public class FunctionDataController extends HttpServlet {
                     request.getSession().removeAttribute("Success_Message");
 
                     request.getSession().setAttribute("Success_Message", "Successfully Updated");
-                    response.sendRedirect("Service?action=ViewService");
+                    response.sendRedirect("FunctionData?action=ManageFunctionData");
                 } else {
                     request.getSession().removeAttribute("Error_Message");
 
                     request.getSession().setAttribute("Error_Message", "Not Updated,Please Try again");
-                    response.sendRedirect("Service?action=ViewService");
+                    response.sendRedirect("FunctionData?action=ManageFunctionData");
                 }
 
                 break;
