@@ -222,7 +222,9 @@
 
 
                             <tr>
-                                <td>January</td>
+                                <td>
+                                    January
+                                </td>
                                 <td>
                                     <input class="form-control col-md-7 col-xs-12"  name="1amount" placeholder="Enter Amount" required="required" type="number">
                            
