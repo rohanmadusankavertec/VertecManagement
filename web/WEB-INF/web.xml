@@ -96,12 +96,18 @@
         <servlet-name>NominalCodeController</servlet-name>
         <servlet-class>com.vertec.controller.NominalCodeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BudgetController</servlet-name>
+        <servlet-class>com.vertec.controller.BudgetController</servlet-class>
+    </servlet>
     
     
     
     
-    
-    
+    <servlet-mapping>
+        <servlet-name>BudgetController</servlet-name>
+        <url-pattern>/Budget</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NominalCodeController</servlet-name>
         <url-pattern>/NominalCode</url-pattern>

@@ -208,6 +208,7 @@
                             <li><a href="${context}/FunctionData?action=ManageFunctionData">Manage Function</a></li>
                             <li><a href="${context}/CostCenter?action=CostCenterPage">Cost Center</a></li>
                             <li><a href="${context}/NominalCode?action=ManageNominalCode">Manage Nominal Code</a></li>
+                            <li><a href="${context}/Budget?action=ViewBudgetPlan">Manage Nominal Code</a></li>
                             
                         </ul>
                     </li>
