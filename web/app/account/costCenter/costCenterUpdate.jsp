@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="com.vertec.hibe.model.CostCenter"%>
 <%@page import="com.vertec.hibe.model.State"%>
 <%@page import="com.vertec.hibe.model.CctvCategory"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +14,7 @@
 
 
 <%
-            State s = (State) request.getAttribute("state");
+            CostCenter cc = (CostCenter) request.getAttribute("CostCenter");
             
 %>
 
@@ -23,7 +24,7 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                State  Management
+                Cost Center  Management
             </h3>
         </div>
 
@@ -34,7 +35,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Update State Item<small></small></h2>
+                    <h2>Update Cost Center Item<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -49,20 +50,29 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="State?action=updateState" method="post" class="form-horizontal form-label-left" novalidate>
+                    <form action="CostCenter?action=updateCostCenter" method="post" class="form-horizontal form-label-left" novalidate>
 
                         </p>
                         <span class="section"></span>
                         
                            
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">State name<span class="required"></span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center name<span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="hidden" name="sId" value="<%=s.getId()%>"/>
-                                <input id="name" value="<%=s.getName() %>" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
+                                <input type="hidden" name="sId" value="<%=cc.getId()%>"/>
+                                <input id="name" value="<%=cc.getName() %>" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
                             </div>
                         </div>
+                        
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center Code<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                
+                                <input id="name" value="<%=cc.getCode() %>" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="code"  required="required" type="text">
+                            </div>
+                        </div>    
                                    
                                     
                         
