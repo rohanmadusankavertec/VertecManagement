@@ -24,7 +24,7 @@
     
     function loadFunctionData(){
 //        $("").empty();
-        var sid = document.getElementById("itemState").value;
+        var sid = document.getElementById("stateid").value;
         alert(sid);
         $.ajax({
             type: "POST",
@@ -35,11 +35,63 @@
 
 
                 var fdata = document.getElementById("fdata");
-                var ihtml = "";
+                var ihtml = "<option disabled  selected='true'>Select Cost Center</option>";
+                
                 for (var f = 0; f < arrLn1.length; f++) {
                     ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].fname+"</option>"
                 }
                 fdata.innerHTML = ihtml;
+
+
+            }
+        });
+        
+    }
+    
+    function loadCostCenter(){
+//        $("").empty();
+//alert("check..");
+        var ccid = document.getElementById("fdata").value;
+        alert(ccid);
+        $.ajax({
+            type: "POST",
+            url: "ActualCost?action=getCostCenter&ccid="+ccid,
+            success: function(msg) {
+                var reply = eval('(' + msg + ')');
+                var arrLn1 = reply.CostCenter;
+
+
+                var cdata = document.getElementById("ccenter");
+                var ihtml = "<option disabled  selected='true'>Select Cost Center</option>";
+                for (var f = 0; f < arrLn1.length; f++) {
+                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].cname+"</option>"
+                }
+                cdata.innerHTML = ihtml;
+
+
+            }
+        });
+        
+    }
+    function loadNominalCode(){
+//        $("").empty();
+alert("check..");
+        var ccid = document.getElementById("ccenter").value;
+        alert(ccid);
+        $.ajax({
+            type: "POST",
+            url: "ActualCost?action=getNominalCode&ccid="+ccid,
+            success: function(msg) {
+                var reply = eval('(' + msg + ')');
+                var arrLn1 = reply.NominalCode;
+
+
+                var cdata = document.getElementById("nominalCode");
+                var ihtml = "<option disabled  selected='true'>Select nominal code</option>";
+                for (var f = 0; f < arrLn1.length; f++) {
+                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].ncname+"</option>"
+                }
+                cdata.innerHTML = ihtml;
 
 
             }
@@ -95,8 +147,8 @@
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Function Data  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="fdata" id="fdata"  required="required" >
-                                    <option disabled value="">Select Function Data</option>
+                                <select class="form-control" name="fdata" id="fdata"  required="required" onchange="loadCostCenter()">
+                                    <option selected="true"  disabled value="">Select Function Data</option>
                                     
                                     
                                 </select>                              
@@ -106,8 +158,8 @@
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Cost Center  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="ccenter" id="ccenter"  required="required" >
-                                    <option disabled value="">Select Cost Center </option>
+                                <select class="form-control" name="ccenter" id="ccenter"  required="required" onchange="loadNominalCode()" >
+                                    <option selected="true"  value="">Select Cost Center </option>
                                     
                                     
                                 </select>                              
@@ -145,63 +197,7 @@
     </div>
 
     
-    <div class="row">
-
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Registered Functions <small>up to now</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table">
-                            <thead>
-                                <tr class="headings">
-                                    <th>#</th>
-                                    <th>State Name</th>
-                                    <th>Function Name</th>
-                                    <th class=" no-link last"><span class="nobr">Update</span>
-                                    <th class=" no-link last"><span class="nobr">Delete</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%                                    for (FunctionData c : fdList) {
-                                %>
-                                <tr>
-                                    <td class=" "><%=c.getId()%></td>
-                                    <td class=" "><%=c.getStateId().getName() %></td>
-                                    <td class=" "><%=c.getName()%></td>
-                                    <td class=" last"> 
-                                        <form name="form1" method="post" action="FunctionData?action=UpdateFunction"><input type="hidden" name="functionId" value="<%=c.getId()%>"/>
-                                            <button type="submit" class="glyphicon glyphicon-edit">
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td class=" last"> 
-                                        <form name="form1" method="post" action="FunctionData?action=RemoveFunction"><input type="hidden" name="functionId" value="<%=c.getId()%>"/>
-                                            <button id="send" type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <%}%>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
+    
 </div>
 
 <%@include file="../../../template/footer.jsp"%>
