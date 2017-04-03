@@ -12,9 +12,18 @@
 <%@include file="../../../template/sidebar.jsp"%>
 <%@page import="com.vertec.hibe.model.Customer"%>
 <%
-    FunctionData ser = (FunctionData) request.getAttribute("function");
+    FunctionData func = (FunctionData) request.getAttribute("function");
     List<State> StateList = (List<State>) request.getAttribute("state");
 %>
+
+<script type="text/javascript">
+    
+    setTimeout("document.getElementById('stateid').value=<%=func.getStateId().getId()%>;","500");
+    
+    
+</script>
+
+
 
 <div class="">
 
@@ -27,7 +36,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="Function?action=UpSer" method="post" class="form-horizontal form-label-left" novalidate >
+                    <form action="Function?action=UpFunc" method="post" class="form-horizontal form-label-left" novalidate >
                         <span class="section">Function Update</span>
                         <div class="item form-group" style="padding-top: 50px;">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select State <span class="required">*</span>
@@ -35,7 +44,8 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="stateid" id="stateid">
                                     <option selected="true" disabled value="">Select State</option>
-                                    <%                                        for (State s : StateList) {
+                                    <%                                        
+                                        for (State s : StateList) {
                                     %>
                                     <option value="<%=s.getId()%>" ><%=s.getName()%></option>
                                     <%
@@ -48,8 +58,8 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Function Name <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12"  name="Name" data-validate-words="2" required="required" type="text" value="<%=ser.getName()%>">
-                                <input name="serId" required="required" type="hidden" value="<%=ser.getId()%>"> 
+                                <input class="form-control col-md-7 col-xs-12"  name="Name" data-validate-words="2" required="required" type="text" value="<%=func.getName()%>">
+                                <input name="funcId" required="required" type="hidden" value="<%=func.getId()%>"> 
                             </div>
                         </div>
                         <div class="ln_solid"></div>

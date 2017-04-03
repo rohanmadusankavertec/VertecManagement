@@ -100,14 +100,15 @@ public class FunctionDataDAOImpl {
 
     }
 
-    public String updateService(Service service) {
+    public String updateFunction(FunctionData func) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         if (session != null) {
             try {
-                SQLQuery query = session.createSQLQuery("Update service set service_name=:name where id=:Id");
-                query.setParameter("name", service.getServiceName());
-                query.setParameter("Id", service.getId());
+                SQLQuery query = session.createSQLQuery("Update function_data set name=:name,state_id=:stateId where id=:Id");
+                query.setParameter("name", func.getName());
+                query.setParameter("stateId", func.getStateId());
+                query.setParameter("Id", func.getId());
                 query.executeUpdate();
                 transaction.commit();
                 return VertecConstants.UPDATED;

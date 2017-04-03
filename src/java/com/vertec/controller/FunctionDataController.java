@@ -107,24 +107,32 @@ public class FunctionDataController extends HttpServlet {
             case "UpdateFunction": {
                 String cId = request.getParameter("functionId").trim();
                 int cuId = Integer.parseInt(cId);
-                Service customer = functiondao.viewService(cuId);
-                request.setAttribute("service", customer);
+
+                List<State> state = ardao.getListOfState();
+                request.setAttribute("state", state);
+
+                FunctionData fd = ardao.getFunctionById(cuId);
+                request.setAttribute("function", fd);
                 requestDispatcher = request.getRequestDispatcher("app/account/functionData/viewFunctionData.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }
 
             // update service
-            case "UpSer": {
+            case "UpFunc": {
                 System.out.println("CALLING UPDATE FUNCTION");
-                String sId = request.getParameter("serId").trim();
+                String sId = request.getParameter("funcId").trim();
                 String Name = request.getParameter("Name").trim();
+                String stateid = request.getParameter("stateid").trim();
 
-                Service c = new Service();
-                c.setId(Integer.parseInt(sId));
-                c.setServiceName(Name);
-
-                String result = functiondao.updateService(c);
+                
+                FunctionData fd = new FunctionData();
+                fd.setId(Integer.parseInt(sId));
+                fd.setName(Name);
+                fd.setStateId(new State(Integer.parseInt(stateid)));
+                
+                
+                String result = functiondao.updateFunction(fd);
 
                 if (result.equals(VertecConstants.UPDATED)) {
                     request.getSession().removeAttribute("Success_Message");
