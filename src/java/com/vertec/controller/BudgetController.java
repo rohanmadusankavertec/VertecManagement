@@ -5,13 +5,19 @@
  */
 package com.vertec.controller;
 
+import com.vertec.daoimpl.AccountReportDAOImpl;
 import com.vertec.daoimpl.BudgetDAOImpl;
 import com.vertec.daoimpl.ServiceDAOImpl;
 import com.vertec.hibe.model.BudgetPlan;
+import com.vertec.hibe.model.CostCenter;
+import com.vertec.hibe.model.FunctionData;
+import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.Service;
+import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +26,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -39,6 +47,7 @@ public class BudgetController extends HttpServlet {
      */
     // private  final EmployeeDAOImpl employeedao = new EmployeeDAOImpl();
     private final BudgetDAOImpl budgetdao = new BudgetDAOImpl();
+    private final AccountReportDAOImpl reportdao = new AccountReportDAOImpl();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,12 +63,231 @@ public class BudgetController extends HttpServlet {
             case "ViewBudgetPlan": {
                 List<BudgetPlan> cuList = budgetdao.getListOfBudgetPlan();
                 request.setAttribute("budget", cuList);
-                
+
+                List<State> state = reportdao.getListOfState();
+                request.setAttribute("state", state);
+                List<FunctionData> fd = reportdao.getListOfFunctionData();
+                request.setAttribute("fd", fd);
+                List<CostCenter> cs = reportdao.getListOfCostCenter();
+                request.setAttribute("costcenter", cs);
+                List<NominalCode> nc = reportdao.getListOfNominalCode();
+                request.setAttribute("nominalcode", nc);
                 requestDispatcher = request.getRequestDispatcher("app/account/BudgetPlan/BudgetPlan.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }
+            case "getYearlyBudget": {
+                String ncid = request.getParameter("ncid").trim();
+                String year = request.getParameter("year").trim();
 
+                List<BudgetPlan> fdList = budgetdao.getListOfYearlyBudgetPlan(Integer.parseInt(ncid), year);
+                JSONObject jOB = new JSONObject();
+                JSONArray jar1 = new JSONArray();
+                JSONObject job1 = null;
+
+                boolean bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("1")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("2")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("3")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("4")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("5")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("6")) {
+                        System.out.println("Came IN **************************");
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("7")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("8")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("9")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("10")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("11")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                ////////////////////////////////////////////////////////////
+                bool = true;
+                job1 = new JSONObject();
+                for (BudgetPlan p : fdList) {
+                    if (p.getMonth().equals("12")) {
+                        job1.put("amount", p.getAmount());
+                        job1.put("isChanged", budgetdao.isUpdated(p));
+                        bool = false;
+                    }
+                }
+                if (bool) {
+                    job1.put("isChanged", false);
+                    job1.put("amount", "");
+                }
+                jar1.add(job1);
+                
+                
+                jOB.put("arr", jar1);
+                response.getWriter().write(jOB.toString());
+                break;
+            }
+            case "SaveBudgetPlan": {
+                String ncid = request.getParameter("ncid").trim();
+                String year = request.getParameter("year").trim();
+                String amount = request.getParameter("amount").trim();
+                String month = request.getParameter("month").trim();
+                
+                BudgetPlan bp = new BudgetPlan();
+                bp.setAmount(Double.parseDouble(amount));
+                bp.setNominalCodeId(new NominalCode(Integer.parseInt(ncid)));
+                bp.setYear(year);
+                bp.setDate(new Date());
+                bp.setSysUserId(user1);
+                bp.setMonth(month);
+                String result=budgetdao.saveBudgetPlan(bp);
+                response.getWriter().write(result);
+                break;
+            }
         }
     }
 
