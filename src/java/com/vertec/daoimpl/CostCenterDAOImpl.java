@@ -63,7 +63,7 @@ public class CostCenterDAOImpl {
         return null;
     }
     
-    public String updateState(State s) {
+    public String updateCostCenter(CostCenter c) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -71,11 +71,12 @@ public class CostCenterDAOImpl {
             try {
 
 //                Query query = session.createSQLQuery("Update customer set first_name=:firstname,last_name=:lastname,company_name=:companyName,mobile_no=:mobileNo,offiice_no=:officeNo,address=:address,fax=:fax,email=:email where id=:cusId");
-                Query query = session.createQuery("UPDATE State s SET s.name=:name WHERE s.id=:sid");
+                Query query = session.createQuery("UPDATE CostCenter s SET s.name=:name,s.code=:code WHERE s.id=:sid");
 //                Query query = session.createQuery("UPDATE CctvItems c SET c.name=:name,c.price=:price,c.cctvCategoryId=:cate WHERE c.id=:id");
                 System.out.println("GOT QUERY....");
-                query.setParameter("name", s.getName() );
-                query.setParameter("sid", s.getId());
+                query.setParameter("name", c.getName() );
+                query.setParameter("code", c.getCode() );
+                query.setParameter("sid", c.getId());
 
                 query.executeUpdate();
 
@@ -98,17 +99,17 @@ public class CostCenterDAOImpl {
         return null;
     }
     
-    public State viewStateById(int sid) {
+    public CostCenter viewCostCenterById(int ccid) {
 
         Session session = NewHibernateUtil.getSessionFactory().openSession();
 
         if (session != null) {
             try {
-                Query query = session.getNamedQuery("State.findById");
-                query.setParameter("id", sid);
+                Query query = session.getNamedQuery("CostCenter.findById");
+                query.setParameter("id", ccid);
 
-                State state = (State) query.uniqueResult();
-                return state;
+                CostCenter cc = (CostCenter) query.uniqueResult();
+                return cc;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,12 +123,12 @@ public class CostCenterDAOImpl {
         return null;
     
     }
-    public String deleteState(int id) {
+    public String deleteCostCenter(int id) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         if (session != null) {
             try {
-                Query query = session.createQuery("UPDATE State s SET s.isvalid=:valid WHERE s.id=:sid");
+                Query query = session.createQuery("UPDATE CostCenter s SET s.isvalid=:valid WHERE s.id=:sid");
 //                System.out.println("GOT QUERY....");
                 query.setParameter("valid", false );
                 query.setParameter("sid", id);

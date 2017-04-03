@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="com.vertec.hibe.model.CostCenter"%>
 <%@page import="com.vertec.hibe.model.State"%>
 <%@page import="com.vertec.hibe.model.CctvCategory"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +14,7 @@
 
 
 <%
-            List<State> sList = (List<State>) request.getAttribute("state");
+            List<CostCenter> ccList = (List<CostCenter>) request.getAttribute("costcenter");
             
 %>
 
@@ -66,7 +67,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center code<span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
+                                <input id="code" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="code"  required="required" type="text">
                             </div>
                         </div>           
                                     
@@ -111,8 +112,9 @@
                             <thead>
                                 <tr class="headings">
 
-                                    <th>state ID </th>
-                                    <th>state Name </th>
+                                    <th> ID </th>
+                                    <th>Cost Center Name </th>
+                                    <th>Cost Center Code </th>
                                     
                                     
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
@@ -122,21 +124,22 @@
                             </thead>
 
                             <tbody>
-                                <%for (State s : sList) {%>
+                                <%for (CostCenter c : ccList) {%>
                                 <tr>
 
-                                    <td class=" "><%=s.getId() %></td>
-                                    <td class=" "><%=s.getName() %></td>
+                                    <td class=" "><%=c.getId() %></td>
+                                    <td class=" "><%=c.getName() %></td>
+                                    <td class=" "><%=c.getCode() %></td>
 
                                     <td class=" last">
-                                        <form action="State?action=loadState" method="POST">
-                                            <input type="hidden" name="sId" value="<%=s.getId()%>"/>
+                                        <form action="CostCenter?action=loadCostCenter" method="POST">
+                                            <input type="hidden" name="sId" value="<%=c.getId()%>"/>
                                             <input type="submit" value="Update" class="btn btn-warning" name="update" />
                                         </form>
                                     </td>
                                     <td class=" last">
-                                        <form action="State?action=deleteState" method="POST">
-                                            <input type="hidden" name="sId" value="<%=s.getId()%>"/>
+                                        <form action="CostCenter?action=deleteCostCenter" method="POST">
+                                            <input type="hidden" name="sId" value="<%=c.getId()%>"/>
                                             <input type="submit" value="Delete" class="btn btn-danger" name="delete" />
                                         </form>
                                     </td>

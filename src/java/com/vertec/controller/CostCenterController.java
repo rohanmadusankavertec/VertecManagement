@@ -66,71 +66,73 @@ public class CostCenterController extends HttpServlet {
                     c.setCode(code);
                     c.setIsvalid(true);
                     
-                    String result = statedao.saveState(s);
+                    String result = costcenterdao.saveCostCenter(c);
                     if (result.equals(VertecConstants.SUCCESS)) {
                         request.getSession().removeAttribute("Success_Message");
 
                         request.getSession().setAttribute("Success_Message", "Successfully Added");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     } else {
                         request.getSession().removeAttribute("Error_Message");
 
                         request.getSession().setAttribute("Error_Message", "Not Added,Please Tri again");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     }
                     break;
                 }
                 
-                case "loadState": {
-                    String stateId = request.getParameter("sId");
-                    System.out.println("....."+stateId);
-                    State state = statedao.viewStateById(Integer.parseInt(stateId));
-                    request.setAttribute("state", state);
-                    requestDispatcher = request.getRequestDispatcher("app/account/state/stateUpdate.jsp");
+                case "loadCostCenter": {
+                    String ccId = request.getParameter("sId");
+                    System.out.println("..ccid..."+ccId);
+                    CostCenter CostCenter = costcenterdao.viewCostCenterById(Integer.parseInt(ccId));
+                    request.setAttribute("CostCenter", CostCenter);
+                    requestDispatcher = request.getRequestDispatcher("app/account/costCenter/costCenterUpdate.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                     
                 }
                 
-                case "updateState": {
-                    String state = request.getParameter("name").trim();
+                case "updateCostCenter": {
+                    String ccname = request.getParameter("name").trim();
+                    String code = request.getParameter("code").trim();
                     String id = request.getParameter("sId").trim();
-                    System.out.println("......"+state);
-                    State s = new State();
-                    s.setName(state);
-                    s.setId(Integer.parseInt(id));
+                    System.out.println("......"+ccname);
+                    CostCenter cc = new CostCenter();
+                    cc.setName(ccname);
+                    cc.setCode(code);
+                    cc.setId(Integer.parseInt(id));
                     
                     
                     
-                    String result = statedao.updateState(s);
+                    String result = costcenterdao.updateCostCenter(cc);
                     if (result.equals(VertecConstants.UPDATED)) {
                         request.getSession().removeAttribute("Success_Message");
 
                         request.getSession().setAttribute("Success_Message", "Successfully Updated");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     } else {
                         request.getSession().removeAttribute("Error_Message");
 
                         request.getSession().setAttribute("Error_Message", "Not Updated,Please Tri again");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     }
                     break;
                 }
                 
                 
-                case "deleteState": {
+                case "deleteCostCenter": {
                     String id = request.getParameter("sId").trim();
-                    String result = statedao.deleteState(Integer.parseInt(id));
+                    String result = costcenterdao.deleteCostCenter(Integer.parseInt(id));
                     if (result.equals(VertecConstants.SUCCESS)) {
                         request.getSession().removeAttribute("Success_Message");
 
                         request.getSession().setAttribute("Success_Message", "Successfully Deleted");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     } else {
                         request.getSession().removeAttribute("Error_Message");
 
                         request.getSession().setAttribute("Error_Message", "Not Deleted,Please Tri again");
-                        response.sendRedirect("State?action=viewStatePage");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
                     }
                     break;
                 }
