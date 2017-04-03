@@ -5,7 +5,7 @@
  */
 package com.vertec.daoimpl;
 
-import com.vertec.hibe.model.FunctionData;
+import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.Service;
 import com.vertec.util.NewHibernateUtil;
 import com.vertec.util.VertecConstants;
@@ -21,7 +21,7 @@ import org.hibernate.Transaction;
  */
 public class NominalCodeDAOImpl {
 
-    public String saveFunction(FunctionData fun) {
+    public String saveNominalCode(NominalCode nc) {
 
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -29,7 +29,7 @@ public class NominalCodeDAOImpl {
         if (session != null) {
 
             try {
-                session.save(fun);
+                session.save(nc);
                 session.flush();
 
                 transaction.commit();
@@ -50,65 +50,17 @@ public class NominalCodeDAOImpl {
 
     }
 
-    public List<Service> getListOfService() {
 
-        Session session = NewHibernateUtil.getSessionFactory().openSession();
-
-        if (session != null) {
-            try {
-                Query query = session.createQuery("SELECT c FROM Service c WHERE c.isValid=:isValid");
-                query.setParameter("isValid", true);
-                List<Service> csList = query.list();
-
-                return csList;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (session != null && session.isOpen()) {
-                    session.close();
-                }
-            }
-        }
-
-        return null;
-
-    }
-
-    public Service viewService(int customerId) {
-
-        Session session = NewHibernateUtil.getSessionFactory().openSession();
-
-        if (session != null) {
-            try {
-                Query query = session.getNamedQuery("Service.findById");
-                query.setParameter("id", customerId);
-
-                Service user = (Service) query.uniqueResult();
-                return user;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (session != null && session.isOpen()) {
-                    session.close();
-                }
-            }
-        }
-
-        return null;
-
-    }
-
-    public String updateFunction(FunctionData func) {
+    public String updateNominalCode(NominalCode nc) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         if (session != null) {
             try {
-                SQLQuery query = session.createSQLQuery("Update function_data set name=:name,state_id=:stateId where id=:Id");
-                query.setParameter("name", func.getName());
-                query.setParameter("stateId", func.getStateId());
-                query.setParameter("Id", func.getId());
+                SQLQuery query = session.createSQLQuery("Update nominal_code set name=:name,cost_center_id=:ccId,code=:code where id=:Id");
+                query.setParameter("name", nc.getName());
+                query.setParameter("ccId", nc.getCostCenterId());
+                query.setParameter("Id", nc.getId());
+                query.setParameter("code", nc.getCode());
                 query.executeUpdate();
                 transaction.commit();
                 return VertecConstants.UPDATED;

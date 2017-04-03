@@ -9,7 +9,9 @@ import com.vertec.daoimpl.AccountReportDAOImpl;
 import com.vertec.daoimpl.FunctionDataDAOImpl;
 import com.vertec.daoimpl.NominalCodeDAOImpl;
 import com.vertec.daoimpl.ServiceDAOImpl;
+import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.FunctionData;
+import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
@@ -59,7 +61,7 @@ public class NominalCodeController extends HttpServlet {
                 request.setAttribute("state", cuList);
                 List<FunctionData> fd = ardao.getListOfFunctionData();
                 request.setAttribute("fd", fd);
-                requestDispatcher = request.getRequestDispatcher("app/account/functionData/registerFunctionData.jsp");
+                requestDispatcher = request.getRequestDispatcher("app/account/functionData/registerNominalCode.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }
@@ -67,75 +69,86 @@ public class NominalCodeController extends HttpServlet {
             case "Register": {
                 System.out.println("In Nominal Code Registration");
 
-                String Name = request.getParameter("fname").trim();
-                String stateid = request.getParameter("stateid").trim();
+                String Name = request.getParameter("nc").trim();
+                String code = request.getParameter("code").trim();
+                String ccid = request.getParameter("ccid").trim();
 
-                FunctionData f = new FunctionData();
-                f.setName(Name);
-                f.setStateId(new State(Integer.parseInt(stateid)));
-                f.setIsvalid(true);
-
-                Service c = new Service();
-                c.setServiceName(Name);
-                c.setIsValid(true);
-                //String result = employeedao.saveEmployee(e);
-                String result = ncdao.saveFunction(f);
+                NominalCode nc =new NominalCode();
+                nc.setCode(code);
+                nc.setName(Name);
+                nc.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
+                
+                String result = ncdao.saveNominalCode(nc);
 
                 if (result.equals(VertecConstants.SUCCESS)) {
                     request.getSession().removeAttribute("Success_Message");
 
                     request.getSession().setAttribute("Success_Message", "Successfully Added");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 } else {
                     request.getSession().removeAttribute("Error_Message");
 
                     request.getSession().setAttribute("Error_Message", "Not Added,Please Tri again");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 }
 
                 break;
             }
 
             case "UpdateNominalCode": {
-                String cId = request.getParameter("functionId").trim();
+                String cId = request.getParameter("ncId").trim();
                 int cuId = Integer.parseInt(cId);
 
                 List<State> state = ardao.getListOfState();
                 request.setAttribute("state", state);
+                List<FunctionData> fd = ardao.getListOfFunctionData();
+                request.setAttribute("fd", fd);
+                List<CostCenter> cs = ardao.getListOfCostCenter();
+                request.setAttribute("costcenter", cs);
 
-                FunctionData fd = ardao.getFunctionById(cuId);
-                request.setAttribute("function", fd);
-                requestDispatcher = request.getRequestDispatcher("app/account/functionData/viewFunctionData.jsp");
+                
+                
+
+                NominalCode nc = ardao.getNominalCodeById(cuId);
+                request.setAttribute("nc", nc);
+                requestDispatcher = request.getRequestDispatcher("app/account/functionData/viewNominalCode.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             }
 
             // update service
             case "UpNC": {
-                System.out.println("CALLING UPDATE FUNCTION");
-                String sId = request.getParameter("funcId").trim();
+                String sId = request.getParameter("ncId").trim();
                 String Name = request.getParameter("Name").trim();
-                String stateid = request.getParameter("stateid").trim();
+//                String stateid = request.getParameter("stateid").trim();
+//                String fid = request.getParameter("fid").trim();
+                String ccid = request.getParameter("ccid").trim();
+                String code = request.getParameter("nc").trim();
 
                 
-                FunctionData fd = new FunctionData();
-                fd.setId(Integer.parseInt(sId));
-                fd.setName(Name);
-                fd.setStateId(new State(Integer.parseInt(stateid)));
+                
+                NominalCode nc = new NominalCode();
+                nc.setCode(code);
+                nc.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
+                nc.setId(Integer.parseInt(sId));
+                nc.setName(Name);
                 
                 
-                String result = ncdao.updateFunction(fd);
+                
+                
+                
+                String result = ncdao.updateNominalCode(nc);
 
                 if (result.equals(VertecConstants.UPDATED)) {
                     request.getSession().removeAttribute("Success_Message");
 
                     request.getSession().setAttribute("Success_Message", "Successfully Updated");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 } else {
                     request.getSession().removeAttribute("Error_Message");
 
                     request.getSession().setAttribute("Error_Message", "Not Updated,Please Try again");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 }
 
                 break;
@@ -150,11 +163,11 @@ public class NominalCodeController extends HttpServlet {
                 if (status.equals(VertecConstants.UPDATED)) {
                     request.getSession().removeAttribute("Success_Message");
                     request.getSession().setAttribute("Success_Message", "Successfully Deleted");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 } else {
                     request.getSession().removeAttribute("Error_Message");
                     request.getSession().setAttribute("Error_Message", "Not Deleted,Please Try again");
-                    response.sendRedirect("FunctionData?action=ManageFunctionData");
+                    response.sendRedirect("NominalCode?action=ManageNominalCode");
                 }
 
                 break;
