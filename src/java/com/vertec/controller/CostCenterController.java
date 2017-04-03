@@ -5,6 +5,8 @@
  */
 package com.vertec.controller;
 
+import com.vertec.daoimpl.CostCenterDAOImpl;
+import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
@@ -35,6 +37,8 @@ public class CostCenterController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final CostCenterDAOImpl costcenterdao = new CostCenterDAOImpl();
+            
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -47,18 +51,20 @@ public class CostCenterController extends HttpServlet {
             RequestDispatcher requestDispatcher;
             switch(action){
                 
-                case "viewStatePage": {
-                    List<State> sList = statedao.loadAllState();
-                    request.setAttribute("state", sList);
-                    requestDispatcher = request.getRequestDispatcher("app/account/state/stateManage.jsp");
+                case "CostCenterPage": {
+                    List<CostCenter> cList = costcenterdao.loadAllCostCenter();
+                    request.setAttribute("costcenter", cList);
+                    requestDispatcher = request.getRequestDispatcher("app/account/costCenter/costCenterManage.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                 }
-                case "saveState": {
+                case "saveCostCenter": {
                     String state = request.getParameter("name").trim();
-                    State s = new State();
-                    s.setName(state);
-                    s.setIsvalid(true);
+                    String code = request.getParameter("code").trim();
+                    CostCenter c = new CostCenter();
+                    c.setName(state);
+                    c.setCode(code);
+                    c.setIsvalid(true);
                     
                     String result = statedao.saveState(s);
                     if (result.equals(VertecConstants.SUCCESS)) {

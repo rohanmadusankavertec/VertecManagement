@@ -6,6 +6,7 @@
 package com.vertec.daoimpl;
 
 
+import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.State;
 import com.vertec.util.NewHibernateUtil;
 import com.vertec.util.VertecConstants;
@@ -18,14 +19,14 @@ import org.hibernate.Transaction;
  *
  * @author Ruchira
  */
-public class CostCenterDAOImpl1 {
-    public String saveState(State s) {
+public class CostCenterDAOImpl {
+    public String saveCostCenter(CostCenter cc) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         if (session != null) {
             try {
-                session.save(s);
+                session.save(cc);
                 session.flush();
                 transaction.commit();
                 return VertecConstants.SUCCESS;
@@ -42,13 +43,13 @@ public class CostCenterDAOImpl1 {
         return null;
     }
     
-    public List<State> loadAllState() {
+    public List<CostCenter> loadAllCostCenter() {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (session != null) {
             try {
-                Query query = session.createQuery("SELECT s FROM State s WHERE s.isvalid = :isvalid");
+                Query query = session.createQuery("SELECT s FROM CostCenter s WHERE s.isvalid = :isvalid");
                 query.setParameter("isvalid", true);
-                List<State> prList = query.list();
+                List<CostCenter> prList = query.list();
                 return prList;
 
             } catch (Exception e) {
