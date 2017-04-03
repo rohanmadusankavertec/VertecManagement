@@ -88,9 +88,21 @@
         <servlet-name>FunctionDataController</servlet-name>
         <servlet-class>com.vertec.controller.FunctionDataController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CostCenterController</servlet-name>
+        <servlet-class>com.vertec.controller.CostCenterController</servlet-class>
+    </servlet>
     
     
     
+    
+    
+    
+    
+    <servlet-mapping>
+        <servlet-name>CostCenterController</servlet-name>
+        <url-pattern>/CostCenter</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FunctionDataController</servlet-name>
         <url-pattern>/FunctionData</url-pattern>
