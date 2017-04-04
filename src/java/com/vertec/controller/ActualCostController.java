@@ -14,6 +14,7 @@ import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
+import com.vertec.util.VertecConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ActualCostController extends HttpServlet {
      */
     private final CostCenterDAOImpl costcenterdao = new CostCenterDAOImpl();
     private final StateDAOImpl statedao = new StateDAOImpl();
-//    private final ActualCostDAOImpl actualcostdao = new ActualCostDAOImpl();
+    private final ActualCostDAOImpl actualcostdao = new ActualCostDAOImpl();
     private final AccountReportDAOImpl accountReportdao = new AccountReportDAOImpl();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -110,6 +111,33 @@ public class ActualCostController extends HttpServlet {
                     response.getWriter().write(jOB.toString());
                     
                     break;
+                }
+                case "saveActualCost": {
+                    String state = request.getParameter("stateid").trim();
+                    String code = request.getParameter("fdata").trim();
+                    String ccenter = request.getParameter("ccenter").trim();
+                    String nominal = request.getParameter("nominalCode").trim();
+                    String nominal = request.getParameter("nominalCode").trim();
+                    CostCenter c = new CostCenter();
+                    c.setName(state);
+                    c.setCode(code);
+                    c.setIsvalid(true);
+                    c.setFunctionId(new FunctionData(Integer.parseInt(fid)));
+                    
+                    String result = costcenterdao.saveCostCenter(c);
+                    if (result.equals(VertecConstants.SUCCESS)) {
+                        request.getSession().removeAttribute("Success_Message");
+
+                        request.getSession().setAttribute("Success_Message", "Successfully Added");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
+                    } else {
+                        request.getSession().removeAttribute("Error_Message");
+
+                        request.getSession().setAttribute("Error_Message", "Not Added,Please Tri again");
+                        response.sendRedirect("CostCenter?action=CostCenterPage");
+                    }
+                    break;
+                    
                 }
             }
         }
