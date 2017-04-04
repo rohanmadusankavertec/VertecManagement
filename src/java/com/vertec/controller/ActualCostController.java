@@ -117,12 +117,12 @@ public class ActualCostController extends HttpServlet {
                     String code = request.getParameter("fdata").trim();
                     String ccenter = request.getParameter("ccenter").trim();
                     String nominal = request.getParameter("nominalCode").trim();
-                    String nominal = request.getParameter("nominalCode").trim();
+                    String nominal1 = request.getParameter("nominalCode").trim();
                     CostCenter c = new CostCenter();
                     c.setName(state);
                     c.setCode(code);
                     c.setIsvalid(true);
-                    c.setFunctionId(new FunctionData(Integer.parseInt(fid)));
+                    c.setFunctionId(new FunctionData(Integer.parseInt(code)));
                     
                     String result = costcenterdao.saveCostCenter(c);
                     if (result.equals(VertecConstants.SUCCESS)) {
