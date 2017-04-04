@@ -91,7 +91,7 @@ public class ActualCostController extends HttpServlet {
 
                     List<Integer> ylist = new ArrayList<Integer>();
                     int nr= Calendar.getInstance().get(Calendar.YEAR);
-                    System.out.println("......current..."+nr);
+//                    System.out.println("......current..."+nr);
                     for (int i = 2012; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
                         ylist.add(i);
                     }
@@ -135,7 +135,7 @@ public class ActualCostController extends HttpServlet {
                     JSONArray jar1 = new JSONArray();
                     JSONObject job1 = null;
                     for (NominalCode n : nc) {
-                        System.out.println("........nominal........"+n.getName());
+//                        System.out.println("........nominal........"+n.getName());
                         job1 = new JSONObject();
                         job1.put("id", n.getId());
                         job1.put("ncname", n.getName());
@@ -196,18 +196,20 @@ public class ActualCostController extends HttpServlet {
                     
                 }
                 case "getActualCostTable": {
-                    
-                    int year = Integer.parseInt( request.getParameter("nominalCode").trim());
-                    int month = Integer.parseInt( request.getParameter("year").trim());
-                    int nominal = Integer.parseInt( request.getParameter("month").trim());
-//                    System.out.println(".........."+cid);
-                    List<ActualCost> cc = actualcostdao.getActualCostList(year, month, nominal);
+                    System.out.println("tabeling....");
+                    int noid = Integer.parseInt( request.getParameter("nominalCode").trim());
+                    String year = request.getParameter("year").trim();
+                    String month = request.getParameter("month").trim();
+                    System.out.println("...year......."+year);
+                    System.out.println("...mont......."+month);
+                    System.out.println("...noid......."+noid);
+                    List<ActualCost> cc = actualcostdao.getActualCostList(year, month, noid);
                      
                     JSONObject jOB = new JSONObject();
                     JSONArray jar1 = new JSONArray();
                     JSONObject job1 = null;
                     for (ActualCost c : cc) {
-//                        System.out.println(c.getName());
+                        System.out.println(".............................."+c.getAmount());
                         job1 = new JSONObject();
                         job1.put("id", c.getId());
                         job1.put("amount", c.getAmount());
@@ -219,6 +221,22 @@ public class ActualCostController extends HttpServlet {
                     }
                     jOB.put("actualTable", jar1);
                     response.getWriter().write(jOB.toString());
+                    
+                    break;
+                }
+                case "UpdateActualCost": {
+                    String ref = request.getParameter("ref");
+                    String des = request.getParameter("des");
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    double amt = Double.parseDouble(request.getParameter("amt"));
+                    System.out.println("ref.."+ref+"...des..."+des+"...amt..."+amt);
+                    
+                    String result = actualcostdao.updateActualCost(id, amt, des, ref);
+                    if(result.equals(VertecConstants.SUCCESS)){
+                        out.write(VertecConstants.SUCCESS);
+                    }else{
+                        out.write(VertecConstants.ERROR);
+                    }
                     
                     break;
                 }

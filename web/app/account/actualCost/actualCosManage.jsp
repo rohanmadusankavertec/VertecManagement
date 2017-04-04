@@ -23,10 +23,30 @@
 <script type="text/javascript">
     
     
+    function sm_warning(text) {
+        BootstrapDialog.show({
+            title: 'Warning',
+            type: BootstrapDialog.TYPE_WARNING,
+            message: text,
+            size: BootstrapDialog.SIZE_SMALL
+        });
+    }
+
+
+    function nom_Success(text) {
+        BootstrapDialog.show({
+            title: 'Notification',
+            type: BootstrapDialog.TYPE_SUCCESS,
+            message: text,
+            size: BootstrapDialog.SIZE_NORMAL
+        });
+    }
+    
+    
     function loadFunctionData(){
 //        $("").empty();
         var sid = document.getElementById("stateid").value;
-        alert(sid);
+//        alert(sid);
         $.ajax({
             type: "POST",
             url: "CostCenter?action=getFunctionData&sid="+sid,
@@ -53,7 +73,7 @@
 //        $("").empty();
 //alert("check..");
         var ccid = document.getElementById("fdata").value;
-        alert(ccid);
+//        alert(ccid);
         $.ajax({
             type: "POST",
             url: "ActualCost?action=getCostCenter&ccid="+ccid,
@@ -76,9 +96,9 @@
     }
     function loadNominalCode(){
 //        $("").empty();
-alert("check..");
+//alert("check..");
         var ccid = document.getElementById("ccenter").value;
-        alert(ccid);
+        
         $.ajax({
             type: "POST",
             url: "ActualCost?action=getNominalCode&ccid="+ccid,
@@ -100,24 +120,57 @@ alert("check..");
         
     }
     function loadTable(){
+        
+        
         var year = document.getElementById('year').value;
         var month = document.getElementById('month').value;
         var nomoid = document.getElementById('nominalCode').value;
-        
+//        alert(year+" "+month+" "+nomoid);
             $.ajax({
             type: "POST",
-            url: "../../ActualCost?action=getActualCostTable&nominalCode="+nomoid+"&year="+year+"&month="+month,
+            url: "ActualCost?action=getActualCostTable&nominalCode="+nomoid+"&year="+year+"&month="+month,
             success: function(msg) {
                 var reply = eval('(' + msg + ')');
                 var arr = reply.actualTable;
-
+                var tb = document.getElementById("actualcostItem");
+                var data="";
                 for (var f = 0; f < arr.length; f++) {
-                    var tb = document.getElementById("actualcostItem");
-                    var data = data + "<tr id='" + arr[f].id + "'><td><input type='text' id='ref"+arr[f].id+"' value='"+arr[f].refere+"'/></td><td><input type='text' id='des"+arr[f].id+"' value='"+arr[f].descrip+"'/></td><td><input type='number' id='amt"+arr[f].id+"' value='"+arr[f].amont+"'/></td><td><a href='#' id='deleteUser'  class='glyphicon glyphicon-remove'></a></td></tr>";
+                    
+                    data =data+ "<tr id='" + arr[f].id + "'><td><input style='width: 80%;' type='text' id='ref"+arr[f].id+"' value='"+arr[f].refere+"'/></td><td><input style='width: 90%;' type='text' id='des"+arr[f].id+"' value='"+arr[f].descrip+"'/></td><td><input style='width: 60%;' type='number' id='amt"+arr[f].id+"' value='"+arr[f].amount+"'/></td><td><button id='' type='button' onclick='updateActualCost("+arr[f].id+")' class='btn btn-warning'>Update</button></td></tr>";
                     tb.innerHTML = data;
                 }    
             }
         });
+        
+        document.getElementById('loadTable').className="";
+    }
+    
+    function updateActualCost(rowId){
+//        alert("calling");
+        var ref = document.getElementById("ref"+rowId).value; 
+        var des = document.getElementById("des"+rowId).value; 
+        var amt = document.getElementById("amt"+rowId).value; 
+        var rowid =rowId;
+//        alert(ref+"-r "+des+"-d "+amt+"-a "+rowid+"-row");
+        var xmlHttp = getAjaxObject();
+        xmlHttp.onreadystatechange = function()
+        {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+            {
+                var reply = xmlHttp.responseText;
+
+                if (reply === "Success") {
+                    
+                    nom_Success("Actual Cost is Updated Successfully ");
+                    setTimeout("location.href = 'ActualCost?action=ActualCostManage';", 1500);
+                } else {
+                    sm_warning("Actual Cost is not Updated, Please Try again.");
+                }
+            }
+        };
+        xmlHttp.open("POST", "ActualCost?action=UpdateActualCost&id=" + rowid + "&ref=" + ref + "&des=" + des + "&amt=" + amt, true);
+        xmlHttp.send();
+        
     }
     
 </script>
@@ -135,7 +188,7 @@ alert("check..");
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
 
                         </li>
                         <li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -217,7 +270,7 @@ alert("check..");
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Month  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="month" id="month"  required="required" onclick="loadTable()" >
+                                <select class="form-control" name="month" id="month"  required="required" onchange="loadTable()" >
                                     <option selected="true" disabled value="">Select month </option>
                                     <option   value="1">January </option>
                                     <option   value="2">February </option>
@@ -269,15 +322,18 @@ alert("check..");
 
 
                         <div class="x_content">
+                            <div id="loadTable" class="hidden">     
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                        
+                        <table style="width: 100%;margin-top: 10px;">
                             <thead>
                                 <tr class="headings">
 
                                     
-                                    <th> Amount</th>
+                                    
                                     <th> Reference No </th>
                                     <th>Description </th>
+                                    <th> Amount</th>
                                     
                                     
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
@@ -292,13 +348,14 @@ alert("check..");
 
                         </table>
                     </div>
+                            </div>
                 </div>
                         <div class="ln_solid"></div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
                                 <button id="send" type="submit" class="btn btn-success">Submit</button>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
                 </div>
             </div>
