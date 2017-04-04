@@ -225,7 +225,7 @@
                     </li>
                     <li><a><i class="fa fa-file-text"></i>Account Reports<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                            <li><a href="${context}/AccountReport?action=SearchBudgetPlan">BudgetPlan Report</a></li>
+                            <li><a href="${context}/AccountReport?action=SearchBudgetPlan">Budget Plan Report</a></li>
                             <li><a href="${context}/AccountReport?action=SearchActualCost">Actual Cost Report</a></li>
                         </ul>
                     </li>
