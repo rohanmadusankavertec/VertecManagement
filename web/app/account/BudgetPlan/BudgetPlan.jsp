@@ -21,7 +21,6 @@
     List<State> StateList = (List<State>) request.getAttribute("state");
     List<CostCenter> ccList = (List<CostCenter>) request.getAttribute("costcenter");
     List<NominalCode> ncList = (List<NominalCode>) request.getAttribute("nominalcode");
-    List<BudgetPlan> bp = (List<BudgetPlan>) request.getAttribute("budget");
 
 %>
 
@@ -137,6 +136,8 @@
                     
                     if((arrLn1[f-1].isChanged)===true){
                         document.getElementById(f+"changed").className="";
+                        document.getElementById(f+"changed").onclick="window.open(Budget?action=ViewUpdateLog&bpid="+arrLn1[f-1].bpid+", '_blank');";
+                        document.getElementById(f+"changed").href="Budget?action=ViewUpdateLog&bpid="+arrLn1[f-1].bpid;
                         
                     }else{
                         document.getElementById(f+"changed").className="hidden";
@@ -354,10 +355,10 @@
                                     </td>
                                     <td>
                                         <button id="1save" type="button" onclick="SaveBudgetPlan(1)" class="btn btn-success">Save</button>
-                                        <button id="1update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="1update" type="button" onclick="UpdateBudgetPlan(1)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="1id" />
                                     </td>
-                                    <td><a href="#" id="1changed">Changed</a></td>
+                                    <td><a href="#" target="_blank" id="1changed">Changed</a></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -368,7 +369,7 @@
                                     </td>
                                     <td>
                                         <button id="2save" type="button" onclick="SaveBudgetPlan(2)" class="btn btn-success">Save</button>
-                                        <button id="2update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="2update" type="button" onclick="UpdateBudgetPlan(2)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="2id" />
                                     </td>
                                     <td><a href="#" id="2changed">Changed</a></td>
@@ -382,7 +383,7 @@
                                     </td>
                                     <td>
                                         <button id="3save" type="button" onclick="SaveBudgetPlan(3)" class="btn btn-success">Save</button>
-                                        <button id="3update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="3update" type="button" onclick="UpdateBudgetPlan(3)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="3id" />
                                     </td>
                                     <td><a href="#" id="3changed">Changed</a></td>
@@ -396,7 +397,7 @@
                                     </td>
                                     <td>
                                         <button id="4save" type="button" onclick="SaveBudgetPlan(4)" class="btn btn-success">Save</button>
-                                        <button id="4update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="4update" type="button" onclick="UpdateBudgetPlan(4)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="4id" />
                                     </td>
                                     <td><a href="#" id="4changed">Changed</a></td>
@@ -410,7 +411,7 @@
                                     </td>
                                     <td>
                                         <button id="5save" type="button" onclick="SaveBudgetPlan(5)" class="btn btn-success">Save</button>
-                                        <button id="5update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="5update" type="button" onclick="UpdateBudgetPlan(5)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="5id" />
                                     </td>
                                     <td><a href="#" id="5changed">Changed</a></td>
@@ -424,7 +425,7 @@
                                     </td>
                                     <td>
                                         <button id="6save" type="button" onclick="SaveBudgetPlan(6)" class="btn btn-success">Save</button>
-                                        <button id="6update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="6update" type="button" onclick="UpdateBudgetPlan(6)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="6id" />
                                     </td>
                                     <td><a href="#" id="6changed">Changed</a></td>
@@ -438,7 +439,7 @@
                                     </td>
                                     <td>
                                         <button id="7save" type="button" onclick="SaveBudgetPlan(7)" class="btn btn-success">Save</button>
-                                        <button id="7update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="7update" type="button" onclick="UpdateBudgetPlan(7)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="7id" />
                                     </td>
                                     <td><a href="#" id="7changed">Changed</a></td>
@@ -452,7 +453,7 @@
                                     </td>
                                     <td>
                                         <button id="8save" type="button" onclick="SaveBudgetPlan(8)" class="btn btn-success">Save</button>
-                                        <button id="8update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="8update" type="button" onclick="UpdateBudgetPlan(8)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="8id" />
                                     </td>
                                     <td><a href="#" id="8changed">Changed</a></td>
@@ -466,7 +467,7 @@
                                     </td>
                                     <td>
                                         <button id="9save" type="button" onclick="SaveBudgetPlan(9)" class="btn btn-success">Save</button>
-                                        <button id="9update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="9update" type="button" onclick="UpdateBudgetPlan(9)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="9id" />
                                     </td>
                                     <td><a href="#" id="9changed">Changed</a></td>
@@ -480,10 +481,10 @@
                                     </td>
                                     <td>
                                         <button id="10save" type="button" onclick="SaveBudgetPlan(10)" class="btn btn-success">Save</button>
-                                        <button id="10update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="10update" type="button" onclick="UpdateBudgetPlan(10)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="10id" />
                                     </td>
-                                    <td><a href="#" id="10changed">Changed</a></td>
+                                    <td><a href="#" target="_blank" id="10changed">Changed</a></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -494,7 +495,7 @@
                                     </td>
                                     <td>
                                         <button id="11save" type="button" onclick="SaveBudgetPlan(11)" class="btn btn-success">Save</button>
-                                        <button id="11update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="11update" type="button" onclick="UpdateBudgetPlan(11)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="11id" />
                                     </td>
                                     <td><a href="#" id="11changed">Changed</a></td>
@@ -508,7 +509,7 @@
                                     </td>
                                     <td>
                                         <button id="12save" type="button" onclick="SaveBudgetPlan(12)" class="btn btn-success">Save</button>
-                                        <button id="12update" type="button" class="btn btn-warning">Update</button>
+                                        <button id="12update" type="button" onclick="UpdateBudgetPlan(12)" class="btn btn-warning">Update</button>
                                         <input type="hidden" value="" id="12id" />
                                     </td>
                                     <td><a href="#" id="12changed">Changed</a></td>
