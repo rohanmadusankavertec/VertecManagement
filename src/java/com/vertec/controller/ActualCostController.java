@@ -9,6 +9,7 @@ import com.vertec.daoimpl.AccountReportDAOImpl;
 import com.vertec.daoimpl.ActualCostDAOImpl;
 import com.vertec.daoimpl.CostCenterDAOImpl;
 import com.vertec.daoimpl.StateDAOImpl;
+import com.vertec.hibe.model.ActualCost;
 import com.vertec.hibe.model.CostCenter;
 import com.vertec.hibe.model.FunctionData;
 import com.vertec.hibe.model.NominalCode;
@@ -17,6 +18,11 @@ import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,9 +67,20 @@ public class ActualCostController extends HttpServlet {
                 
                 case "ActualCostPage": {
 //                    System.out.println("....calling ..............");
+//                    List <Integer> yearList = new ArrayList<Integer>();
+//                    for(int i=1990;)
+
+                    List<Integer> ylist = new ArrayList<Integer>();
+                    int nr= Calendar.getInstance().get(Calendar.YEAR);
+//                    System.out.println("......current..."+nr);
+                    for (int i = 2000; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
+                        ylist.add(i);
+                    }
+                    
                     List<State> sList = statedao.loadAllState();
                     
                     request.setAttribute("state", sList);
+                    request.setAttribute("year", ylist);
                     requestDispatcher = request.getRequestDispatcher("app/account/actualCost/addActualCost.jsp");
                     requestDispatcher.forward(request, response);
                     break;
@@ -113,28 +130,44 @@ public class ActualCostController extends HttpServlet {
                     break;
                 }
                 case "saveActualCost": {
-                    String state = request.getParameter("stateid").trim();
-                    String code = request.getParameter("fdata").trim();
-                    String ccenter = request.getParameter("ccenter").trim();
+                    try {
                     String nominal = request.getParameter("nominalCode").trim();
-                    String nominal1 = request.getParameter("nominalCode").trim();
-                    CostCenter c = new CostCenter();
-                    c.setName(state);
-                    c.setCode(code);
-                    c.setIsvalid(true);
-                    c.setFunctionId(new FunctionData(Integer.parseInt(code)));
+                    String year = request.getParameter("year").trim();
+                    String month = request.getParameter("month").trim();
+                    String amt = request.getParameter("amount").trim();
+                    String date = request.getParameter("date").trim();
+                    String refere = request.getParameter("reference").trim();
+                    String descrip = request.getParameter("descrip").trim();
+//                    String nominal21 = request.getParameter("date").trim();
                     
-                    String result = costcenterdao.saveCostCenter(c);
+                    ActualCost a = new ActualCost();
+                    a.setYear(year);
+                    a.setMonth(month);
+                    a.setAmount(Double.parseDouble(amt));
+                    
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        Date ndate = df.parse(date);
+                        a.setDate(ndate);
+                    
+                    
+                    a.setReferenceNo(refere);
+                    a.setDescription(descrip);
+                    a.setNominalCodeId(new NominalCode(Integer.parseInt(nominal)));
+                    a.setSysUserId(user1);
+                    
+                    String result = actualcostdao.saveActualCost(a);
                     if (result.equals(VertecConstants.SUCCESS)) {
                         request.getSession().removeAttribute("Success_Message");
 
                         request.getSession().setAttribute("Success_Message", "Successfully Added");
-                        response.sendRedirect("CostCenter?action=CostCenterPage");
+                        response.sendRedirect("ActualCost?action=ActualCostPage");
                     } else {
                         request.getSession().removeAttribute("Error_Message");
 
                         request.getSession().setAttribute("Error_Message", "Not Added,Please Tri again");
-                        response.sendRedirect("CostCenter?action=CostCenterPage");
+                        response.sendRedirect("ActualCost?action=ActualCostPage");
+                    }
+                    } catch (Exception e) {
                     }
                     break;
                     
