@@ -221,6 +221,7 @@
                             <li><a href="${context}/NominalCode?action=ManageNominalCode">Manage Nominal Code</a></li>
                             <li><a href="${context}/Budget?action=ViewBudgetPlan">Manage Budget Plan</a></li>
                             <li><a href="${context}/ActualCost?action=ActualCostPage">Actual Cost</a></li>
+                            <li><a href="${context}/ActualCost?action=ActualCostManage">Manage Actual Cost</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-file-text"></i>Account Reports<span class="fa fa-chevron-down"></span></a>
