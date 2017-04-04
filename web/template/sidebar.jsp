@@ -33,7 +33,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="${context}/dashboard.jsp"><i class="fa fa-home"></i> DashBoard </a>
-
+                        <%if(false){%>
                     </li>
                     <%if (ca.checkUserAuth("ADD_CUSTOMER", group) != null & ca.checkUserAuth("VIEW_CUSTOMER", group) != null) {%>
                     <li><a><i class="fa fa-user-plus"></i>Customer<span class="fa fa-chevron-down"></span></a>
@@ -202,16 +202,7 @@
 
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-file-text"></i>Account Plan<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu" style="display: none">
-                            <li><a href="${context}/State?action=viewStatePage">Manage State</a></li>
-                            <li><a href="${context}/FunctionData?action=ManageFunctionData">Manage Function</a></li>
-                            <li><a href="${context}/CostCenter?action=CostCenterPage">Cost Center</a></li>
-                            <li><a href="${context}/NominalCode?action=ManageNominalCode">Manage Nominal Code</a></li>
-                            <li><a href="${context}/ActualCost?action=ActualCostPage">Actual Cost</a></li>
-                            <li><a href="${context}/Budget?action=ViewBudgetPlan">Manage Budget Plan</a></li>
-                        </ul>
-                    </li>
+                   
                     <li><a><i class="fa fa-file-text"></i>Reports<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="${context}/Report?action=printCustomer">Customers</a>
@@ -219,6 +210,17 @@
                             <li><a href="${context}/Report?action=printPackage">Packages</a>
                             <li><a href="${context}/Report?action=printCustomer">Project</a>
                             </li>
+                        </ul>
+                    </li>
+                     <%}%>
+                     <li><a><i class="fa fa-file-text"></i>Account Plan<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            <li><a href="${context}/State?action=viewStatePage">Manage State</a></li>
+                            <li><a href="${context}/FunctionData?action=ManageFunctionData">Manage Function</a></li>
+                            <li><a href="${context}/CostCenter?action=CostCenterPage">Cost Center</a></li>
+                            <li><a href="${context}/NominalCode?action=ManageNominalCode">Manage Nominal Code</a></li>
+                            <li><a href="${context}/ActualCost?action=ActualCostPage">Actual Cost</a></li>
+                            <li><a href="${context}/Budget?action=ViewBudgetPlan">Manage Budget Plan</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-file-text"></i>Account Reports<span class="fa fa-chevron-down"></span></a>
