@@ -26,7 +26,7 @@
     function loadFunctionData(){
 //        $("").empty();
         var sid = document.getElementById("stateid").value;
-        alert(sid);
+//        alert(sid);
         $.ajax({
             type: "POST",
             url: "CostCenter?action=getFunctionData&sid="+sid,
@@ -53,7 +53,7 @@
 //        $("").empty();
 //alert("check..");
         var ccid = document.getElementById("fdata").value;
-        alert(ccid);
+//        alert(ccid);
         $.ajax({
             type: "POST",
             url: "ActualCost?action=getCostCenter&ccid="+ccid,
@@ -78,7 +78,7 @@
 //        $("").empty();
 alert("check..");
         var ccid = document.getElementById("ccenter").value;
-        alert(ccid);
+//        alert(ccid);
         $.ajax({
             type: "POST",
             url: "ActualCost?action=getNominalCode&ccid="+ccid,
