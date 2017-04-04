@@ -15,6 +15,7 @@ import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
+import com.vertec.hibe.model.UpdateLog;
 import com.vertec.util.VertecConstants;
 import java.io.IOException;
 import java.util.Date;
@@ -285,6 +286,39 @@ public class BudgetController extends HttpServlet {
                 bp.setSysUserId(user1);
                 bp.setMonth(month);
                 String result=budgetdao.saveBudgetPlan(bp);
+                response.getWriter().write(result);
+                break;
+            }
+            case "UpdateBudgetPlan": {
+                String ncid = request.getParameter("ncid").trim();
+                String year = request.getParameter("year").trim();
+                String amount = request.getParameter("amount").trim();
+                String month = request.getParameter("month").trim();
+                
+                
+                BudgetPlan old = budgetdao.getBudgetPlanById(Integer.parseInt(ncid), year, month);
+                
+                
+                UpdateLog u = new UpdateLog();
+                u.setDate(new Date());
+                u.setBeforeUser(old.getSysUserId());
+                u.setAfterUser(user1);
+                u.setBeforeAmount(old.getAmount());
+                u.setAfterAmount(Double.parseDouble(amount));
+                u.setBudgetPlanId(old);
+                String result1=budgetdao.saveUpdateLog(u);
+                
+                
+                BudgetPlan bp = new BudgetPlan();
+                bp.setAmount(Double.parseDouble(amount));
+                bp.setNominalCodeId(new NominalCode(Integer.parseInt(ncid)));
+                bp.setYear(year);
+                bp.setDate(new Date());
+                bp.setSysUserId(user1);
+                bp.setMonth(month);
+                String result=budgetdao.updateBudget(bp);
+                
+                
                 response.getWriter().write(result);
                 break;
             }

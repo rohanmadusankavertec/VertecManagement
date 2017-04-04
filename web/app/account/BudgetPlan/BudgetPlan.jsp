@@ -149,23 +149,61 @@
         });
     }
     
-    
+    function sm_warning(text) {
+        BootstrapDialog.show({
+            title: 'Warning',
+            type: BootstrapDialog.TYPE_WARNING,
+            message: text,
+            size: BootstrapDialog.SIZE_SMALL
+        });
+    }
+    function nom_Success(text) {
+        BootstrapDialog.show({
+            title: 'Notification',
+            type: BootstrapDialog.TYPE_SUCCESS,
+            message: text,
+            size: BootstrapDialog.SIZE_NORMAL
+        });
+       
+    }
     
     
     function SaveBudgetPlan(id) {
-        var year = document.getElementById('year').value;
-        var ncid = document.createElement("ncid").value;
+        var year = document.getElementById("year").value;
+        var ncid = document.getElementById("ncid").value;
         var amount = document.getElementById(id+"amount").value;
         $.ajax({
             type: "POST",
             url: "Budget?action=SaveBudgetPlan&ncid=" + ncid+"&amount="+amount+"&year="+year+"&month="+id,
             success: function (msg) {
-                alert(msg);
                 
-
-
+                if(msg==="Success"){
+                    nom_Success("Successfully Saved...");
+                    loadData();
+                }else{
+                    sm_warning("Oopz.. Something went Wronge.")
+                    
+                }
             }
-
+        });
+    }
+    function UpdateBudgetPlan(id) {
+        var year = document.getElementById("year").value;
+        var ncid = document.getElementById("ncid").value;
+        var amount = document.getElementById(id+"amount").value;
+        $.ajax({
+            type: "POST",
+            url: "Budget?action=UpdateBudgetPlan&ncid=" + ncid+"&amount="+amount+"&year="+year+"&month="+id,
+            success: function (msg) {
+                
+                if(msg==="Success"){
+                    nom_Success("Successfully Updated...");
+                    loadData();
+                }else{
+                    sm_warning("Oopz.. Something went Wronge.")
+                    
+                }
+            }
         });
     }
     
