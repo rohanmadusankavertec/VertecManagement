@@ -14,21 +14,20 @@
 <script src="app/js/notAlert.js"></script>
 
 <%
-            List<CostCenter> ccList = (List<CostCenter>) request.getAttribute("costcenter");
-            List<State> sList = (List<State>) request.getAttribute("state");
-            
+    List<CostCenter> ccList = (List<CostCenter>) request.getAttribute("costcenter");
+    List<State> sList = (List<State>) request.getAttribute("state");
+
 %>
 <script type="text/javascript">
-    
-    
-    function loadFunctionData(){
+
+
+    function loadFunctionData() {
 //        $("").empty();
         var sid = document.getElementById("itemState").value;
-        alert(sid);
         $.ajax({
             type: "POST",
-            url: "CostCenter?action=getFunctionData&sid="+sid,
-            success: function(msg) {
+            url: "CostCenter?action=getFunctionData&sid=" + sid,
+            success: function (msg) {
                 var reply = eval('(' + msg + ')');
                 var arrLn1 = reply.functionData;
 
@@ -36,16 +35,16 @@
                 var fdata = document.getElementById("fdata");
                 var ihtml = "";
                 for (var f = 0; f < arrLn1.length; f++) {
-                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].fname+"</option>"
+                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].fname + "</option>"
                 }
                 fdata.innerHTML = ihtml;
 
 
             }
         });
-        
+
     }
-    
+
 </script>
 
 
@@ -59,7 +58,7 @@
 
     </div>
     <div class="clearfix"></div>
-    
+
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -70,7 +69,7 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            
+
                         </li>
                         <li><a class="close-link"><i class="fa fa-close"></i></a>
                         </li>
@@ -83,18 +82,18 @@
 
                         </p>
                         <span class="section"></span>
-                        
-                        
+
+
                         <div style="" class="item form-group">
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">State  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="itemState" id="itemState"  required="required" onchange="loadFunctionData()" >
                                     <option selected="true" disabled  value="">Select State Item</option>
-                                    <% for(State s: sList) {%>
-                                        <option value="<%=s.getId() %>"><%=s.getName() %></option>
+                                    <% for (State s : sList) {%>
+                                    <option value="<%=s.getId()%>"><%=s.getName()%></option>
                                     <%}%>
-                                    
+
                                 </select>                              
                             </div>
                         </div>
@@ -103,13 +102,19 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="fdata" id="fdata"  required="required" >
-                                    <option disabled value="">Select Function Data</option>
-                                    
-                                    
+                                    <option selected="true" disabled value="" >Select Function Data</option>
+
+
                                 </select>                              
                             </div>
                         </div>            
-                           
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center code<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="code" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="code"  required="required" type="text">
+                            </div>
+                        </div>  
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center name<span class="required"></span>
                             </label>
@@ -117,15 +122,9 @@
                                 <input id="name" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="name"  required="required" type="text">
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Cost Center code<span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="code" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="code"  required="required" type="text">
-                            </div>
-                        </div>           
-                                    
-                        
+
+
+
 
 
                         <div class="ln_solid"></div>
@@ -136,25 +135,25 @@
                             </div>
                         </div>
                     </form>
-                    
+
                     <div class="ln_solid"></div>
-                    
-                    
+
+
 
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="row">
-        
+
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
-                       
+
                         <li><a class="close-link"><i class="fa fa-close"></i></a>
                         </li>
                     </ul>
@@ -168,10 +167,10 @@
 
                                     <th> ID </th>
                                     <th> Function Data </th>
-                                    <th> Name </th>
                                     <th>Code </th>
-                                    
-                                    
+                                    <th> Name </th>
+
+
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
                                     <th class=" no-link last"><span class="nobr">Action</span></th>
 
@@ -184,8 +183,8 @@
 
                                     <td class=" "><%=c.getId() %></td>
                                     <td class=" "><%=c.getFunctionId().getName() %></td>
-                                    <td class=" "><%=c.getName() %></td>
                                     <td class=" "><%=c.getCode() %></td>
+                                    <td class=" "><%=c.getName() %></td>
 
                                     <td class=" last">
                                         <form action="CostCenter?action=loadCostCenter" method="POST">

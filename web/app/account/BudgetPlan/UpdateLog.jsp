@@ -95,7 +95,6 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <label>
                                     <%
-
                                         if (bp.getMonth().equals("1") || bp.getMonth().equals("01")) {
                                             out.write("January");
                                         } else if (bp.getMonth().equals("2") || bp.getMonth().equals("02")) {
@@ -121,8 +120,6 @@
                                         } else if (bp.getMonth().equals("12")) {
                                             out.write("December");
                                         }
-
-
                                     %>
                                 </label>                  
                             </div>
@@ -150,7 +147,8 @@
                 </div>
                 <div class="x_content">
                     <center>
-                    <%                                        for (UpdateLog s : ulList) {
+                    <%                                        
+                        for (UpdateLog s : ulList) {
                     %>
                     <strong> <%=s.getAfterUser().getFirstName()%> changed <%=s.getBeforeUser().getFirstName()%>'s amount (Rs. <%=s.getBeforeAmount()%>) to Rs. <%=s.getAfterAmount()%> at <%=s.getDate()%><br></strong>
                     <%
