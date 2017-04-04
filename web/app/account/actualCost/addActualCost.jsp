@@ -17,6 +17,7 @@
 
         
         List<State> StateList = (List<State>) request.getAttribute("state");
+        List<Integer> yList = (List<Integer>) request.getAttribute("year");
 
 %>
 <script type="text/javascript">
@@ -124,7 +125,7 @@ alert("check..");
                 </div>
                 <div class="x_content">
 
-                    <form action="FunctionData?action=Register" method="post" class="form-horizontal form-label-left" validate>
+                    <form action="ActualCost?action=saveActualCost" method="post" class="form-horizontal form-label-left" validate>
 
                         <span class="section">Add Actual Cost</span>
                         <div class="item form-group" style="padding-top: 50px;">
@@ -182,8 +183,13 @@ alert("check..");
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="year" id="year"  required="required" >
                                     <option selected="true" disabled value="">Select year </option>
-                                    
-                                    
+                                    <%                                        
+                                        for (Integer i : yList) {
+                                    %>
+                                    <option value="<%=i%>" ><%=i%></option>
+                                    <%
+                                        }
+                                    %>
                                 </select>                              
                             </div>
                         </div>
@@ -212,12 +218,33 @@ alert("check..");
                         </div>        
                                 
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Function Name <span class="required">*</span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Amount <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="fname" placeholder="Enter Function Name" required="required" type="text">
+                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="amount" placeholder="Enter Amount" required="required" type="number">
                             </div>
                         </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Date<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="date" placeholder="Select the date" required="required" type="date">
+                            </div>
+                        </div> 
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Reference no<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="reference" placeholder="Enter the Number" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="descrip" placeholder="Select the date" required="required" type="text">
+                            </div>
+                        </div>         
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
