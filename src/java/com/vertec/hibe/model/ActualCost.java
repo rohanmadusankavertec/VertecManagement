@@ -24,7 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "actual_cost")
@@ -39,10 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ActualCost.findByReferenceNo", query = "SELECT a FROM ActualCost a WHERE a.referenceNo = :referenceNo"),
     @NamedQuery(name = "ActualCost.findByDescription", query = "SELECT a FROM ActualCost a WHERE a.description = :description")})
 public class ActualCost implements Serializable {
-
-    @JoinColumn(name = "nominal_code_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private NominalCode nominalCodeId;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +61,12 @@ public class ActualCost implements Serializable {
     private String referenceNo;
     @Column(name = "description")
     private String description;
+    @JoinColumn(name = "cost_center_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CostCenter costCenterId;
+    @JoinColumn(name = "nominal_code_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private NominalCode nominalCodeId;
     @JoinColumn(name = "sys_user_id", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser sysUserId;
@@ -131,6 +134,22 @@ public class ActualCost implements Serializable {
         this.description = description;
     }
 
+    public CostCenter getCostCenterId() {
+        return costCenterId;
+    }
+
+    public void setCostCenterId(CostCenter costCenterId) {
+        this.costCenterId = costCenterId;
+    }
+
+    public NominalCode getNominalCodeId() {
+        return nominalCodeId;
+    }
+
+    public void setNominalCodeId(NominalCode nominalCodeId) {
+        this.nominalCodeId = nominalCodeId;
+    }
+
     public SysUser getSysUserId() {
         return sysUserId;
     }
@@ -162,14 +181,6 @@ public class ActualCost implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.ActualCost[ id=" + id + " ]";
-    }
-
-    public NominalCode getNominalCodeId() {
-        return nominalCodeId;
-    }
-
-    public void setNominalCodeId(NominalCode nominalCodeId) {
-        this.nominalCodeId = nominalCodeId;
     }
     
 }

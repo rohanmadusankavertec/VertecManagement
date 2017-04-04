@@ -6,18 +6,20 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,9 +49,10 @@ public class NominalCode implements Serializable {
     private Boolean isvalid;
     @Column(name = "code")
     private String code;
-    @JoinColumn(name = "cost_center_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private CostCenter costCenterId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalCodeId")
+    private Collection<ActualCost> actualCostCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalCodeId")
+    private Collection<BudgetPlan> budgetPlanCollection;
 
     public NominalCode() {
     }
@@ -90,12 +93,22 @@ public class NominalCode implements Serializable {
         this.code = code;
     }
 
-    public CostCenter getCostCenterId() {
-        return costCenterId;
+    @XmlTransient
+    public Collection<ActualCost> getActualCostCollection() {
+        return actualCostCollection;
     }
 
-    public void setCostCenterId(CostCenter costCenterId) {
-        this.costCenterId = costCenterId;
+    public void setActualCostCollection(Collection<ActualCost> actualCostCollection) {
+        this.actualCostCollection = actualCostCollection;
+    }
+
+    @XmlTransient
+    public Collection<BudgetPlan> getBudgetPlanCollection() {
+        return budgetPlanCollection;
+    }
+
+    public void setBudgetPlanCollection(Collection<BudgetPlan> budgetPlanCollection) {
+        this.budgetPlanCollection = budgetPlanCollection;
     }
 
     @Override

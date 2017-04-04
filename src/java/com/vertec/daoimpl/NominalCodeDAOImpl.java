@@ -56,9 +56,8 @@ public class NominalCodeDAOImpl {
         Transaction transaction = session.beginTransaction();
         if (session != null) {
             try {
-                SQLQuery query = session.createSQLQuery("Update nominal_code set name=:name,cost_center_id=:ccId,code=:code where id=:Id");
+                SQLQuery query = session.createSQLQuery("Update nominal_code set name=:name,code=:code where id=:Id");
                 query.setParameter("name", nc.getName());
-                query.setParameter("ccId", nc.getCostCenterId());
                 query.setParameter("Id", nc.getId());
                 query.setParameter("code", nc.getCode());
                 query.executeUpdate();

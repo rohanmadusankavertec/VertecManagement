@@ -51,11 +51,13 @@ public class CostCenter implements Serializable {
     private Boolean isvalid;
     @Column(name = "code")
     private String code;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costCenterId")
+    private Collection<ActualCost> actualCostCollection;
     @JoinColumn(name = "function_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private FunctionData functionId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "costCenterId")
-    private Collection<NominalCode> nominalCodeCollection;
+    private Collection<BudgetPlan> budgetPlanCollection;
 
     public CostCenter() {
     }
@@ -96,6 +98,15 @@ public class CostCenter implements Serializable {
         this.code = code;
     }
 
+    @XmlTransient
+    public Collection<ActualCost> getActualCostCollection() {
+        return actualCostCollection;
+    }
+
+    public void setActualCostCollection(Collection<ActualCost> actualCostCollection) {
+        this.actualCostCollection = actualCostCollection;
+    }
+
     public FunctionData getFunctionId() {
         return functionId;
     }
@@ -105,12 +116,12 @@ public class CostCenter implements Serializable {
     }
 
     @XmlTransient
-    public Collection<NominalCode> getNominalCodeCollection() {
-        return nominalCodeCollection;
+    public Collection<BudgetPlan> getBudgetPlanCollection() {
+        return budgetPlanCollection;
     }
 
-    public void setNominalCodeCollection(Collection<NominalCode> nominalCodeCollection) {
-        this.nominalCodeCollection = nominalCodeCollection;
+    public void setBudgetPlanCollection(Collection<BudgetPlan> budgetPlanCollection) {
+        this.budgetPlanCollection = budgetPlanCollection;
     }
 
     @Override

@@ -79,7 +79,6 @@ public class NominalCodeController extends HttpServlet {
                 nc.setCode(code);
                 nc.setName(Name);
                 nc.setIsvalid(true);
-                nc.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
                 
                 String result = ncdao.saveNominalCode(nc);
 
@@ -130,7 +129,6 @@ public class NominalCodeController extends HttpServlet {
                 
                 NominalCode nc = new NominalCode();
                 nc.setCode(code);
-                nc.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
                 nc.setId(Integer.parseInt(sId));
                 nc.setName(Name);
                 

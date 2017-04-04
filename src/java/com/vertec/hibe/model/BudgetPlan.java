@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "budget_plan")
@@ -58,6 +59,9 @@ public class BudgetPlan implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @JoinColumn(name = "cost_center_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CostCenter costCenterId;
     @JoinColumn(name = "nominal_code_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private NominalCode nominalCodeId;
@@ -112,6 +116,14 @@ public class BudgetPlan implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public CostCenter getCostCenterId() {
+        return costCenterId;
+    }
+
+    public void setCostCenterId(CostCenter costCenterId) {
+        this.costCenterId = costCenterId;
     }
 
     public NominalCode getNominalCodeId() {

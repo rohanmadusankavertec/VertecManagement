@@ -24,7 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "update_log")
@@ -54,15 +55,15 @@ public class UpdateLog implements Serializable {
     private String description;
     @Column(name = "after_amount")
     private Double afterAmount;
+    @JoinColumn(name = "budget_plan_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private BudgetPlan budgetPlanId;
     @JoinColumn(name = "before_user", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser beforeUser;
     @JoinColumn(name = "after_user", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser afterUser;
-    @JoinColumn(name = "budget_plan_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private BudgetPlan budgetPlanId;
 
     public UpdateLog() {
     }
@@ -111,6 +112,14 @@ public class UpdateLog implements Serializable {
         this.afterAmount = afterAmount;
     }
 
+    public BudgetPlan getBudgetPlanId() {
+        return budgetPlanId;
+    }
+
+    public void setBudgetPlanId(BudgetPlan budgetPlanId) {
+        this.budgetPlanId = budgetPlanId;
+    }
+
     public SysUser getBeforeUser() {
         return beforeUser;
     }
@@ -125,14 +134,6 @@ public class UpdateLog implements Serializable {
 
     public void setAfterUser(SysUser afterUser) {
         this.afterUser = afterUser;
-    }
-
-    public BudgetPlan getBudgetPlanId() {
-        return budgetPlanId;
-    }
-
-    public void setBudgetPlanId(BudgetPlan budgetPlanId) {
-        this.budgetPlanId = budgetPlanId;
     }
 
     @Override

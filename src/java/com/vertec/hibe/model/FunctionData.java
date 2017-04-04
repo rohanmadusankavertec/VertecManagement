@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ruchira
+ * @author Rohan Madusanka @Contact 071 - 9085504 @E-mail
+ * rohanmadusanka72@gmail.com
  */
 @Entity
 @Table(name = "function_data")
