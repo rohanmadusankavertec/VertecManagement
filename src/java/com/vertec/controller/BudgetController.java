@@ -15,6 +15,7 @@ import com.vertec.hibe.model.NominalCode;
 import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
+import com.vertec.hibe.model.UpdateLog;
 import com.vertec.util.VertecConstants;
 import java.io.IOException;
 import java.util.Date;
@@ -91,6 +92,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("1")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -106,6 +108,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("2")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -121,6 +124,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("3")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -136,6 +140,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("4")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -151,6 +156,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("5")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -167,6 +173,7 @@ public class BudgetController extends HttpServlet {
                         System.out.println("Came IN **************************");
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -182,6 +189,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("7")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -197,6 +205,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("8")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -212,6 +221,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("9")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -227,6 +237,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("10")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -242,6 +253,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("11")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -257,6 +269,7 @@ public class BudgetController extends HttpServlet {
                     if (p.getMonth().equals("12")) {
                         job1.put("amount", p.getAmount());
                         job1.put("isChanged", budgetdao.isUpdated(p));
+                        job1.put("bpid", p.getId());
                         bool = false;
                     }
                 }
@@ -286,6 +299,56 @@ public class BudgetController extends HttpServlet {
                 bp.setMonth(month);
                 String result=budgetdao.saveBudgetPlan(bp);
                 response.getWriter().write(result);
+                break;
+            }
+            case "UpdateBudgetPlan": {
+                String ncid = request.getParameter("ncid").trim();
+                String year = request.getParameter("year").trim();
+                String amount = request.getParameter("amount").trim();
+                String month = request.getParameter("month").trim();
+                
+                
+                BudgetPlan old = budgetdao.getBudgetPlanById(Integer.parseInt(ncid), year, month);
+                
+                
+                UpdateLog u = new UpdateLog();
+                u.setDate(new Date());
+                u.setBeforeUser(old.getSysUserId());
+                u.setAfterUser(user1);
+                u.setBeforeAmount(old.getAmount());
+                u.setAfterAmount(Double.parseDouble(amount));
+                u.setBudgetPlanId(old);
+                String result1=budgetdao.saveUpdateLog(u);
+                
+                
+                BudgetPlan bp = new BudgetPlan();
+                bp.setAmount(Double.parseDouble(amount));
+                bp.setNominalCodeId(new NominalCode(Integer.parseInt(ncid)));
+                bp.setYear(year);
+                bp.setDate(new Date());
+                bp.setSysUserId(user1);
+                bp.setMonth(month);
+                String result=budgetdao.updateBudget(bp);
+                
+                
+                response.getWriter().write(result);
+                break;
+            }
+            
+            
+            
+            case "ViewUpdateLog": {
+                String bpid = request.getParameter("bpid").trim();
+                BudgetPlan bp = budgetdao.getBudgetPlanById2(Integer.parseInt(bpid));
+                
+                
+                request.setAttribute("bp", bp);
+                
+                
+                List<UpdateLog> ul = budgetdao.getUpdateLog(bp);
+                request.setAttribute("ul", ul);
+                requestDispatcher = request.getRequestDispatcher("app/account/BudgetPlan/UpdateLog.jsp");
+                requestDispatcher.forward(request, response);
                 break;
             }
         }
