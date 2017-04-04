@@ -99,6 +99,26 @@ alert("check..");
         });
         
     }
+    function loadTable(){
+        var year = document.getElementById('year').value;
+        var month = document.getElementById('month').value;
+        var nomoid = document.getElementById('nominalCode').value;
+        
+            $.ajax({
+            type: "POST",
+            url: "../../ActualCost?action=getActualCostTable&nominalCode="+nomoid+"&year="+year+"&month="+month,
+            success: function(msg) {
+                var reply = eval('(' + msg + ')');
+                var arr = reply.actualTable;
+
+                for (var f = 0; f < arr.length; f++) {
+                    var tb = document.getElementById("actualcostItem");
+                    var data = data + "<tr id='" + arr[f].id + "'><td><input type='text' id='ref"+arr[f].id+"' value='"+arr[f].refere+"'/></td><td><input type='text' id='des"+arr[f].id+"' value='"+arr[f].descrip+"'/></td><td><input type='number' id='amt"+arr[f].id+"' value='"+arr[f].amont+"'/></td><td><a href='#' id='deleteUser'  class='glyphicon glyphicon-remove'></a></td></tr>";
+                    tb.innerHTML = data;
+                }    
+            }
+        });
+    }
     
 </script>
 
@@ -110,7 +130,7 @@ alert("check..");
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2><small>Actual Cost Manage</small></h2>
+                    <h2><small>Actual Cost</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -197,7 +217,7 @@ alert("check..");
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Month  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="month" id="month"  required="required" >
+                                <select class="form-control" name="month" id="month"  required="required" onclick="loadTable()" >
                                     <option selected="true" disabled value="">Select month </option>
                                     <option   value="1">January </option>
                                     <option   value="2">February </option>
@@ -217,20 +237,20 @@ alert("check..");
                             </div>
                         </div>        
                                 
-                        <div class="item form-group">
+<!--                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Amount <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="amount" placeholder="Enter Amount" required="required" type="number">
                             </div>
                         </div>
-<!--                        <div class="item form-group">
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Date<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="date" placeholder="Select the date" required="required" type="date">
                             </div>
-                        </div> -->
+                        </div> 
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Reference no<span class="required">*</span>
                             </label>
@@ -244,11 +264,35 @@ alert("check..");
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="descrip" placeholder="Select the date" required="required" type="text">
                             </div>
-                        </div>         
-
-                        
+                        </div>         -->
 
 
+
+                        <div class="x_content">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped responsive-utilities jambo_table">
+                            <thead>
+                                <tr class="headings">
+
+                                    
+                                    <th> Amount</th>
+                                    <th> Reference No </th>
+                                    <th>Description </th>
+                                    
+                                    
+                                    <th class=" no-link last"><span class="nobr">Action</span></th>
+                                    
+
+                                </tr>
+                            </thead>
+
+                            <tbody id="actualcostItem">
+                                
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">

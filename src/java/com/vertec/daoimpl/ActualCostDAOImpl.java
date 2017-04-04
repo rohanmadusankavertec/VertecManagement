@@ -20,26 +20,27 @@ import org.hibernate.Transaction;
  * @author Ruchira
  */
 public class ActualCostDAOImpl {
-//    public List<CostCenter> getCostCenterByFunctionId(int fid) {
-//        Session session = NewHibernateUtil.getSessionFactory().openSession();
-//        if (session != null) {
-//            try {
-//                Query query = session.createQuery("SELECT c FROM CostCenter c WHERE c.isvalid = :isvalid AND c.functionId.id=:fid");
-//                query.setParameter("isvalid", true);
-//                query.setParameter("fid", fid);
-//                List<CostCenter> prList = query.list();
-//                return prList;
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (session != null && session.isOpen()) {
-//                    session.close();
-//                }
-//            }
-//        }
-//        return null;
-//    }
+    public List<ActualCost> getActualCostList(int year,int month,int noId) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT a FROM ActualCost a WHERE a.year = :year AND a.nominalCodeId.id=:nominalId AND a.month=:month");
+                query.setParameter("year", year);
+                query.setParameter("nominalId", month);
+                query.setParameter("month", noId);
+                List<ActualCost> prList = query.list();
+                return prList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        return null;
+    }
     
     public String saveActualCost(ActualCost ac) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
