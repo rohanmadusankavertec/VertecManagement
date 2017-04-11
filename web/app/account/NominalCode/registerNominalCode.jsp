@@ -2,6 +2,7 @@
     Document   : registerCustomer
     Created on : Oct 20, 2016, 8:40:14 AM
     Author     : User
+
 --%>
 
 <%@page import="com.vertec.hibe.model.NominalCode"%>
