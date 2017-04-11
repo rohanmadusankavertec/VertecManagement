@@ -73,7 +73,6 @@ public class NominalCodeController extends HttpServlet {
 
                 String Name = request.getParameter("nc").trim();
                 String code = request.getParameter("code").trim();
-                String ccid = request.getParameter("ccid").trim();
 
                 NominalCode nc =new NominalCode();
                 nc.setCode(code);
@@ -101,13 +100,7 @@ public class NominalCodeController extends HttpServlet {
                 String cId = request.getParameter("ncId").trim();
                 int cuId = Integer.parseInt(cId);
 
-                List<State> state = ardao.getListOfState();
-                request.setAttribute("state", state);
-                List<FunctionData> fd = ardao.getListOfFunctionData();
-                request.setAttribute("fd", fd);
-                List<CostCenter> cs = ardao.getListOfCostCenter();
-                request.setAttribute("costcenter", cs);
-
+                
                 
                 NominalCode nc = ardao.getNominalCodeById(cuId);
                 request.setAttribute("nc", nc);
@@ -122,7 +115,7 @@ public class NominalCodeController extends HttpServlet {
                 String Name = request.getParameter("Name").trim();
 //                String stateid = request.getParameter("stateid").trim();
 //                String fid = request.getParameter("fid").trim();
-                String ccid = request.getParameter("ccid").trim();
+//                String ccid = request.getParameter("ccid").trim();
                 String code = request.getParameter("nc").trim();
 
                 

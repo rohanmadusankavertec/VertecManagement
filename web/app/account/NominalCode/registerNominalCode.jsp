@@ -49,9 +49,7 @@
                 <div class="x_content">
 
                     <form action="NominalCode?action=Register" method="post" class="form-horizontal form-label-left" validate>
-
                         <span class="section">Nominal Code Registration</span>
-                        
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nominal Code<span class="required">*</span>
                             </label>
@@ -99,9 +97,6 @@
                             <thead>
                                 <tr class="headings">
                                     <th>#</th>
-                                    <th>State Name</th>
-                                    <th>Function Name</th>
-                                    <th>Cost Center</th>
                                     <th>Nominal Code</th>
                                     <th class=" no-link last"><span class="nobr">Update</span>
                                     <th class=" no-link last"><span class="nobr">Delete</span>
