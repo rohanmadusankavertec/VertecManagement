@@ -15,22 +15,22 @@
 <%@page import="com.vertec.hibe.model.Customer"%>
 <%
     NominalCode nc = (NominalCode) request.getAttribute("nc");
-    List<State> StateList = (List<State>) request.getAttribute("state");
-    List<FunctionData> fd = (List<FunctionData>) request.getAttribute("fd");
-    List<CostCenter> cs = (List<CostCenter>) request.getAttribute("costcenter");
+//    List<State> StateList = (List<State>) request.getAttribute("state");
+//    List<FunctionData> fd = (List<FunctionData>) request.getAttribute("fd");
+//    List<CostCenter> cs = (List<CostCenter>) request.getAttribute("costcenter");
 %>
 
 <script type="text/javascript">
     
-    setTimeout("SetData()","500");
-    
-    function SetData(){
-        document.getElementById('stateid').value=<%=nc.getCostCenterId().getFunctionId().getStateId().getId() %>;
-        document.getElementById('fid').value=<%=nc.getCostCenterId().getFunctionId().getId()%>;
-        document.getElementById('ccid').value=<%=nc.getCostCenterId().getId()%>;
-        
-        
-    }
+//    setTimeout("SetData()","500");
+//    
+//    function SetData(){
+//        document.getElementById('stateid').value=
+//        document.getElementById('fid').value=
+//        document.getElementById('ccid').value=
+//        
+//        
+//    }
 </script>
 
 
@@ -48,54 +48,9 @@
                 <div class="x_content">
                     <form action="NominalCode?action=UpNC" method="post" class="form-horizontal form-label-left" novalidate >
                         <span class="section">Function Update</span>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select State <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="stateid" id="stateid">
-                                    <option selected="true" disabled value="">Select State</option>
-                                    <%                                        
-                                        for (State s : StateList) {
-                                    %>
-                                    <option value="<%=s.getId()%>" ><%=s.getName()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>                              
-                            </div>
-                        </div>
-                                <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Function <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="fid" id="fid">
-                                    <option selected="true" disabled value="">Select Function</option>
-                                    <%                                        
-                                        for (FunctionData s : fd) {
-                                    %>
-                                    <option value="<%=s.getId()%>" ><%=s.getName()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>                              
-                            </div>
-                        </div>
-                                <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Cost Center <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="ccid" id="ccid">
-                                    <option selected="true" disabled value="">Select Cost Center</option>
-                                    <%                                        
-                                        for (CostCenter s : cs) {
-                                    %>
-                                    <option value="<%=s.getId()%>" ><%=s.getCode()+" "+ s.getName()%></option>
-                                    <%
-                                        }
-                                    %>
-                                </select>                              
-                            </div>
-                        </div>
+                        
+                                
+                                
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Nominal Code <span class="required">*</span>
                             </label>

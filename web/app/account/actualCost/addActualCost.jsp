@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@page import="com.vertec.hibe.model.NominalCode"%>
 <%@page import="com.vertec.hibe.model.State"%>
 <%@page import="com.vertec.hibe.model.FunctionData"%>
 <%@page import="com.vertec.hibe.model.Service"%>
@@ -18,6 +19,7 @@
         
         List<State> StateList = (List<State>) request.getAttribute("state");
         List<Integer> yList = (List<Integer>) request.getAttribute("year");
+        List<NominalCode> nomiList = (List<NominalCode>) request.getAttribute("nominal");
 
 %>
 <script type="text/javascript">
@@ -74,31 +76,31 @@
         });
         
     }
-    function loadNominalCode(){
-//        $("").empty();
-alert("check..");
-        var ccid = document.getElementById("ccenter").value;
-//        alert(ccid);
-        $.ajax({
-            type: "POST",
-            url: "ActualCost?action=getNominalCode&ccid="+ccid,
-            success: function(msg) {
-                var reply = eval('(' + msg + ')');
-                var arrLn1 = reply.NominalCode;
-
-
-                var cdata = document.getElementById("nominalCode");
-                var ihtml = "<option disabled  selected='true'>Select nominal code</option>";
-                for (var f = 0; f < arrLn1.length; f++) {
-                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].ncname+"</option>"
-                }
-                cdata.innerHTML = ihtml;
-
-
-            }
-        });
-        
-    }
+//    function loadNominalCode(){
+////        $("").empty();
+//alert("check..");
+//        var ccid = document.getElementById("ccenter").value;
+////        alert(ccid);
+//        $.ajax({
+//            type: "POST",
+//            url: "ActualCost?action=getNominalCode&ccid="+ccid,
+//            success: function(msg) {
+//                var reply = eval('(' + msg + ')');
+//                var arrLn1 = reply.NominalCode;
+//
+//
+//                var cdata = document.getElementById("nominalCode");
+//                var ihtml = "<option disabled  selected='true'>Select nominal code</option>";
+//                for (var f = 0; f < arrLn1.length; f++) {
+//                    ihtml += "<option value='" + arrLn1[f].id + "'>" + arrLn1[f].ncname+"</option>"
+//                }
+//                cdata.innerHTML = ihtml;
+//
+//
+//            }
+//        });
+//        
+//    }
     
 </script>
 
@@ -159,7 +161,7 @@ alert("check..");
                             <label class="control-label col-md-3 col-sm-12 col-xs-12" for="name">Cost Center  
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="ccenter" id="ccenter"  required="required" onchange="loadNominalCode()" >
+                                <select class="form-control" name="ccenter" id="ccenter"  required="required" >
                                     <option selected="true"  value="">Select Cost Center </option>
                                     
                                     
@@ -172,7 +174,13 @@ alert("check..");
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="nominalCode" id="nominalCode"  required="required" >
                                     <option selected="true" disabled value="">Select Nominal Code </option>
-                                    
+                                    <%                                        
+                                        for (NominalCode n : nomiList) {
+                                    %>
+                                    <option value="<%=n.getId()%>" ><%=n.getCode()+" "+"-"+" "+n.getName() %></option>
+                                    <%
+                                        }
+                                    %>
                                     
                                 </select>                              
                             </div>

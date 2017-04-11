@@ -71,6 +71,7 @@ public class ActualCostController extends HttpServlet {
 //                    for(int i=1990;)
 
                     List<Integer> ylist = new ArrayList<Integer>();
+                    List<NominalCode> nc = accountReportdao.getListOfNominal();
                     int nr= Calendar.getInstance().get(Calendar.YEAR);
 //                    System.out.println("......current..."+nr);
                     for (int i = 2012; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
@@ -81,6 +82,7 @@ public class ActualCostController extends HttpServlet {
                     
                     request.setAttribute("state", sList);
                     request.setAttribute("year", ylist);
+                    request.setAttribute("nominal", nc);
                     requestDispatcher = request.getRequestDispatcher("app/account/actualCost/addActualCost.jsp");
                     requestDispatcher.forward(request, response);
                     break;
@@ -127,9 +129,9 @@ public class ActualCostController extends HttpServlet {
                     break;
                 }
                 case "getNominalCode": {
-                    String cid = request.getParameter("ccid").trim();
+//                    String cid = request.getParameter("ccid").trim();
 //                    System.out.println(".........."+cid);
-                    List<NominalCode> nc = accountReportdao.getListOfNominalbyCostCenter(Integer.parseInt(cid));
+                    List<NominalCode> nc = accountReportdao.getListOfNominal();
                      
                     JSONObject jOB = new JSONObject();
                     JSONArray jar1 = new JSONArray();
@@ -154,7 +156,7 @@ public class ActualCostController extends HttpServlet {
                     String year = request.getParameter("year").trim();
                     String month = request.getParameter("month").trim();
                     String amt = request.getParameter("amount").trim();
-//                    String date = request.getParameter("date").trim();
+                    String ccenter = request.getParameter("ccenter").trim();
                     String refere = request.getParameter("reference").trim();
                     String descrip = request.getParameter("descrip").trim();
 //                    String nominal21 = request.getParameter("date").trim();
@@ -163,6 +165,8 @@ public class ActualCostController extends HttpServlet {
                     a.setYear(year);
                     a.setMonth(month);
                     a.setAmount(Double.parseDouble(amt));
+                    a.setNominalCodeId(new NominalCode(Integer.parseInt(nominal)));
+                    a.setCostCenterId(new CostCenter(Integer.parseInt(ccenter)));
                     
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         Date now = new Date();
@@ -174,7 +178,7 @@ public class ActualCostController extends HttpServlet {
                     
                     a.setReferenceNo(refere);
                     a.setDescription(descrip);
-                    a.setNominalCodeId(new NominalCode(Integer.parseInt(nominal)));
+//                    a.setNominalCodeId(new NominalCode(Integer.parseInt(nominal)));
                     a.setSysUserId(user1);
                     
                     String result = actualcostdao.saveActualCost(a);

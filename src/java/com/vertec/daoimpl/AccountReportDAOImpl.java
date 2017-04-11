@@ -303,6 +303,31 @@ public class AccountReportDAOImpl {
         return null;
     
     }
+    public List<NominalCode> getListOfNominal() {
+
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT c FROM NominalCode c WHERE c.isvalid=:isValid ");
+                query.setParameter("isValid", true);
+//                query.setParameter("id", id);
+                List<NominalCode> csList = query.list();
+                
+                return csList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    
+    }
     public List<BudgetPlan> getListOfYearlyBudgetPlans(int ncid,String year) {
 
         Session session = NewHibernateUtil.getSessionFactory().openSession();
