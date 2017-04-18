@@ -80,32 +80,32 @@
             }
         });
     }
-
-    function loadNominal() {
-        $("#ncid").empty();
-        var s1 = document.getElementById('ncid');
-        var t1 = document.createElement("option");
-
-        t1.value = "";
-        t1.innerHTML = "Select Nominal Code";
-        s1.appendChild(t1);
-        var ccId = document.getElementById('ccid').value;
-        $.ajax({
-            type: "POST",
-            url: "AccountReport?action=getNominalByCostCenter&ccid=" + ccId,
-            success: function (msg) {
-                var reply = eval('(' + msg + ')');
-                var arrLn1 = reply.cc;
-
-                for (var f = 0; f < arrLn1.length; f++) {
-                    var t = document.createElement("option");
-                    t.value = arrLn1[f].id;
-                    t.innerHTML = arrLn1[f].name;
-                    s1.appendChild(t);
-                }
-            }
-        });
-    }
+//
+//    function loadNominal() {
+//        $("#ncid").empty();
+//        var s1 = document.getElementById('ncid');
+//        var t1 = document.createElement("option");
+//
+//        t1.value = "";
+//        t1.innerHTML = "Select Nominal Code";
+//        s1.appendChild(t1);
+//        var ccId = document.getElementById('ccid').value;
+//        $.ajax({
+//            type: "POST",
+//            url: "AccountReport?action=getNominalByCostCenter&ccid=" + ccId,
+//            success: function (msg) {
+//                var reply = eval('(' + msg + ')');
+//                var arrLn1 = reply.cc;
+//
+//                for (var f = 0; f < arrLn1.length; f++) {
+//                    var t = document.createElement("option");
+//                    t.value = arrLn1[f].id;
+//                    t.innerHTML = arrLn1[f].name;
+//                    s1.appendChild(t);
+//                }
+//            }
+//        });
+//    }
 
 
     function loadData() {
@@ -269,7 +269,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Select Cost Center
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="ccid" id="ccid" onchange="loadNominal()">
+                                <select class="form-control" name="ccid" id="ccid">
                                     <option selected="true" disabled value="">Select Cost Center</option>
                                     <%
                                         for (CostCenter s : ccList) {
