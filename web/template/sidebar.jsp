@@ -33,7 +33,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="${context}/dashboard.jsp"><i class="fa fa-home"></i> DashBoard </a>
-                        <%if(false){%>
+                      
                     </li>
                     <%if (ca.checkUserAuth("ADD_CUSTOMER", group) != null & ca.checkUserAuth("VIEW_CUSTOMER", group) != null) {%>
                     <li><a><i class="fa fa-user-plus"></i>Customer<span class="fa fa-chevron-down"></span></a>
@@ -212,7 +212,6 @@
                             </li>
                         </ul>
                     </li>
-                     <%}%>
                      <li><a><i class="fa fa-file-text"></i>Account Plan<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
                             <li><a href="${context}/State?action=viewStatePage">Manage State</a></li>
