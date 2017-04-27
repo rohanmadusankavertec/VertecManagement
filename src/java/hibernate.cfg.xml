@@ -16,6 +16,7 @@
     <mapping class="com.vertec.hibe.model.CctvItems"/>
     <mapping class="com.vertec.hibe.model.CctvQuotationInfo"/>
     <mapping class="com.vertec.hibe.model.CctvQuotationItems"/>
+    <mapping class="com.vertec.hibe.model.CctvWarranty"/>
     <mapping class="com.vertec.hibe.model.CostCenter"/>
     <mapping class="com.vertec.hibe.model.Customer"/>
     <mapping class="com.vertec.hibe.model.Employee"/>
@@ -46,6 +47,7 @@
     <mapping class="com.vertec.hibe.model.Quotation"/>
     <mapping class="com.vertec.hibe.model.QuotationHasFeatures"/>
     <mapping class="com.vertec.hibe.model.QuotationHasPackages"/>
+    <mapping class="com.vertec.hibe.model.QuotationStatus"/>
     <mapping class="com.vertec.hibe.model.Service"/>
     <mapping class="com.vertec.hibe.model.SoftwareQuotation"/>
     <mapping class="com.vertec.hibe.model.State"/>

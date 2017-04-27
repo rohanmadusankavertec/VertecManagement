@@ -96,11 +96,12 @@
         List<QuotationHasFeatures> list = (List<QuotationHasFeatures>) request.getAttribute("qhfs");
         List<Installment> Inslist = (List<Installment>) request.getAttribute("ins");
         Quotation q = (Quotation) request.getAttribute("quo");
-        List<Service> se = (List<Service>) request.getAttribute("service");
+        
         List<SoftwareQuotation> sL = (List<SoftwareQuotation>) request.getAttribute("softList");
         List<QuotationHasPackages> pL = (List<QuotationHasPackages>) request.getAttribute("pList");
         List<QuotationHasPackages> qpL = (List<QuotationHasPackages>) request.getAttribute("qpList");
         String sAmot = (String) request.getAttribute("tAmt");
+        System.out.println("....print amount.."+sAmot);
 
     %>
 

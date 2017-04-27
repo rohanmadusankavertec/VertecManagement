@@ -15,6 +15,8 @@ import com.vertec.hibe.model.State;
 import com.vertec.hibe.model.SysUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -180,6 +182,29 @@ public class AccountReportController extends HttpServlet {
                     
                     requestDispatcher = request.getRequestDispatcher("app/account/reports/ActualCost.jsp");
                     requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "searchAllBudgetPlan": {
+                    System.out.println("calling...........................................");
+                    List<Integer> ylist = new ArrayList<Integer>();
+                    
+                    int nr= Calendar.getInstance().get(Calendar.YEAR);
+                    System.out.println("......current..."+nr);
+                    for (int i = 2012; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
+                        ylist.add(i);
+                    }
+                    for (Integer i : ylist) {
+                        System.out.println("........"+i);
+                    }
+                    request.setAttribute("year", ylist);
+                    requestDispatcher = request.getRequestDispatcher("app/account/reports/SearchAllBudgetPlan.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "AllBudget":{
+                    String year =request.getParameter("").trim();
+                    String month =request.getParameter("").trim();
+                    
                     break;
                 }
             }

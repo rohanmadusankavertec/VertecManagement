@@ -98,6 +98,7 @@
                                 <tr class="headings">
                                     <th>#</th>
                                     <th>Nominal Code</th>
+                                    <th>Nominal Code Name</th>
                                     <th class=" no-link last"><span class="nobr">Update</span>
                                     <th class=" no-link last"><span class="nobr">Delete</span>
                                     </th>
@@ -108,7 +109,8 @@
                                 %>
                                 <tr>
                                     <td class=" "><%=c.getId()%></td>
-                                    <td class=" "><%=c.getCode()+" "+c.getName() %></td>
+                                    <td class=" "><%=c.getCode()%></td>
+                                    <td class=" "><%=c.getName() %></td>
                                     <td class=" last"> 
                                         <form name="form1" method="post" action="NominalCode?action=UpdateNominalCode">
                                             <input type="hidden" name="ncId" value="<%=c.getId()%>"/>

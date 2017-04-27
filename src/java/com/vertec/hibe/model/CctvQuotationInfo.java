@@ -6,10 +6,8 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,12 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,10 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CctvQuotationInfo.findByTotal", query = "SELECT c FROM CctvQuotationInfo c WHERE c.total = :total")})
 public class CctvQuotationInfo implements Serializable {
 
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Customer customerId;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +48,12 @@ public class CctvQuotationInfo implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total")
     private Double total;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cctvQuotationInfoId")
-    private Collection<CctvQuotationItems> cctvQuotationItemsCollection;
+    @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private QuotationStatus quotationStatusId;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Customer customerId;
     @JoinColumn(name = "sys_user_sysuser_id", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser sysUserSysuserId;
@@ -93,13 +89,20 @@ public class CctvQuotationInfo implements Serializable {
         this.total = total;
     }
 
-    @XmlTransient
-    public Collection<CctvQuotationItems> getCctvQuotationItemsCollection() {
-        return cctvQuotationItemsCollection;
+    public QuotationStatus getQuotationStatusId() {
+        return quotationStatusId;
     }
 
-    public void setCctvQuotationItemsCollection(Collection<CctvQuotationItems> cctvQuotationItemsCollection) {
-        this.cctvQuotationItemsCollection = cctvQuotationItemsCollection;
+    public void setQuotationStatusId(QuotationStatus quotationStatusId) {
+        this.quotationStatusId = quotationStatusId;
+    }
+
+    public Customer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
     }
 
     public SysUser getSysUserSysuserId() {
@@ -133,14 +136,6 @@ public class CctvQuotationInfo implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.CctvQuotationInfo[ id=" + id + " ]";
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
     }
     
 }

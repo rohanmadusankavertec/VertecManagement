@@ -13,6 +13,7 @@ import com.vertec.hibe.model.CctvCategory;
 import com.vertec.hibe.model.CctvItems;
 import com.vertec.hibe.model.CctvQuotationInfo;
 import com.vertec.hibe.model.CctvQuotationItems;
+import com.vertec.hibe.model.CctvWarranty;
 import com.vertec.hibe.model.Customer;
 import com.vertec.hibe.model.Features;
 import com.vertec.hibe.model.HardwareItem;
@@ -23,6 +24,7 @@ import com.vertec.hibe.model.ProjectProposal;
 import com.vertec.hibe.model.Quotation;
 import com.vertec.hibe.model.QuotationHasFeatures;
 import com.vertec.hibe.model.QuotationHasPackages;
+import com.vertec.hibe.model.QuotationStatus;
 import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.SoftwareQuotation;
 import com.vertec.hibe.model.SysUser;
@@ -254,6 +256,7 @@ public class QuotationController extends HttpServlet {
                     requestDispatcher.forward(request, response);
                     break;
                 }
+                
                 // load software quotation page
                 
                 case "SoftwareQuotation": {
@@ -330,7 +333,8 @@ public class QuotationController extends HttpServlet {
                     q.setCreatedBy(user1);
                     q.setDate(new Date());
                     q.setPackageId(new com.vertec.hibe.model.Package(Integer.parseInt(packagename)));
-
+                    q.setQuotationStatusId(new QuotationStatus(1));
+                   
                     String result = quotationDAO.saveQuotation(q);
                     System.out.println("lllll"+result);
                     for (int i =0; i<featurearr.length; i++){
@@ -381,7 +385,7 @@ public class QuotationController extends HttpServlet {
                     q.setAmount(1.0);
                     q.setCreatedBy(user1);
                     q.setDate(new Date());
-                    
+                    q.setQuotationStatusId(new QuotationStatus(1));
 //                    q.setPackageId(new com.vertec.hibe.model.Package(Integer.parseInt(packagename)));
                     
                     
@@ -421,13 +425,20 @@ public class QuotationController extends HttpServlet {
                     break;
                 }
                 // view all quotation
-                case "ViewQuotation": {
-                    List<Quotation> qt = quotationDAO.loadAllQuotation();
-                    request.setAttribute("quotation", qt);
-                    requestDispatcher = request.getRequestDispatcher("app/quotation/ViewQuotation.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
+//                case "ViewQuotation": {
+//                    List<Quotation> qt = quotationDAO.loadAllQuotation();
+//                    request.setAttribute("quotation", qt);
+//                    requestDispatcher = request.getRequestDispatcher("app/quotation/ViewQuotation.jsp");
+//                    requestDispatcher.forward(request, response);
+//                    break;
+//                }
+//                case "ViewQuotation": {
+//                    List<Quotation> qt = quotationDAO.loadAllQuotation();
+//                    request.setAttribute("quotation", qt);
+//                    requestDispatcher = request.getRequestDispatcher("app/quotation/ViewQuotation.jsp");
+//                    requestDispatcher.forward(request, response);
+//                    break;
+//                }
                 case "Template": {
                     requestDispatcher = request.getRequestDispatcher("app/quotation/QuotationTemplateSoftware.jsp");
                     requestDispatcher.forward(request, response);
@@ -462,34 +473,27 @@ public class QuotationController extends HttpServlet {
                     System.out.println("Quotation ID"+qid);
                     
                     int sid = Integer.parseInt(sID);
-//                    System.out.println("1");
                     List<QuotationHasFeatures> list = quotationDAO.getWebsite(Integer.parseInt(qid));
                     request.setAttribute("qhfs", list);
-//                    System.out.println("2");
                     List<Installment> inslist = quotationDAO.getInstallment(Integer.parseInt(qid));
                     request.setAttribute("ins", inslist);
-//                    System.out.println("3");
                     Quotation q = quotationDAO.LoadProjectByQuotation(Integer.parseInt(qid));
                     request.setAttribute("quo", q);
-//                    System.out.println("4");
                     List<Service> serlist = quotationDAO.getServices();
                     request.setAttribute("service", serlist);
-//                    System.out.println("5");
                     List<SoftwareQuotation> soList = quotationDAO.getSoftware(Integer.parseInt(qid));
                     request.setAttribute("softList", soList);
-//                    System.out.println("6");
                     List<QuotationHasPackages> pList = quotationDAO.getSoftwarepackageDetails(Integer.parseInt(qid));
                     request.setAttribute("pList", pList);
-//                    System.out.println("7");
                     List<QuotationHasPackages> qpList = quotationDAO.getSoftwarepackageDetails1(Integer.parseInt(qid));
                     request.setAttribute("qpList", qpList);
 //                    System.out.println("8");
                     
                     
                      if(sid == 1){
-                         String totAmt = quotationDAO.getTotAmount(Integer.parseInt(qid));
+//                         String totAmt = quotationDAO.getTotAmount(Integer.parseInt(qid));
 //                    System.out.println("9");
-                    request.setAttribute("tAmt", totAmt);
+//                    request.setAttribute("tAmt", totAmt);
                         requestDispatcher = request.getRequestDispatcher("app/quotation/design/Software.jsp");
                         requestDispatcher.forward(request, response);
                     }else if(sid == 2){
@@ -569,6 +573,7 @@ public class QuotationController extends HttpServlet {
                     hq.setDate(new Date());
                     hq.setAmount(tot);
                     hq.setCustomerId(new Customer(Integer.parseInt(cid)));
+                    hq.setQuotationStatusId(new QuotationStatus(1));
                     String result1 = quotationDAO.saveHardwareQuotation(hq);
                     
                     
@@ -597,13 +602,13 @@ public class QuotationController extends HttpServlet {
                     break;
                 }
                 // load all hardware quotation
-                case "viewHardwareQuotation": {
-                    List<HardwareQuotation> hqList = quotationDAO.loadHardwareQuotation();
-                    request.setAttribute("hqList", hqList);
-                    requestDispatcher = request.getRequestDispatcher("app/quotation/viewHardware.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
+//                case "viewHardwareQuotation": {
+//                    List<HardwareQuotation> hqList = quotationDAO.loadHardwareQuotation();
+//                    request.setAttribute("hqList", hqList);
+//                    requestDispatcher = request.getRequestDispatcher("app/quotation/viewHardware.jsp");
+//                    requestDispatcher.forward(request, response);
+//                    break;
+//                }
                 // print the quotation
                 case "viewHardwareItem": {
                     String hitem = request.getParameter("hidden");
@@ -662,6 +667,32 @@ public class QuotationController extends HttpServlet {
                     String tot = request.getParameter("qty");
                     String cid = request.getParameter("customer");
                     String grand = request.getParameter("grand");
+// ---------------------------------------------------------------------------------  
+                    String camera = request.getParameter("camera");
+                    String dvr = request.getParameter("dvr");
+                    String disk = request.getParameter("hardDisk");
+                    String monitor = request.getParameter("monitor");
+                    String install = request.getParameter("installation");
+                    String cable = request.getParameter("cable");
+                    String fst = request.getParameter("fst");
+                    String snd = request.getParameter("snd");
+                    String trd = request.getParameter("trd");
+                    String prepare = request.getParameter("prepare");
+                    String designation = request.getParameter("designation");
+//                    System.out.println("cameara..."+camera);
+//                    System.out.println("dvr..."+dvr);
+//                    System.out.println("disk..."+disk);
+//                    System.out.println("moniter..."+monitor);
+//                    System.out.println("install..."+install);
+//                    System.out.println("cable..."+cable);
+//                    System.out.println("1st..."+fst);
+//                    System.out.println("2nd..."+snd);
+//                    System.out.println("3rd..."+trd);
+//                    System.out.println("per..."+prepare);
+//                    System.out.println("desg..."+designation);
+// ---------------------------------------------------------------------------------                   
+                    
+
                     System.out.println(item);
                     System.out.println(qty);
                     String[] itemarr = item.split(",");
@@ -673,7 +704,7 @@ public class QuotationController extends HttpServlet {
 //                    q.setTotal(Double.parseDouble(tot));
                     q.setTotal(Double.parseDouble(grand));
                     q.setCustomerId(new Customer(Integer.parseInt(cid)));
-                    
+                    q.setQuotationStatusId(new QuotationStatus(1));
                     String result = VertecConstants.SUCCESS;
                     result = quotationDAO.saveCCTV(q);
                     System.out.println("......."+result);
@@ -692,21 +723,41 @@ public class QuotationController extends HttpServlet {
                         result = quotationDAO.saveCCTVquotation(c);
                     }
                     
+                    CctvWarranty w = new CctvWarranty();
+                    w.setCamera(Double.parseDouble(camera));
+                    w.setDvr(Double.parseDouble(dvr));
+                    w.setHardDisk(Double.parseDouble(disk));
+                    if(!monitor.equals("")){
+                    w.setMonitor(Double.parseDouble(monitor));
+                    }
+                    w.setCable(Double.parseDouble(cable));
+                    w.setInstallation(Double.parseDouble(install));
+                    w.setStPayment(Double.parseDouble(fst));
+                    w.setNdPayment(Double.parseDouble(snd));
+                    w.setRdPayment(Double.parseDouble(trd));
+                    w.setPreparedBy(prepare);
+                    w.setDesignation(designation);
+                    w.setCctvQuotationInfoId(q);
                     
-                    
-                    out.write(result);
+                    String resu = quotationDAO.saveCCTVWarrenty(w);
+                    System.out.println("..........warrenty.."+resu);
+                    if(result.equals(VertecConstants.SUCCESS) && resu.equals(VertecConstants.SUCCESS)){
+                       out.write(result);
+                    }else{
+                        out.write(VertecConstants.ERROR);
+                    }
                     break;
                     
                 }
                 // view all cctv quotation
-                case "loadcctvQuotation": {
-                    List<CctvQuotationInfo> info = quotationDAO.loadCctvQuotation();
-                    request.setAttribute("info", info);
-                    
-                    requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllCctv.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
+//                case "loadcctvQuotation": {
+//                    List<CctvQuotationInfo> info = quotationDAO.loadCctvQuotation();
+//                    request.setAttribute("info", info);
+//                    
+//                    requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllCctv.jsp");
+//                    requestDispatcher.forward(request, response);
+//                    break;
+//                }
                 // print cctv quotaion
                 case "viewCctvItem": {
                     String hitem = request.getParameter("hidden");
@@ -714,7 +765,182 @@ public class QuotationController extends HttpServlet {
                     request.setAttribute("info", info);
                     CctvQuotationInfo cq = quotationDAO.viewCctvQuotation(Integer.parseInt(hitem));
                     request.setAttribute("cq", cq);
+                    CctvWarranty cc = quotationDAO.loadCCTVWarrenty(Integer.parseInt(hitem));
+                    request.setAttribute("ccwarrenty", cc);
                     requestDispatcher = request.getRequestDispatcher("app/quotation/design/Cctv.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "NewcreateQuotation": {
+                    List<Service> serList = quotationDAO.NewgetServices();
+                    request.setAttribute("serList", serList);
+                    
+                    requestDispatcher = request.getRequestDispatcher("app/quotation/NewCreateQuotation.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "ViewcreateQuotation": {
+                    String sid = request.getParameter("service").trim();
+//                    System.out.println(">>>>>>>>>>>>>>> "+sid);
+                    int serviceId = Integer.parseInt(sid);
+                    if(serviceId == 1){
+//                        System.out.println("..............Software................"+serviceId);
+                        List<ProjectProposal> pp = quotationDAO.loadProjectProposalsByServiceId(serviceId);
+                        request.setAttribute("proposal", pp);
+                        List<com.vertec.hibe.model.Package> p = quotationDAO.loadPackage("1", serviceId);
+                        request.setAttribute("packages", p);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/SoftwareQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                    }else if(serviceId == 2){
+//                        System.out.println("..............Web Site................"+serviceId);
+                        List<ProjectProposal> pp = quotationDAO.loadProjectProposalsByServiceId(serviceId);
+                        request.setAttribute("proposal", pp);
+                        List<com.vertec.hibe.model.Package> p = quotationDAO.loadPackage("1", serviceId);
+                        request.setAttribute("packages", p);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/CreateQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                        
+                    }else if(serviceId == 3){
+//                        System.out.println("..............CCTV................"+serviceId);
+                        List<CctvCategory> category = cctvDAO.loadItemCategory();
+                        request.setAttribute("category", category);
+                        List<Customer> customer = quotationDAO.loadCustomer();
+                        request.setAttribute("customer", customer);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/cctvQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                        
+                    }else if(serviceId == 4){
+//                        System.out.println("..............Promotion................"+serviceId);
+                        List<ProjectProposal> pp = quotationDAO.loadProjectProposalsByServiceId(serviceId);
+                        request.setAttribute("proposal", pp);
+                        List<com.vertec.hibe.model.Package> p = quotationDAO.loadPackage("1", serviceId);
+                        request.setAttribute("packages", p);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/CreateQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                        
+                    }else if(serviceId == 5){
+//                        System.out.println("..............Hardware................"+serviceId);
+                        List<Customer> customer = quotationDAO.loadCustomer();
+                        request.setAttribute("cus", customer);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/HardwareQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                    }else if(serviceId == 6){
+                        System.out.println("..............Graphic................"+serviceId);
+                    }
+                    
+                    break;
+                }
+                case "NewloadPageQuotation": {
+                    List<Service> serList = quotationDAO.NewgetServices();
+                    request.setAttribute("serList", serList);
+                    
+                    requestDispatcher = request.getRequestDispatcher("app/quotation/NewViewQuotation.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "ViewQuotation": {
+                    
+                    String sid = request.getParameter("service").trim();
+                    System.out.println(">>>>>>>>>>>>>>> "+sid);
+                    int serviceId = Integer.parseInt(sid);
+                    
+                    if(serviceId == 1){
+                        List<Quotation> Qlist = quotationDAO.loadAllQuotationByServiceId(serviceId);
+                        request.setAttribute("Qlist", Qlist);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllSoftware.jsp");
+                        requestDispatcher.forward(request, response);
+                        
+                    }else if(serviceId == 2){
+                        List<Quotation> Qlist = quotationDAO.loadAllQuotationByServiceId(serviceId);
+                        request.setAttribute("Qlist", Qlist);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllWebsite.jsp");
+                        requestDispatcher.forward(request, response);
+                    }else if(serviceId == 3){
+                        List<CctvQuotationInfo> info = quotationDAO.loadCctvQuotation();
+                        request.setAttribute("info", info);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllCctv.jsp");
+                        requestDispatcher.forward(request, response);
+                    
+                    }else if(serviceId == 4){
+                        List<Quotation> Qlist = quotationDAO.loadAllQuotationByServiceId(serviceId);
+                        request.setAttribute("Qlist", Qlist);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllPromotion.jsp");
+                        requestDispatcher.forward(request, response);
+                    
+                    }else if(serviceId == 5){
+                        List<HardwareQuotation> hqList = quotationDAO.loadHardwareQuotation();
+                        request.setAttribute("hqList", hqList);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewHardware.jsp");
+                        requestDispatcher.forward(request, response);
+                    
+                    }else if(serviceId == 6){
+                    
+                    }
+                    break;
+                }
+                
+                case "NewviewSoftware": {
+                    String qid = request.getParameter("hidden");
+                    
+                    System.out.println("Quotation ID.........."+qid);
+                    
+                   
+                    List<QuotationHasFeatures> list = quotationDAO.getWebsite(Integer.parseInt(qid));
+                    request.setAttribute("qhfs", list);
+                    List<Installment> inslist = quotationDAO.getInstallment(Integer.parseInt(qid));
+                    request.setAttribute("ins", inslist);
+                    Quotation q = quotationDAO.LoadProjectByQuotation(Integer.parseInt(qid));
+                    request.setAttribute("quo", q);
+                    
+                    List<SoftwareQuotation> soList = quotationDAO.getSoftware(Integer.parseInt(qid));
+                    request.setAttribute("softList", soList);
+                    List<QuotationHasPackages> pList = quotationDAO.getSoftwarepackageDetails(Integer.parseInt(qid));
+                    request.setAttribute("pList", pList);
+                    List<QuotationHasPackages> qpList = quotationDAO.getSoftwarepackageDetails1(Integer.parseInt(qid));
+                    request.setAttribute("qpList", qpList);
+                    String totAmt = quotationDAO.getTotAmount(Integer.parseInt(qid));
+//                    double totAmt = quotationDAO.getTotAmount(Integer.parseInt(qid));
+                    
+                    request.setAttribute("tAmt", totAmt);
+                    
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/design/Software.jsp");
+                        requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "NewviewWebsite": {
+                    String qid = request.getParameter("hidden");
+                    
+                    System.out.println("Quotation ID.........."+qid);
+                    
+                   
+                    List<QuotationHasFeatures> list = quotationDAO.getWebsite(Integer.parseInt(qid));
+                    request.setAttribute("qhfs", list);
+                    List<Installment> inslist = quotationDAO.getInstallment(Integer.parseInt(qid));
+                    request.setAttribute("ins", inslist);
+                    Quotation q = quotationDAO.LoadProjectByQuotation(Integer.parseInt(qid));
+                    request.setAttribute("quo", q);
+                    requestDispatcher = request.getRequestDispatcher("app/quotation/design/WebSite.jsp");
+                    requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "NewviewPromotion": {
+                    String qid = request.getParameter("hidden");
+                    
+                    System.out.println("Quotation ID.........."+qid);
+                    
+                   
+                    List<QuotationHasFeatures> list = quotationDAO.getWebsite(Integer.parseInt(qid));
+                    request.setAttribute("qhfs", list);
+                    List<Installment> inslist = quotationDAO.getInstallment(Integer.parseInt(qid));
+                    request.setAttribute("ins", inslist);
+                    Quotation q = quotationDAO.LoadProjectByQuotation(Integer.parseInt(qid));
+                    request.setAttribute("quo", q);
+                    requestDispatcher = request.getRequestDispatcher("app/quotation/design/Promotion.jsp");
                     requestDispatcher.forward(request, response);
                     break;
                 }

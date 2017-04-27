@@ -290,7 +290,7 @@ function getDiff(){ // get time defference
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Electricity Cost:
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Utility Cost:
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="ecost" class="form-control col-md-7 col-xs-12"  data-validate-words="1" name="ecost" onkeyup="getValues()" placeholder="Enter Electricity Cost" required="required" type="number">

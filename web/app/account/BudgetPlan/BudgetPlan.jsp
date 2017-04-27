@@ -171,13 +171,19 @@
     
     function SaveBudgetPlan(id) {
         var year = document.getElementById("year").value;
+        
         var ncid = document.getElementById("ncid").value;
         var amount = document.getElementById(id+"amount").value;
+        var ccid = document.getElementById("ccid").value;
+//        alert(ccid);
+//        alert(ncid);
+//        alert(amount);
+//        alert(id);
         $.ajax({
             type: "POST",
-            url: "Budget?action=SaveBudgetPlan&ncid=" + ncid+"&amount="+amount+"&year="+year+"&month="+id,
+            url: "Budget?action=SaveBudgetPlan&ncid=" + ncid+"&amount="+amount+"&year="+year+"&month="+id+"&costcId="+ccid,
             success: function (msg) {
-                
+//                alert(msg);
                 if(msg==="Success"){
                     nom_Success("Successfully Saved...");
                     loadData();

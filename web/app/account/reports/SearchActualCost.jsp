@@ -75,34 +75,34 @@
 
         });
     }
-    function loadNominal() {
-        $("#nomiId").empty();
-        var s1 = document.getElementById('nomiId');
-        var t1 = document.createElement("option");
-
-        t1.value = "";
-        t1.innerHTML = "Select Nominal Code";
-        s1.appendChild(t1);
-        var ccId = document.getElementById('ccId').value;
-        $.ajax({
-            type: "POST",
-            url: "AccountReport?action=getNominalByCostCenter&ccid=" + ccId,
-            success: function (msg) {
-                var reply = eval('(' + msg + ')');
-                var arrLn1 = reply.cc;
-                
-                for (var f = 0; f < arrLn1.length; f++) {
-                    var t = document.createElement("option");
-                    t.value = arrLn1[f].id;
-                    t.innerHTML = arrLn1[f].name;
-                    s1.appendChild(t);
-                }
-
-
-            }
-
-        });
-    }
+//    function loadNominal() {
+//        $("#nomiId").empty();
+//        var s1 = document.getElementById('nomiId');
+//        var t1 = document.createElement("option");
+//
+//        t1.value = "";
+//        t1.innerHTML = "Select Nominal Code";
+//        s1.appendChild(t1);
+//        var ccId = document.getElementById('ccId').value;
+//        $.ajax({
+//            type: "POST",
+//            url: "AccountReport?action=getNominalByCostCenter&ccid=" + ccId,
+//            success: function (msg) {
+//                var reply = eval('(' + msg + ')');
+//                var arrLn1 = reply.cc;
+//                
+//                for (var f = 0; f < arrLn1.length; f++) {
+//                    var t = document.createElement("option");
+//                    t.value = arrLn1[f].id;
+//                    t.innerHTML = arrLn1[f].name;
+//                    s1.appendChild(t);
+//                }
+//
+//
+//            }
+//
+//        });
+//    }
 </script>
 
 
@@ -138,13 +138,13 @@
                 </div>
                 <div class="x_content">
 
-                    <form action="AccountReport?action=ActualCost" method="POST">
+                    <form action="AccountReport?action=ActualCost" method="POST" >
 
                         <div class="item form-group" style="padding-top: 50px;">
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select State <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="stateid" id="stateid" onchange="loadFunctionData();">
+                                <select class="form-control" name="stateid" id="stateid" required="required" onchange="loadFunctionData();">
                                     <option selected="true" disabled value="">Select State</option>
                                     <%                                        for (State s : state) {
                                     %>
@@ -159,7 +159,7 @@
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select Function <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="functionid" id="functionid" onchange="loadCostCenter();">
+                                <select class="form-control" name="functionid" id="functionid" onchange="loadCostCenter();"required="required">
                                     <option selected="true" disabled value="">Select Function</option>
                                     <%
                                         for (FunctionData s : fd) {
@@ -176,7 +176,7 @@
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select Cost Center <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="ccId" id="ccId" onchange="loadNominal();">
+                                <select class="form-control" name="ccId" id="ccId" onchange="" required="required">
                                     <option selected="true" disabled value="">Select Cost Center</option>
                                     <%
                                         for (CostCenter s : cs) {
@@ -193,7 +193,7 @@
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select Nominal Code <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="nomiId" id="nomiId" >
+                                <select class="form-control" name="nomiId" id="nomiId" required="required" >
                                     <option selected="true" disabled value="">Select Nominal Code</option>
                                     <%
                                         for (NominalCode s : nc) {
@@ -209,7 +209,7 @@
                             <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Select Budget Years <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="byear" id="byear" >
+                                <select class="form-control" name="byear" id="byear" required="required">
                                     <option selected="true" disabled value="">Select Budget Years</option>
                                     <%
                                         for (String s : by) {

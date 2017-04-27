@@ -105,27 +105,15 @@
                                 <%if (ca.checkUserAuth("VIEW_PACKAGE", group) != null) {%>
                             <li><a href="${context}/Quotation?action=SearchPackage">View Packages</a></li>
                                 <%}%>
+                                
                                 <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=createQuotation">Create Quotation</a></li>
+                            <li><a href="${context}/Quotation?action=NewcreateQuotation">Create Quotation</a></li>
                                 <%}%>
-                            <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=SoftwareQuotation">Create software Quotation</a></li>
+                                <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
+                            <li><a href="${context}/Quotation?action=NewloadPageQuotation">View Quotation</a></li>
                                 <%}%>
-                            <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=viewHardware">Create Hardware Quotation</a></li>
-                                <%}%>
-                            <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=loadCctvPage">Create CCTV Quotation</a></li>
-                                <%}%>
-                                <%if (ca.checkUserAuth("VIEW_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=ViewQuotation">View Quotation</a></li>
-                                <%}%>
-                            <%if (ca.checkUserAuth("VIEW_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=viewHardwareQuotation">View Hardware Quotation</a></li>
-                                <%}%>
-                            <%if (ca.checkUserAuth("VIEW_QUOTATION", group) != null) {%>
-                            <li><a href="${context}/Quotation?action=loadcctvQuotation">View CCTV Quotation</a></li>
-                                <%}%>
+                            
+                                
                         </ul>
                     </li>
                     <%if (ca.checkUserAuth("CALCULATE_ESTIMATE_COST", group) != null & ca.checkUserAuth("VIEW_ESTIMATE_COST", group) != null) {%>

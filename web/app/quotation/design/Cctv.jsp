@@ -4,6 +4,8 @@
     Author     : Java-Dev-Ruchira
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.vertec.hibe.model.CctvWarranty"%>
 <%@page import="com.vertec.hibe.model.CctvQuotationItems"%>
 <%@page import="com.vertec.hibe.model.CctvQuotationInfo"%>
 <%@page import="com.vertec.hibe.model.HardwareQuotation"%>
@@ -30,6 +32,19 @@
     <%
         List<CctvQuotationItems> list = (List<CctvQuotationItems>) request.getAttribute("info");
         CctvQuotationInfo hq =(CctvQuotationInfo) request.getAttribute("cq");
+        CctvWarranty w = (CctvWarranty)request.getAttribute("ccwarrenty");
+        System.out.println("..........warrenty.."+w.getDesignation());
+        DecimalFormat df = new DecimalFormat("####0.00");
+        String cable = df.format(w.getCable());
+        double stt = w.getStPayment();
+        double sec1 = w.getNdPayment();
+        double trd1= w.getRdPayment()
+                ;
+        int fir = (int)stt;
+        int sec = (int)sec1;
+        int thrd = (int)trd1;
+        System.out.println("..........cable.."+cable);
+        System.out.println("..........st.."+fir);
     %>
 
 
@@ -115,22 +130,25 @@
         </table>
     </center>
                     <br>
-   <p><strong> * Additional Cabling Per Meter Rs.180.00</strong></p>
+   <p><strong> * Additional Cabling Per Meter Rs.<%=cable %></strong></p>
    <br>
    <p><u><strong>TERMS AND CONDITIONS</strong></u></p>
 								
     
     <p>All additional Fittings are subjected to the Quotation
     </p>
-    <p>Warranty commences at the date of installation and there will be 2 years warranty on the implemented solution,at any time problems/issues that could arise, would be solved without any additional charge.
+    <p>Warranty commences at the date of installation and there will be <%=w.getInstallation() %> years warranty on the implemented solution,at any time problems/issues that could arise, would be solved without any additional charge.
     </p>
     <p>We guarantee that each CCTV equipment and Solutions has been carefully tested and is in perfect operating Condition on Delivery.Warranty covers only manufacture’s Defects from the date of purchasing as follows
     </p>
     
     <ul style="list-style-type:disc">
-        <li>All Camera’s	2 years</li>
-        <li>DVR (Digital Video Recorder) 2 years</li>
-        <li>Hard Disk Drive	2 years</li>
+        <li>All Camera’s	<%=w.getCamera() %> years</li>
+        <li>DVR (Digital Video Recorder) <%=w.getDvr() %> years</li>
+        <li>Hard Disk Drive	<%=w.getHardDisk() %> years</li>
+        <%if(w.getMonitor()!= null){ %>
+        <li>Monitor <%=w.getMonitor() %> years</li>
+        <%}%>
     </ul>
 
     
@@ -157,7 +175,7 @@
     
     <p><strong><b><u>Advance payment</u></b></strong></p>
     <p>
-        Advance is 40% of the cost and 2nd payment will be 35% at the end of the caballing part,Balance 25% at the final day of the project.
+        Advance is <%=fir %> % of the cost and 2nd payment will be <%=sec %>% at the end of the caballing part,Balance <%=thrd %>% at the final day of the project.
         </p>
         
         <p><strong><b><u>Maintenance Support (Troubleshooting)</u></b></strong></p>    
@@ -176,8 +194,8 @@
                         <br />
                         <br />
                         ....................................<br />
-                        Hansy Kumaralal<br />
-                        (Project Coordinator )</p>
+                        <%=w.getPreparedBy() %><br />
+                        (<%=w.getDesignation() %>)</p>
                 </td>
                 <td style="width:300px">&nbsp;</td>
                 <td>

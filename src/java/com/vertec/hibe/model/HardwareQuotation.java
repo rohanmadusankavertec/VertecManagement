@@ -6,10 +6,8 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,16 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Java-Dev-Ruchira
+ * @author Ruchira
  */
 @Entity
 @Table(name = "hardware_quotation")
@@ -52,11 +48,12 @@ public class HardwareQuotation implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
+    @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private QuotationStatus quotationStatusId;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Customer customerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hardwareId")
-    private Collection<HardwareItem> hardwareItemCollection;
 
     public HardwareQuotation() {
     }
@@ -89,21 +86,20 @@ public class HardwareQuotation implements Serializable {
         this.amount = amount;
     }
 
+    public QuotationStatus getQuotationStatusId() {
+        return quotationStatusId;
+    }
+
+    public void setQuotationStatusId(QuotationStatus quotationStatusId) {
+        this.quotationStatusId = quotationStatusId;
+    }
+
     public Customer getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
-    }
-
-    @XmlTransient
-    public Collection<HardwareItem> getHardwareItemCollection() {
-        return hardwareItemCollection;
-    }
-
-    public void setHardwareItemCollection(Collection<HardwareItem> hardwareItemCollection) {
-        this.hardwareItemCollection = hardwareItemCollection;
     }
 
     @Override

@@ -289,6 +289,8 @@ public class BudgetController extends HttpServlet {
                 String year = request.getParameter("year").trim();
                 String amount = request.getParameter("amount").trim();
                 String month = request.getParameter("month").trim();
+                String ccid = request.getParameter("costcId").trim();
+//                System.out.println("ncid......."+ncid+".....year...."+year+"....amount..."+amount+"....month..."+month+"....ccid...."+ccid);
                 
                 BudgetPlan bp = new BudgetPlan();
                 bp.setAmount(Double.parseDouble(amount));
@@ -297,7 +299,9 @@ public class BudgetController extends HttpServlet {
                 bp.setDate(new Date());
                 bp.setSysUserId(user1);
                 bp.setMonth(month);
+                bp.setCostCenterId(new CostCenter(Integer.parseInt(ccid)));
                 String result=budgetdao.saveBudgetPlan(bp);
+//                System.out.println("...result...."+result);
                 response.getWriter().write(result);
                 break;
             }

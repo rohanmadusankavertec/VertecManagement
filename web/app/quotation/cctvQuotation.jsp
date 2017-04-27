@@ -70,6 +70,25 @@
    
     function sendData(){ // save quotation
         var customer = document.getElementById("customer").value;
+        var camera = document.getElementById("camera").value;
+        var dvr = document.getElementById("dvr").value;
+        var disk = document.getElementById("disk").value;
+        var moniter = document.getElementById("monitor").value;
+        var intall = document.getElementById("install").value;
+        var cable = document.getElementById("cable").value;
+        var fst = document.getElementById("1st").value;
+        var snd = document.getElementById("2nd").value;
+        var trd = document.getElementById("3rd").value;
+        var prepare = document.getElementById("prepare").value;
+        var designation = document.getElementById("desgnation").value;
+//        alert(camera);
+//        alert(dvr);
+//        alert(disk);
+//        alert(moniter);
+        alert(intall);
+//        alert(cable);
+//        alert(prepare);
+//        alert(designation);
         var xmlHttp = getAjaxObject();
             xmlHttp.onreadystatechange = function()
             {
@@ -79,13 +98,13 @@
 
                     if (reply === "Success") {
                         nom_Success("Quotation added Successfully ");
-                        setTimeout("location.href = 'Quotation?action=viewHardware';", 1000);
+                        setTimeout("location.href = 'Quotation?action=NewcreateQuotation';", 1000);
                     } else {
                         sm_warning("Quotation is not added, Please Try again.");
                     }
                 }
             };
-                xmlHttp.open("POST", "Quotation?action=saveCctvQuotation&items="+tbArr+"&qty="+qty+"&customer="+customer+"&grand="+grand, true);
+                xmlHttp.open("POST", "Quotation?action=saveCctvQuotation&items="+tbArr+"&qty="+qty+"&customer="+customer+"&grand="+grand+"&camera="+camera+"&dvr="+dvr+"&hardDisk="+disk+"&monitor="+moniter+"&installation="+intall+"&cable="+cable+"&fst="+fst+"&snd="+snd+"&trd="+trd+"&prepare="+prepare+"&designation="+designation, true);
                 xmlHttp.send();
             
             
@@ -301,7 +320,89 @@ calculation1();
                             </div>
                         </center>
                     </div> 
-
+                    <div class="clearfix"></div>
+                    <div class="x_title">
+                        <h2>Add CCTV Warronty <small></small></h2>
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Camera</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="camera" name="camera" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div> 
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">DVR(Digital Video Recorder)</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="dvr" name="dvr" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Hard Disk</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="disk" name="disk" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Monitor</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="monitor" name="monitor" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Installation</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="install" name="install" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Additional cable(per meter)</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="cable" name="cable" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">1 st Payment</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="1st" name="1st" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">2 st Payment</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="2nd" name="2nd" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">3 rd Payment</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="3rd" name="3rd" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Prepared By</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="prepare" name="prepare" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="text">
+                            </div>
+                    </div>
+                    <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Designation</label>
+                            
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="desgnation" name="desgnation" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="text">
+                            </div>
+                    </div>
                     <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Sub Total :Rs
                             </label>

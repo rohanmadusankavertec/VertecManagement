@@ -6,10 +6,8 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,16 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Java-Dev-Ruchira
+ * @author Ruchira
  */
 @Entity
 @Table(name = "quotation")
@@ -39,15 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Quotation.findByDate", query = "SELECT q FROM Quotation q WHERE q.date = :date"),
     @NamedQuery(name = "Quotation.findByAmount", query = "SELECT q FROM Quotation q WHERE q.amount = :amount")})
 public class Quotation implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationId")
-    private Collection<QuotationHasPackages> quotationHasPackagesCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationId")
-    private Collection<SoftwareQuotation> softwareQuotationCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationId")
-    private Collection<Installment> installmentCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,15 +48,18 @@ public class Quotation implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
-    @JoinColumn(name = "created_by", referencedColumnName = "sysuser_id")
+    @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private SysUser createdBy;
-    @JoinColumn(name = "project_proposal_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private ProjectProposal projectProposalId;
+    private QuotationStatus quotationStatusId;
     @JoinColumn(name = "package_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Package packageId;
+    @JoinColumn(name = "project_proposal_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private ProjectProposal projectProposalId;
+    @JoinColumn(name = "created_by", referencedColumnName = "sysuser_id")
+    @ManyToOne(optional = false)
+    private SysUser createdBy;
 
     public Quotation() {
     }
@@ -102,12 +92,20 @@ public class Quotation implements Serializable {
         this.amount = amount;
     }
 
-    public SysUser getCreatedBy() {
-        return createdBy;
+    public QuotationStatus getQuotationStatusId() {
+        return quotationStatusId;
     }
 
-    public void setCreatedBy(SysUser createdBy) {
-        this.createdBy = createdBy;
+    public void setQuotationStatusId(QuotationStatus quotationStatusId) {
+        this.quotationStatusId = quotationStatusId;
+    }
+
+    public Package getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(Package packageId) {
+        this.packageId = packageId;
     }
 
     public ProjectProposal getProjectProposalId() {
@@ -118,12 +116,12 @@ public class Quotation implements Serializable {
         this.projectProposalId = projectProposalId;
     }
 
-    public Package getPackageId() {
-        return packageId;
+    public SysUser getCreatedBy() {
+        return createdBy;
     }
 
-    public void setPackageId(Package packageId) {
-        this.packageId = packageId;
+    public void setCreatedBy(SysUser createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override
@@ -149,33 +147,6 @@ public class Quotation implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.Quotation[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Installment> getInstallmentCollection() {
-        return installmentCollection;
-    }
-
-    public void setInstallmentCollection(Collection<Installment> installmentCollection) {
-        this.installmentCollection = installmentCollection;
-    }
-
-    @XmlTransient
-    public Collection<SoftwareQuotation> getSoftwareQuotationCollection() {
-        return softwareQuotationCollection;
-    }
-
-    public void setSoftwareQuotationCollection(Collection<SoftwareQuotation> softwareQuotationCollection) {
-        this.softwareQuotationCollection = softwareQuotationCollection;
-    }
-
-    @XmlTransient
-    public Collection<QuotationHasPackages> getQuotationHasPackagesCollection() {
-        return quotationHasPackagesCollection;
-    }
-
-    public void setQuotationHasPackagesCollection(Collection<QuotationHasPackages> quotationHasPackagesCollection) {
-        this.quotationHasPackagesCollection = quotationHasPackagesCollection;
     }
     
 }
