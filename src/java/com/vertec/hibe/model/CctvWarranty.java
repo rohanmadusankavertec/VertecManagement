@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -68,10 +67,8 @@ public class CctvWarranty implements Serializable {
     private Double ndPayment;
     @Column(name = "3rd_payment")
     private Double rdPayment;
-    @Size(max = 200)
     @Column(name = "prepared_by")
     private String preparedBy;
-    @Size(max = 200)
     @Column(name = "designation")
     private String designation;
     @JoinColumn(name = "cctv_quotation_info_id", referencedColumnName = "id")
