@@ -44,6 +44,8 @@
                                     <th>Date </th>
                                     <th>Created By </th>
                                     <th>Amount </th>
+                                    <th>Action </th>
+                                    <th>Action </th>
                                     <th>Print </th>
                                     
                                 </tr>
@@ -61,6 +63,18 @@
                                     <td class=" "><%=s.getDate() %></td>
                                     <td class=" "><%=s.getCreatedBy().getFirstName() %></td>
                                     <td class=" "><%=s.getAmount() %></td>
+                                    <td><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
+                                            <input type="hidden" name="type" value="2"/>
+                                            <button  onclick="" type="submit" class="btn btn-danger">Canceled</button> 
+                                        </form>
+                                    </td>
+                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
+                                            <input type="hidden" name="type" value="1"/>
+                                            <button  onclick="" type="submit" class="btn btn-warning">Approved</button> 
+                                        </form>
+                                    </td>
                                     <td><form method="POST" target="_blank" action="Quotation?action=NewviewSoftware">
                                             <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
                                             <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 

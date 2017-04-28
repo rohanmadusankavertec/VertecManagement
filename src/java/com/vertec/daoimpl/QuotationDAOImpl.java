@@ -1312,5 +1312,42 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
         }
         return null;
     }
+    
+    public String changeStatus(int qid,int type) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
+        if (session != null) {
+            try {
+                String hql = "";
+                if(type==1){
+                    System.out.println("<<<<<<<<<<<<<<<<<<<<<<");
+                    hql="UPDATE Quotation q SET q.quotationStatusId.id =:approved WHERE q.id=:id";
+                }else{
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+                    hql="UPDATE Quotation q SET q.quotationStatusId.id =:canceld WHERE q.id=:id";
+                }
+                Query query = session.createQuery(hql);
+                if(type == 1){
+                    query.setParameter("approved", 2);
+                }else{
+                    query.setParameter("canceld", 3);
+                }
+                
+                query.setParameter("id", qid);
+                query.executeUpdate();
+                tr.commit();
+                return VertecConstants.SUCCESS;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+
+        return VertecConstants.ERROR;
+    }
    
 }

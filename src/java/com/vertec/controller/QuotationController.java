@@ -840,7 +840,7 @@ public class QuotationController extends HttpServlet {
                     break;
                 }
                 case "ViewQuotation": {
-                    
+                    System.out.println("...calling.....");
                     String sid = request.getParameter("service").trim();
                     System.out.println(">>>>>>>>>>>>>>> "+sid);
                     int serviceId = Integer.parseInt(sid);
@@ -942,6 +942,29 @@ public class QuotationController extends HttpServlet {
                     request.setAttribute("quo", q);
                     requestDispatcher = request.getRequestDispatcher("app/quotation/design/Promotion.jsp");
                     requestDispatcher.forward(request, response);
+                    break;
+                }
+                case "changeStatus": {
+                    System.out.println("...............////////////////////...............................");
+                    String qid = request.getParameter("hidden").trim();
+                    String type = request.getParameter("type").trim();
+                    
+                    System.out.println("...........qid.."+qid);
+                    System.out.println("...........type.."+type);
+                    
+                    String result = quotationDAO.changeStatus(Integer.parseInt(qid), Integer.parseInt(type));
+                    System.out.println("........result..."+result);    
+                    if (result.equals(VertecConstants.SUCCESS)) {
+                            request.getSession().removeAttribute("Success_Message");
+
+                            request.getSession().setAttribute("Success_Message", "Successfully Changed");
+                            response.sendRedirect("Quotation?action=ViewQuotation");
+                        } else {
+                            request.getSession().removeAttribute("Error_Message");
+
+                            request.getSession().setAttribute("Error_Message", "Not Changed,Please Tri again");
+                            response.sendRedirect("Quotation?action=ViewQuotation");
+                        }
                     break;
                 }
                 

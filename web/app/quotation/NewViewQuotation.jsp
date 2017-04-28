@@ -39,7 +39,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="Quotation?action=ViewQuotation" method="post" class="form-horizontal form-label-left" validate>
+                    <form action="Quotation?action=ViewQuotation" method="GET" class="form-horizontal form-label-left" validate>
                         <span class="section"></span>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Service</label>
