@@ -48,12 +48,12 @@ public class HardwareQuotation implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
+    @JoinColumn(name = "project_proposal_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private ProjectProposal projectProposalId;
     @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private QuotationStatus quotationStatusId;
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Customer customerId;
 
     public HardwareQuotation() {
     }
@@ -86,20 +86,20 @@ public class HardwareQuotation implements Serializable {
         this.amount = amount;
     }
 
+    public ProjectProposal getProjectProposalId() {
+        return projectProposalId;
+    }
+
+    public void setProjectProposalId(ProjectProposal projectProposalId) {
+        this.projectProposalId = projectProposalId;
+    }
+
     public QuotationStatus getQuotationStatusId() {
         return quotationStatusId;
     }
 
     public void setQuotationStatusId(QuotationStatus quotationStatusId) {
         this.quotationStatusId = quotationStatusId;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
     }
 
     @Override

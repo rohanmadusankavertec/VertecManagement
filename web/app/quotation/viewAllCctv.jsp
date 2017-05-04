@@ -38,9 +38,11 @@
                             <thead>
                                 <tr class="headings">
 
-                                    <th>Customer Name </th>
+                                    <th>Project Name </th>
                                     <th>Date</th>
                                     <th>Amount</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
                                     <th>Print </th>
                                     
                                 </tr>
@@ -53,9 +55,24 @@
                                 %>
                                 <tr>
 
-                                    <td class=" "><%=c.getCustomerId().getFirstName()+" "+c.getCustomerId().getLastName() %></td>
+                                    <td class=" "><%=c.getProjectProposalId().getProposalName() %></td>
                                     <td class=" "><%=c.getDate() %></td>
                                     <td class=" "><%=c.getTotal() %></td>
+                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=c.getId()%>"/>
+                                            <input type="hidden" name="type" value="1"/>
+                                            <input type="hidden" name="service" value="3"/>
+                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
+                                        </form>
+                                    </td>
+                                    <td><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=c.getId()%>"/>
+                                            <input type="hidden" name="type" value="2"/>
+                                            <input type="hidden" name="service" value="3"/>
+                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
+                                        </form>
+                                    </td>
+                                    
                                     <td>
                                         <form method="POST" target="_blank" action="Quotation?action=viewCctvItem">
                                             <input type="hidden" name="hidden" value="<%=c.getId()%>"/>

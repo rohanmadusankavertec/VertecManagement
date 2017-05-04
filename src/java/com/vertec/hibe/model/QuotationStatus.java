@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "QuotationStatus.findByStatus", query = "SELECT q FROM QuotationStatus q WHERE q.status = :status")})
 public class QuotationStatus implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationStatusId")
+    private Collection<ProjectProposal> projectProposalCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -122,6 +125,15 @@ public class QuotationStatus implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.QuotationStatus[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ProjectProposal> getProjectProposalCollection() {
+        return projectProposalCollection;
+    }
+
+    public void setProjectProposalCollection(Collection<ProjectProposal> projectProposalCollection) {
+        this.projectProposalCollection = projectProposalCollection;
     }
     
 }

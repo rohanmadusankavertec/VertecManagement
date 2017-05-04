@@ -17,11 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Java-Dev-Ruchira
+ * @author Ruchira
  */
 @Entity
 @Table(name = "software_quotation")
@@ -40,6 +41,7 @@ public class SoftwareQuotation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 100)
     @Column(name = "description")
     private String description;
     @Column(name = "qty")

@@ -57,7 +57,8 @@
 
         <table style="width: 100%;">
             <tr style="height: 20px;width: 80%;">
-                <td style="width: 40%"> TO :<%=hq.getCustomerId().getCompanyName()%></td>
+                <td style="width: 40%"> TO :<%=hq.getProjectProposalId().getCustomerId().getCompanyName() %></td>
+               
 
                 <td style="width: 40%;"></td>
                 <td style="width: 20%"> Date:<%
@@ -69,21 +70,21 @@
             </tr>
             <tr>
                 
-                <td>    Att :<%=hq.getCustomerId().getFirstName() +" "+hq.getCustomerId().getLastName() %></td>
+                <td>    Att :<%=hq.getProjectProposalId().getCustomerId().getFirstName() +" "+hq.getProjectProposalId().getCustomerId().getLastName() %></td>
                 <td></td>
-                <td>Quotation#:<%=hq.getId()%>   </td>
+                <td>Quotation#:<%=hq.getId()%></td>
 
             </tr>
             <tr>
                 
-                <td>Contact No :<%=hq.getCustomerId().getMobileNo() %></td>
+                <td>Contact No :<%=hq.getProjectProposalId().getCustomerId().getMobileNo() %></td>
                 <td></td>
                 <td></td>
 
             </tr>
             <tr>
                 
-                <td>E-mail : <%=hq.getCustomerId().getEmail() %></td>
+                <td>E-mail : <%=hq.getProjectProposalId().getCustomerId().getEmail() %></td>
                 <td></td>
                 <td></td>
 

@@ -4,7 +4,9 @@
     Author     : Java-Dev-Ruchira
 --%>
 
-<%@page import="com.vertec.hibe.model.Quotation"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.vertec.hibe.model.Service"%>
+<%@page import="com.vertec.hibe.model.CctvQuotationInfo"%>
 <%@page import="com.vertec.hibe.model.HardwareQuotation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../../template/header.jsp"%>
@@ -12,7 +14,9 @@
 
 
     <%
-        List<Quotation> webList = (List<Quotation>) request.getAttribute("Qlist");
+        List<CctvQuotationInfo> hqList = (List<CctvQuotationInfo>) request.getAttribute("quoList");
+        
+        String status = (String)request.getAttribute("status");
     %>
     <div class="">
 
@@ -22,7 +26,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Web Quotation <small>up to now</small></h2>
+                    <%if(status.equals("2")) {%>
+                        <h2>CCTV Quotation Marked As Approved <small>up to now</small></h2>
+                    <%} else {%>
+                        <h2>CCTV Quotation Marked As Canceled <small>up to now</small></h2>
+                    <%}%>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><li class="fa fa-chevron-up"></li></a>
                         </li>
@@ -38,13 +46,10 @@
                             <thead>
                                 <tr class="headings">
 
-                                    <th>Project Name </th>
                                     <th>Customer Name </th>
-                                    <th>Date </th>
-                                    <th>Created By </th>
-                                    <th>Amount </th>
-                                    <th>Action </th>
-                                    <th>Action </th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    
                                     <th>Print </th>
                                     
                                 </tr>
@@ -52,34 +57,24 @@
 
                             <tbody>
 
-                                <% for (Quotation p : webList) {
+                                <% for (CctvQuotationInfo c : hqList) {
 
                                 %>
                                 <tr>
 
-                                    <td class=" "><%=p.getProjectProposalId().getProposalName() %></td>
-                                    <td class=" "><%=p.getProjectProposalId().getCustomerId().getFirstName()+" "+p.getProjectProposalId().getCustomerId().getLastName() %></td>
-                                    <td class=" "><%=p.getDate() %></td>
-                                    <td class=" "><%=p.getCreatedBy().getFirstName() %></td>
-                                    <td class=" "><%=p.getAmount() %></td>
-                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
-                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
-                                            <input type="hidden" name="type" value="1"/>
-                                            <input type="hidden" name="proposal" value="<%=p.getProjectProposalId().getId() %>"/>
-                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
-                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
-                                        </form>
-                                    </td>
-                                    <td><form method="POST"  action="Quotation?action=changeStatus">
-                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
-                                            <input type="hidden" name="type" value="2"/>
-                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
-                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
-                                        </form>
-                                    </td>
+                                    <td class=" "><%=c.getCustomerId().getFirstName()+" "+c.getCustomerId().getLastName() %></td>
+                                    <td class=" "><%=c.getDate() %></td>
+                                    <td class=" "><%DecimalFormat df = new DecimalFormat("####0.00");;     
+                                    double amount = c.getTotal();
+                                   
+                                    String amt = df.format(amount);
+                                    out.write(amt);
                                     
-                                    <td><form method="POST" target="_blank" action="Quotation?action=NewviewWebsite">
-                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
+                                    %></td>
+                                    
+                                    <td>
+                                        <form method="POST" target="_blank" action="Quotation?action=viewCctvItem">
+                                            <input type="hidden" name="hidden" value="<%=c.getId()%>"/>
                                             <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 
                                         </form>
                                     </td>

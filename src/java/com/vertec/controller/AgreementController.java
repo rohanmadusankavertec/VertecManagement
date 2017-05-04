@@ -64,7 +64,7 @@ public class AgreementController extends HttpServlet {
             switch (action) {
                 // open add agreement page
                 case "AddAgreement": {
-                    List<ProjectProposal> c = AgreementDAO.loadAllProjectProposal();
+                    List<ProjectProposal> c = AgreementDAO.loadAllApprovedProject();
                     request.setAttribute("projects", c);
                     requestDispatcher = request.getRequestDispatcher("app/agreement/addAgreement.jsp");
                     requestDispatcher.forward(request, response);

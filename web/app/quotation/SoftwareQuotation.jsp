@@ -198,7 +198,7 @@
 
                 if (reply === "Success") {
                     nom_Success("Quotation is added Successfully ");
-                    setTimeout("location.href = 'Quotation?action=SoftwareQuotation';", 1000);
+                    setTimeout("location.href = 'Quotation?action=ViewcreateQuotation&service=1';", 1000);
                 } else {
                     sm_warning("Quotation is not added, Please Try again.");
                 }
@@ -213,10 +213,17 @@
 //            }
 
         var customer = document.getElementById("customer").value;
-//            alert(customer);
-//            var package = document.getElementById("package").value;
-//            var amount = document.getElementById("amount").value;
-        xmlHttp.open("POST", "Quotation?action=SaveQuotation1&customer=" + customer + "&package=" + pck + "&features=" + pkgf + "&indes=" + indes + "&inamount=" + inamount + "&qty=" + inqty, true);
+        var ftpat = document.getElementById("fspay").value;
+        var sdpay = document.getElementById("sdpay").value;
+        var tdpay = document.getElementById("tdpay").value;
+        var install = document.getElementById("installment").value;
+        var maintenance = document.getElementById("maintenance").value;
+        var extra = document.getElementById("extra").value;
+        var prepare = document.getElementById("prepare").value;
+        var design = document.getElementById("designation").value;
+        
+        
+        xmlHttp.open("POST", "Quotation?action=SaveQuotation1&customer=" + customer + "&package=" + pck + "&features=" + pkgf + "&indes=" + indes + "&inamount=" + inamount + "&qty=" + inqty + "&fspay=" + ftpat + "&sdpay=" + sdpay + "&tdpay=" + tdpay + "&installment=" + install + "&maintenance=" + maintenance + "&extra=" + extra + "&prepareby=" + prepare + "&designation=" + design, true);
         xmlHttp.send();
     }
 
@@ -532,8 +539,71 @@
                             </div>
                         </center>
                     </div> 
-
-
+                    <div class="ln_solid"></div>
+                    <form  method="post" class="form-horizontal form-label-left" novalidate>
+                        <div class="x_title">
+                            <h2 style="margin-left: 100px;">Quotation Advance Details<small></small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">First Payment
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="fspay" class="form-control col-md-7 col-xs-12" placeholder="Enter First Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Second Payment
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="sdpay" class="form-control col-md-7 col-xs-12" placeholder="Enter Second Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Third Payment
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="tdpay" class="form-control col-md-7 col-xs-12" placeholder="Enter third Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Software Installment
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="installment" class="form-control col-md-7 col-xs-12" placeholder="Enter Installment Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Maintenance
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="maintenance" class="form-control col-md-7 col-xs-12" placeholder="Enter Maintenance Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Extra Maintenance(1km)
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="extra" class="form-control col-md-7 col-xs-12" placeholder="Enter Extra Maintenance Payment" type="number">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Prepared By
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="prepare" class="form-control col-md-7 col-xs-12" placeholder="Enter name" type="text">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Designation
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="designation" class="form-control col-md-7 col-xs-12" placeholder="Enter Designation" type="text">
+                            </div>
+                        </div>
+                        
+                        
+                    </form>
 
                     <div class="ln_solid"></div>
                     <div class="form-group" >

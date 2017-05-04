@@ -43,6 +43,8 @@
                                     <th>Date </th>
                                     <th>Created By </th>
                                     <th>Amount </th>
+                                    <th>Action </th>
+                                    <th>Action </th>
                                     <th>Print </th>
                                     
                                 </tr>
@@ -60,10 +62,26 @@
                                     <td class=" "><%=p.getDate() %></td>
                                     <td class=" "><%=p.getCreatedBy().getFirstName() %></td>
                                     <td class=" "><%=p.getAmount() %></td>
+                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
+                                            <input type="hidden" name="type" value="1"/>
+                                            <input type="hidden" name="proposal" value="<%=p.getProjectProposalId().getId() %>"/>
+                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
+                                            <button   type="submit" class="btn btn-success">Approve</button> 
+                                        </form>
+                                    </td>
+                                    <td><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
+                                            <input type="hidden" name="type" value="2"/>
+                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
+                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
+                                        </form>
+                                    </td>
+                                    
                                     <td><form method="POST" target="_blank" action="Quotation?action=NewviewPromotion">
                                             <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
                                             
-                                            <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 
+                                            <button   type="submit" class="glyphicon glyphicon-print"></button> 
                                         </form>
                                     </td>
                                 </tr>

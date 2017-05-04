@@ -6,8 +6,10 @@
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,15 +52,19 @@ public class Quotation implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
-    @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private QuotationStatus quotationStatusId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationId")
+    private Collection<SoftwareQuotation> softwareQuotationCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotationId")
+    private Collection<SoftwareAdvanceDetails> softwareAdvanceDetailsCollection;
     @JoinColumn(name = "package_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Package packageId;
     @JoinColumn(name = "project_proposal_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ProjectProposal projectProposalId;
+    @JoinColumn(name = "quotation_status_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private QuotationStatus quotationStatusId;
     @JoinColumn(name = "created_by", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser createdBy;
@@ -92,12 +100,22 @@ public class Quotation implements Serializable {
         this.amount = amount;
     }
 
-    public QuotationStatus getQuotationStatusId() {
-        return quotationStatusId;
+    @XmlTransient
+    public Collection<SoftwareQuotation> getSoftwareQuotationCollection() {
+        return softwareQuotationCollection;
     }
 
-    public void setQuotationStatusId(QuotationStatus quotationStatusId) {
-        this.quotationStatusId = quotationStatusId;
+    public void setSoftwareQuotationCollection(Collection<SoftwareQuotation> softwareQuotationCollection) {
+        this.softwareQuotationCollection = softwareQuotationCollection;
+    }
+
+    @XmlTransient
+    public Collection<SoftwareAdvanceDetails> getSoftwareAdvanceDetailsCollection() {
+        return softwareAdvanceDetailsCollection;
+    }
+
+    public void setSoftwareAdvanceDetailsCollection(Collection<SoftwareAdvanceDetails> softwareAdvanceDetailsCollection) {
+        this.softwareAdvanceDetailsCollection = softwareAdvanceDetailsCollection;
     }
 
     public Package getPackageId() {
@@ -114,6 +132,14 @@ public class Quotation implements Serializable {
 
     public void setProjectProposalId(ProjectProposal projectProposalId) {
         this.projectProposalId = projectProposalId;
+    }
+
+    public QuotationStatus getQuotationStatusId() {
+        return quotationStatusId;
+    }
+
+    public void setQuotationStatusId(QuotationStatus quotationStatusId) {
+        this.quotationStatusId = quotationStatusId;
     }
 
     public SysUser getCreatedBy() {

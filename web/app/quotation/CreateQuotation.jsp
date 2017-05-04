@@ -329,6 +329,7 @@
     
     var desarr = [];
      function AddQuotation() { // send data of quotation to controller class
+         var serviceId = document.getElementById("serviceId").value;
             var xmlHttp = getAjaxObject();
             xmlHttp.onreadystatechange = function()
             {
@@ -339,7 +340,13 @@
                     if (reply === "Success") {
                         nom_Success("Quotation added Successfully ");
 //                        setTimeout("location.href = 'Estimatecost?action=addestimatecost';", 1500);
-                        setTimeout("location.href = 'Quotation?action=createQuotation';", 1500);
+                        alert(serviceId);
+                        if(serviceId == 2 ){
+                        setTimeout("location.href = 'Quotation?action=ViewcreateQuotation&service=2';", 1500);
+                        }else{
+                        setTimeout("location.href = 'Quotation?action=ViewcreateQuotation&service=4';", 1500);
+  
+                        }
                     } else {
                         sm_warning("Quotation is not added, Please Try again.");
                     }
@@ -390,6 +397,7 @@
 
 
 <%
+    String serviceId = (String)request.getAttribute("serviceid");
     List<ProjectProposal> pp = (List<ProjectProposal>) request.getAttribute("proposal");
     List<com.vertec.hibe.model.Package> pkg = (List<com.vertec.hibe.model.Package>) request.getAttribute("packages");
 %>
@@ -586,6 +594,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group" >
                         <div class="col-md-6 col-md-offset-4 col-lg-offset-4">
+                            <input type="hidden" name="serviceId" id="serviceId" value="<%=serviceId%>"/>
                             <button id="send" type="button" onclick="AddQuotation()" class="btn btn-success">Submit Quotation</button>
                         </div>
                     </div>

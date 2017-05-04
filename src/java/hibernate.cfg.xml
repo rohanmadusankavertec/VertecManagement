@@ -49,6 +49,7 @@
     <mapping class="com.vertec.hibe.model.QuotationHasPackages"/>
     <mapping class="com.vertec.hibe.model.QuotationStatus"/>
     <mapping class="com.vertec.hibe.model.Service"/>
+    <mapping class="com.vertec.hibe.model.SoftwareAdvanceDetails"/>
     <mapping class="com.vertec.hibe.model.SoftwareQuotation"/>
     <mapping class="com.vertec.hibe.model.State"/>
     <mapping class="com.vertec.hibe.model.Status"/>

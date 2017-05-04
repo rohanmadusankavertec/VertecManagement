@@ -4,6 +4,7 @@
     Author     : Java-Dev-Ruchira
 --%>
 
+<%@page import="com.vertec.hibe.model.ProjectProposal"%>
 <%@page import="com.vertec.hibe.model.CctvCategory"%>
 <%@page import="com.vertec.hibe.model.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -98,7 +99,7 @@
 
                     if (reply === "Success") {
                         nom_Success("Quotation added Successfully ");
-                        setTimeout("location.href = 'Quotation?action=NewcreateQuotation';", 1000);
+                        setTimeout("location.href = 'Quotation?action=ViewcreateQuotation&service=3';", 1000);
                     } else {
                         sm_warning("Quotation is not added, Please Try again.");
                     }
@@ -214,7 +215,7 @@ calculation1();
 
 <%
     List<CctvCategory> cc = (List<CctvCategory>) request.getAttribute("category");
-    List<Customer> cu = (List<Customer>) request.getAttribute("customer");
+    List<ProjectProposal> cu = (List<ProjectProposal>) request.getAttribute("project");
     
 %>
 <div class="">
@@ -244,12 +245,12 @@ calculation1();
                         <!--<span class="section"></span>-->
                         <form action="#" method="post" class="form-horizontal form-label-left" validate>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Customer </label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Proposal </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="customer" id="customer" required="required" >
-                                    <option selected="true" disabled="true">Select customer</option>
-                                    <% for (Customer c : cu) {%>
-                                    <option value="<%=c.getId()%>"><%=c.getFirstName()+" "+ c.getLastName()+"-"+c.getCompanyName() %></option>
+                                    <option selected="true" disabled="true">Select Project</option>
+                                    <% for (ProjectProposal c : cu) {%>
+                                    <option value="<%=c.getId()%>"><%=c.getProposalName()+"- "+ c.getCustomerId().getFirstName()+" "+c.getCustomerId().getLastName() %></option>
                                     <%}%>
                                 </select>                            
                             </div>

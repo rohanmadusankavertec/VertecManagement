@@ -11,6 +11,7 @@ import com.vertec.daoimpl.ProposalProjectDAOImpl;
 import com.vertec.daoimpl.ServiceDAOImpl;
 import com.vertec.hibe.model.Customer;
 import com.vertec.hibe.model.ProjectProposal;
+import com.vertec.hibe.model.QuotationStatus;
 import com.vertec.hibe.model.Service;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
@@ -79,6 +80,7 @@ public class ProposalProjectController extends HttpServlet {
                   pp.setCustomerId(new Customer(c));
                   pp.setServiceId(new Service(Integer.parseInt(sId)));
                   pp.setIsValid(isValidated);
+                  pp.setQuotationStatusId(new QuotationStatus(1));
 
                   String result = proposalDAO.saveProjectProposal(pp);
                 

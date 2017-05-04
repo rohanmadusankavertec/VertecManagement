@@ -4,6 +4,7 @@
     Author     : Java-Dev-Ruchira
 --%>
 
+<%@page import="com.vertec.hibe.model.Service"%>
 <%@page import="com.vertec.hibe.model.Quotation"%>
 <%@page import="com.vertec.hibe.model.HardwareQuotation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +13,11 @@
 
 
     <%
-        List<Quotation> webList = (List<Quotation>) request.getAttribute("Qlist");
+        List<Quotation> quoList = (List<Quotation>) request.getAttribute("quoList");
+        Service service = (Service) request.getAttribute("service");
+        String status = (String)request.getAttribute("status");
+//        System.out.println("....service..............."+service);
+//        System.out.println("....status............"+status);
     %>
     <div class="">
 
@@ -22,7 +27,12 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Web Quotation <small>up to now</small></h2>
+                    <%if(status.equals("2")) {%>
+                        <h2><%=service.getServiceName()%> Quotation Marked As Approved <small>up to now</small></h2>
+                    <%} else {%>
+                        <h2><%=service.getServiceName() %> Quotation Marked As Canceled <small>up to now</small></h2>
+                    <%}%>    
+                    
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><li class="fa fa-chevron-up"></li></a>
                         </li>
@@ -43,8 +53,6 @@
                                     <th>Date </th>
                                     <th>Created By </th>
                                     <th>Amount </th>
-                                    <th>Action </th>
-                                    <th>Action </th>
                                     <th>Print </th>
                                     
                                 </tr>
@@ -52,7 +60,7 @@
 
                             <tbody>
 
-                                <% for (Quotation p : webList) {
+                                <% for (Quotation p : quoList) {
 
                                 %>
                                 <tr>
@@ -62,22 +70,6 @@
                                     <td class=" "><%=p.getDate() %></td>
                                     <td class=" "><%=p.getCreatedBy().getFirstName() %></td>
                                     <td class=" "><%=p.getAmount() %></td>
-                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
-                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
-                                            <input type="hidden" name="type" value="1"/>
-                                            <input type="hidden" name="proposal" value="<%=p.getProjectProposalId().getId() %>"/>
-                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
-                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
-                                        </form>
-                                    </td>
-                                    <td><form method="POST"  action="Quotation?action=changeStatus">
-                                            <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
-                                            <input type="hidden" name="type" value="2"/>
-                                            <input type="hidden" name="service" value="<%=p.getProjectProposalId().getServiceId().getId() %>"/>
-                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
-                                        </form>
-                                    </td>
-                                    
                                     <td><form method="POST" target="_blank" action="Quotation?action=NewviewWebsite">
                                             <input type="hidden" name="hidden" value="<%=p.getId()%>"/>
                                             <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 

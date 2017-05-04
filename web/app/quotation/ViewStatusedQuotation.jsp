@@ -17,13 +17,7 @@
 
 <script type="text/javascript">
 
-    function sendData(){
-      
-        var serviceid = document.getElementById('service').value;
-//        alert(serviceid);
-        
-        window.location = 'Quotation?action=ViewcreateQuotation&service=' + serviceid ;
-    }
+    
     
 </script>
 
@@ -47,7 +41,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Create New Quotation<small></small></h2>
+                    <h2>View marked Quotation<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -57,27 +51,37 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="#" method="GET" class="form-horizontal form-label-left" validate>
+                    <form action="Quotation?action=ViewAllMarkedQuatation" method="post" class="form-horizontal form-label-left" validate>
                         <span class="section"></span>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Service</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control" name="service" id="service" required="required" onchange="LoadPackageForProjects();">
-                                    <option selected="true" disabled="true" value="">Select Service</option>
+                                    <option selected="true" disabled="true" value="">---Select Service---</option>
                                     <% for (Service s : slist) {%>
                                     <option value="<%=s.getId()%>"><%=s.getServiceName() %></option>
                                     <%}%>
                                 </select>                            
                             </div>
                         </div>
-                                
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" name="status" id="status" required="required" onchange="LoadPackageForProjects();">
+                                    <option selected="true" disabled="true" value="">---Select Status---</option>
+                                    <option  value="2">Approved</option>
+                                    <option  value="3">Canceled</option>
+                                    
+                                </select>                            
+                            </div>
+                        </div>        
                         
                         <div class="ln_solid"></div>  
                         
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4 col-lg-offset-4">
                                 <!--                                <button type="submit" class="btn btn-primary">Cancel</button>-->
-                                <button id="send" type="button" onclick="sendData();" class="btn btn-success">Submit</button>
+                                <button id="send" type="submit" onclick="" class="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </form>

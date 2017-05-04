@@ -4,6 +4,8 @@
     Author     : Java-Dev-Ruchira
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.vertec.hibe.model.SoftwareAdvanceDetails"%>
 <%@page import="com.vertec.hibe.model.QuotationHasPackages"%>
 <%@page import="com.vertec.hibe.model.SoftwareQuotation"%>
 <%@page import="com.vertec.hibe.model.Service"%>
@@ -98,10 +100,16 @@
         Quotation q = (Quotation) request.getAttribute("quo");
         
         List<SoftwareQuotation> sL = (List<SoftwareQuotation>) request.getAttribute("softList");
+        SoftwareAdvanceDetails sAd = (SoftwareAdvanceDetails) request.getAttribute("softAdvanceList");
         List<QuotationHasPackages> pL = (List<QuotationHasPackages>) request.getAttribute("pList");
         List<QuotationHasPackages> qpL = (List<QuotationHasPackages>) request.getAttribute("qpList");
         String sAmot = (String) request.getAttribute("tAmt");
         System.out.println("....print amount.."+sAmot);
+        DecimalFormat df = new DecimalFormat("####0.00");
+        
+        double st = sAd.getFirstPayment();
+        double sd = sAd.getSecondPayment();
+        double td = sAd.getThirdPayment();
 
     %>
 
@@ -203,12 +211,12 @@
     <p><strong>Reinstallations</strong></p>
 
 
-    <p>Reinstallations in a hardware failure will be done free of charge during the warranty period. (if the hardware is taken through Vertec Software Solutions Only). If not the company will charge Rs:4500/= per machine to reinstall and setups.  								
+    <p>Reinstallations in a hardware failure will be done free of charge during the warranty period. (if the hardware is taken through Vertec Software Solutions Only). If not the company will charge Rs:<%=sAd.getInstallment() %>/= per machine to reinstall and setups.  								
 
     </p>
 
     <p><strong>Advance payment</strong></p>
-    <p>Advance payment of 40% should be made and 2nd payment of 40% should be made at the Final structure Confirmation. Balance 20% to be paid at the final installation. Testing period is One month only								
+    <p>Advance payment of <%=sAd.getFirstPayment() %>% should be made and 2nd payment of <%=sAd.getSecondPayment() %>% should be made at the Final structure Confirmation. Balance <%=sAd.getThirdPayment() %>% to be paid at the final installation. Testing period is One month only								
     </p>
     <p><strong>Training</strong></p>
     <p>A Free of charge training will be given to operate the system smoothly. It is necessary to arrange at least 2 operators for these training sessions. The training sessions will be carried out in the customer location.								
@@ -216,7 +224,7 @@
 
     <p><strong>Maintenance Support (Troubleshooting)</strong></p>
     <p>1st year- free of charge. After testing period Online  troubleshooting- free of Charge .</p>
-    <p><b>Colombo, Kaluthara : Rs.2,000.00, other + Rs:40/=  Per 1 km</b> </p>
+    <p><b>Colombo, Kaluthara : Rs.<%=sAd.getMaintenace() %> other + Rs:<%=sAd.getPlusMaintenace() %>/=  Per 1 km</b> </p>
     <p><b>Period of Validity: This Quotation is valid for 7 days only.</b></p>
 
 
@@ -231,8 +239,8 @@
                         <br />
                         <br />
                         ....................................<br />
-                        Hansy Kumaralal<br />
-                        (Project Coordinator )</p>
+                        <%=sAd.getPreparedBy() %><br />
+                        (<%=sAd.getDesignatioa() %> )</p>
                 </td>
                 <td style="width:300px">&nbsp;</td>
                 <td>

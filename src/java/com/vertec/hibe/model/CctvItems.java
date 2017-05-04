@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CctvItems.findByPrice", query = "SELECT c FROM CctvItems c WHERE c.price = :price")})
 public class CctvItems implements Serializable {
 
+    @Column(name = "is_valid")
+    private Boolean isValid;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,6 +128,14 @@ public class CctvItems implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.CctvItems[ id=" + id + " ]";
+    }
+
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
     }
     
 }

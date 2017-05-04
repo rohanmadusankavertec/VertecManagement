@@ -112,7 +112,9 @@
                                 <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
                             <li><a href="${context}/Quotation?action=NewloadPageQuotation">View Quotation</a></li>
                                 <%}%>
-                            
+                                <%if (ca.checkUserAuth("ADD_QUOTATION", group) != null) {%>
+                            <li><a href="${context}/Quotation?action=viewMarkedQuatation">View Marked Quotation</a></li>
+                                <%}%>
                                 
                         </ul>
                     </li>

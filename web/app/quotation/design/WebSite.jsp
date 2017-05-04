@@ -124,13 +124,13 @@ System.out.println(".......f........"+fp);
 System.out.println(".......s........"+sp);
 System.out.println(".......t........"+tp);
             if (fp == 0) {
-                System.out.println("<<<<<<<<<<<<<<<<f payment"+i.getAmount());
+//                System.out.println("<<<<<<<<<<<<<<<<f payment"+i.getAmount());
                 fp = i.getAmount();
             } else if (sp == 0) {
-                System.out.println("<<<<<<<<<<<<<<<<s payment"+i.getAmount());
+//                System.out.println("<<<<<<<<<<<<<<<<s payment"+i.getAmount());
                 sp = i.getAmount();
             } else if (tp == 0) {
-                System.out.println("<<<<<<<<<<<<<<<<t payment"+i.getAmount());
+//                System.out.println("<<<<<<<<<<<<<<<<t payment"+i.getAmount());
                 tp = i.getAmount();
             }%>
 

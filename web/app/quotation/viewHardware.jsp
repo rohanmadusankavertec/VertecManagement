@@ -37,8 +37,12 @@
                             <thead>
                                 <tr class="headings">
 
-                                    <th>Customer Name </th>
+                                    
+                                    <th>Project Name </th>
+                                    <th>Date</th>
                                     <th>Amount </th>
+                                    <th>Action </th>
+                                    <th>Action </th>
                                     <th>Print </th>
                                     
                                 </tr>
@@ -47,12 +51,36 @@
                             <tbody>
 
                                 <% for (HardwareQuotation h : hqList) {
-
+//                                        System.out.println("..........hhh..:"+h.getId());
                                 %>
                                 <tr>
-
-                                    <td class=" "><%=h.getCustomerId().getFirstName()+" "+h.getCustomerId().getLastName() %></td>
+                                    
+                                    <td class=" "><%=h.getProjectProposalId().getProposalName()  %></td>
+                                    <td class=" "><%=h.getDate() %></td>
                                     <td class=" "><%=h.getAmount() %></td>
+                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=h.getId()%>"/>
+                                            <input type="hidden" name="type" value="1"/>
+                                            <input type="hidden" name="service" value="4"/>
+                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
+                                        </form>
+                                    </td>
+                                    <td><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=h.getId()%>"/>
+                                            <input type="hidden" name="type" value="2"/>
+                                            <input type="hidden" name="service" value="4"/>
+                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
+                                        </form>
+                                    </td>
+                                    <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=h.getId()%>"/>
+                                            <input type="hidden" name="type" value="1"/>
+                                            <input type="hidden" name="service" value="4"/>
+                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
+                                        </form>
+                                    </td>
+                                    
+                                    
                                     <td><form method="POST" target="_blank" action="Quotation?action=viewHardwareItem">
                                             <input type="hidden" name="hidden" value="<%=h.getId()%>"/>
                                             <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 

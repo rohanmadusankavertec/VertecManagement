@@ -21,6 +21,7 @@ import com.vertec.hibe.model.Quotation;
 import com.vertec.hibe.model.QuotationHasFeatures;
 import com.vertec.hibe.model.QuotationHasPackages;
 import com.vertec.hibe.model.Service;
+import com.vertec.hibe.model.SoftwareAdvanceDetails;
 import com.vertec.hibe.model.SoftwareQuotation;
 import com.vertec.util.NewHibernateUtil;
 import com.vertec.util.VertecConstants;
@@ -103,13 +104,14 @@ public class QuotationDAOImpl {
 
         if (session != null) {
             try {
-                Query query = session.createQuery("SELECT q FROM Quotation q WHERE q.projectProposalId.serviceId.id=:id");
+                Query query = session.createQuery("SELECT q FROM Quotation q WHERE q.projectProposalId.serviceId.id=:id AND q.quotationStatusId.id=:statusId");
                 query.setParameter("id", sid);
+                query.setParameter("statusId", 1);
 
                 List<Quotation> prList = query.list();
-                for (Quotation q : prList) {
-                    System.out.println(".......quotation id.."+q.getId());
-                }
+//                for (Quotation q : prList) {
+////                    System.out.println(".......quotation id.."+q.getId());
+//                }
                 return prList;
 
             } catch (Exception e) {
@@ -405,6 +407,28 @@ public class QuotationDAOImpl {
         return null;
     }
     public String saveQuotation(Quotation q) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        if (session != null) {
+            try {
+                session.save(q);
+                session.flush();
+                transaction.commit();
+                return VertecConstants.SUCCESS;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return VertecConstants.ERROR;
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        return null;
+    }
+    public String saveSoftwareAdvanceDetails(SoftwareAdvanceDetails q) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -851,6 +875,33 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
         
         return null;
     }
+    public SoftwareAdvanceDetails getSoftwareAdvanceDetails(int id){
+//        System.out.println("........."+id);
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        if (session != null) {
+            try {
+                
+//                Query query = session.createQuery("SELECT p FROM QuotationHasFeatures p WHERE p.quotationId=:phf");
+                Query query = session.createQuery("SELECT s FROM SoftwareAdvanceDetails s WHERE s.quotationId.id=:qid");
+                query.setParameter("qid", id);
+                
+                SoftwareAdvanceDetails seList =(SoftwareAdvanceDetails) query.uniqueResult();
+                
+                
+                
+                return seList;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+        
+        return null;
+    }
     public int getpackHasFeatureId(int pid,int fid) {
 //        System.out.println("qqqqqqqqqqqq"+qid);
         Session session = NewHibernateUtil.getSessionFactory().openSession();
@@ -1004,6 +1055,30 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
         return null;
     }
     
+    public List<ProjectProposal> loadCCTVProject(){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        if(session !=null){
+            try {
+                Query query = session.createQuery("SELECT c FROM ProjectProposal c WHERE c.isValid=:valid AND c.serviceId.id=:serviceid");
+                query.setParameter("valid", true);
+                query.setParameter("serviceid", 3);
+                List<ProjectProposal> cuList =(List<ProjectProposal>) query.list();
+                return cuList;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        
+        }
+        
+        
+        return null;
+    }
     
     public String saveHardwareItem(HardwareItem hi) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
@@ -1058,8 +1133,10 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
         if(session !=null){
             try {
                 System.out.println("calling");
-                Query query = session.createQuery("SELECT h FROM HardwareQuotation h ORDER BY h.id DESC");
+                Query query = session.createQuery("SELECT h FROM HardwareQuotation h WHERE h.quotationStatusId.id=:statusId ORDER BY h.id DESC");
+                query.setParameter("statusId", 1);
                 List<HardwareQuotation> cuList =(List<HardwareQuotation>) query.list();
+                
                 return cuList;
                 
             } catch (Exception e) {
@@ -1195,8 +1272,8 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
         Transaction transaction = session.beginTransaction();
         if(session !=null){
             try {
-                Query query = session.createQuery("SELECT c  FROM CctvQuotationInfo c ");
-//                query.setParameter("hid", id);
+                Query query = session.createQuery("SELECT c  FROM CctvQuotationInfo c WHERE c.quotationStatusId.id=:statusId");
+                query.setParameter("statusId", 1);
                 List<CctvQuotationInfo> ccList =(List<CctvQuotationInfo>) query.list();
                 
                 return ccList;
@@ -1349,5 +1426,190 @@ public String saveSoftwareQuotation(SoftwareQuotation s) {
 
         return VertecConstants.ERROR;
     }
+    
+    
+    public String changeStatusOfCctv(int qid,int type) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
+        if (session != null) {
+            try {
+                String hql = "";
+                if(type==1){
+                    System.out.println("<<<<<<<<<<<<<<<<<<<<<<");
+                    hql="UPDATE CctvQuotationInfo c SET c.quotationStatusId.id =:approved WHERE c.id=:qid" ;
+                }else{
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+                    hql="UPDATE CctvQuotationInfo c SET c.quotationStatusId.id =:canceled WHERE c.id=:qid";
+                }
+                Query query = session.createQuery(hql);
+                if(type == 1){
+                    query.setParameter("approved", 2);
+                }else{
+                    query.setParameter("canceled", 3);
+                }
+                
+                query.setParameter("qid", qid);
+                query.executeUpdate();
+                tr.commit();
+                return VertecConstants.SUCCESS;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+
+        return VertecConstants.ERROR;
+    }
+    
+    public String changeStatusOfHardware(int qid,int type) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
+        if (session != null) {
+            try {
+                String hql = "";
+                if(type==1){
+                    System.out.println("<<<<<<<<<<<<<<<<<<<<<<");
+                    hql="UPDATE HardwareQuotation h SET h.quotationStatusId.id =:approved WHERE h.id=:qid" ;
+                }else{
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+                    hql="UPDATE HardwareQuotation h SET h.quotationStatusId.id =:canceled WHERE h.id=:qid";
+                }
+                Query query = session.createQuery(hql);
+                if(type == 1){
+                    query.setParameter("approved", 2);
+                }else{
+                    query.setParameter("canceled", 3);
+                }
+                
+                query.setParameter("qid", qid);
+                query.executeUpdate();
+                tr.commit();
+                return VertecConstants.SUCCESS;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+
+        return VertecConstants.ERROR;
+    }
+    
+   public List<Quotation> viewAllMarkedQuotation(int serviceid,int statusId ){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        if(session !=null){
+            try {
+                
+                System.out.println("........run web with other....");
+                Query query = session.createQuery("SELECT q  FROM Quotation q WHERE q.quotationStatusId.id=:statusId AND q.projectProposalId.serviceId.id=:serviceId");
+                query.setParameter("serviceId", serviceid);
+                query.setParameter("statusId", statusId);
+                List<Quotation> cuList =(List<Quotation>) query.list();
+                
+                return cuList;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        
+        }
+        
+        
+        return null;
+    } 
+   
+   
+   public List<CctvQuotationInfo> viewAllMarkedCCTV(int statusId ){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        if(session !=null){
+            try {
+                
+                
+                Query query = session.createQuery("SELECT c FROM CctvQuotationInfo c WHERE c.quotationStatusId.id=:statusId");
+//                query.setParameter("serviceId", serviceid);
+                query.setParameter("statusId", statusId);
+                List<CctvQuotationInfo> cuList =(List<CctvQuotationInfo>) query.list();
+                
+                return cuList;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        
+        }
+        
+        
+        return null;
+    }
+   public List<HardwareQuotation> viewAllMarkedHardware(int statusId ){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        if(session !=null){
+            try {
+                
+                
+                Query query = session.createQuery("SELECT h FROM HardwareQuotation h WHERE h.quotationStatusId.id =:statusId");
+//                query.setParameter("serviceId", serviceid);
+                query.setParameter("statusId", statusId);
+                List<HardwareQuotation> cuList =(List<HardwareQuotation>) query.list();
+                
+                return cuList;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        
+        }
+        
+        
+        return null;
+    }
+   
+   public String ApproveProject(int pid) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
+        if (session != null) {
+            try {
+                Query query = session.createQuery("UPDATE ProjectProposal p SET p.quotationStatusId.id =:statusid WHERE p.id =:pid");
+                query.setParameter("statusid", 2);
+                query.setParameter("pid", pid);
+                query.executeUpdate();
+                tr.commit();
+                return VertecConstants.SUCCESS;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+
+        return VertecConstants.ERROR;
+    }
+   
+   
    
 }

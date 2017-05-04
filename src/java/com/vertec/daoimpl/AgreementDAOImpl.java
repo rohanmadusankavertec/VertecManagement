@@ -105,6 +105,28 @@ public class AgreementDAOImpl {
 
         return null;
     }
+    public List<ProjectProposal> loadAllApprovedProject() {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        if (session != null) {
+            try {
+                Query query = session.createQuery("SELECT p FROM ProjectProposal p WHERE p.quotationStatusId.id=:statusId");
+                query.setParameter("statusId", 2);
+
+                List<ProjectProposal> prList = query.list();
+                return prList;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                }
+            }
+        }
+
+        return null;
+    }
 
     public List<Quotation> loadAllQuotation() {
         Session session = NewHibernateUtil.getSessionFactory().openSession();

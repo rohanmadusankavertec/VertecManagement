@@ -63,18 +63,23 @@
                                     <td class=" "><%=s.getDate() %></td>
                                     <td class=" "><%=s.getCreatedBy().getFirstName() %></td>
                                     <td class=" "><%=s.getAmount() %></td>
-                                    <td><form method="POST"  action="Quotation?action=changeStatus">
-                                            <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
-                                            <input type="hidden" name="type" value="2"/>
-                                            <button  onclick="" type="submit" class="btn btn-danger">Canceled</button> 
-                                        </form>
-                                    </td>
                                     <td class="last"><form method="POST"  action="Quotation?action=changeStatus">
                                             <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
                                             <input type="hidden" name="type" value="1"/>
-                                            <button  onclick="" type="submit" class="btn btn-warning">Approved</button> 
+                                            <input type="hidden" name="proposal" value="<%=s.getProjectProposalId().getId() %>"/>
+                                            <input type="hidden" name="service" value="<%=s.getProjectProposalId().getServiceId().getId() %>"/>
+                                            <button  onclick="" type="submit" class="btn btn-success">Approve</button> 
                                         </form>
                                     </td>
+                                    <td><form method="POST"  action="Quotation?action=changeStatus">
+                                            <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
+                                            
+                                            <input type="hidden" name="type" value="2"/>
+                                            <input type="hidden" name="service" value="<%=s.getProjectProposalId().getServiceId().getId() %>"/>
+                                            <button  onclick="" type="submit" class="btn btn-danger">Cancel</button> 
+                                        </form>
+                                    </td>
+                                    
                                     <td><form method="POST" target="_blank" action="Quotation?action=NewviewSoftware">
                                             <input type="hidden" name="hidden" value="<%=s.getId()%>"/>
                                             <button  onclick="" type="submit" class="glyphicon glyphicon-print"></button> 

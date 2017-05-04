@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.vertec.hibe.model;
 
 import java.io.Serializable;
@@ -21,12 +20,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vertec-r
+ * @author Ruchira
  */
 @Entity
 @Table(name = "customer")
@@ -45,35 +45,36 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customer.findByIsValid", query = "SELECT c FROM Customer c WHERE c.isValid = :isValid")})
 public class Customer implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Collection<CctvQuotationInfo> cctvQuotationInfoCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Collection<HardwareQuotation> hardwareQuotationCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Collection<Invoice> invoiceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Collection<ProjectProposal> projectProposalCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 45)
     @Column(name = "first_name")
     private String firstName;
+    @Size(max = 45)
     @Column(name = "last_name")
     private String lastName;
+    @Size(max = 45)
     @Column(name = "company_name")
     private String companyName;
+    @Size(max = 45)
     @Column(name = "mobile_no")
     private String mobileNo;
+    @Size(max = 45)
     @Column(name = "offiice_no")
     private String offiiceNo;
+    @Size(max = 200)
     @Column(name = "address")
     private String address;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 45)
     @Column(name = "fax")
     private String fax;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 150)
     @Column(name = "email")
     private String email;
     @Column(name = "is_valid")
@@ -81,6 +82,8 @@ public class Customer implements Serializable {
     @JoinColumn(name = "added_by", referencedColumnName = "sysuser_id")
     @ManyToOne(optional = false)
     private SysUser addedBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
+    private Collection<ProjectProposal> projectProposalCollection;
 
     public Customer() {
     }
@@ -177,6 +180,15 @@ public class Customer implements Serializable {
         this.addedBy = addedBy;
     }
 
+    @XmlTransient
+    public Collection<ProjectProposal> getProjectProposalCollection() {
+        return projectProposalCollection;
+    }
+
+    public void setProjectProposalCollection(Collection<ProjectProposal> projectProposalCollection) {
+        this.projectProposalCollection = projectProposalCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -200,43 +212,6 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "com.vertec.hibe.model.Customer[ id=" + id + " ]";
-    }
-
-
-    @XmlTransient
-    public Collection<ProjectProposal> getProjectProposalCollection() {
-        return projectProposalCollection;
-    }
-
-    public void setProjectProposalCollection(Collection<ProjectProposal> projectProposalCollection) {
-        this.projectProposalCollection = projectProposalCollection;
-    }
-
-    @XmlTransient
-    public Collection<Invoice> getInvoiceCollection() {
-        return invoiceCollection;
-    }
-
-    public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
-        this.invoiceCollection = invoiceCollection;
-    }
-
-    @XmlTransient
-    public Collection<HardwareQuotation> getHardwareQuotationCollection() {
-        return hardwareQuotationCollection;
-    }
-
-    public void setHardwareQuotationCollection(Collection<HardwareQuotation> hardwareQuotationCollection) {
-        this.hardwareQuotationCollection = hardwareQuotationCollection;
-    }
-
-    @XmlTransient
-    public Collection<CctvQuotationInfo> getCctvQuotationInfoCollection() {
-        return cctvQuotationInfoCollection;
-    }
-
-    public void setCctvQuotationInfoCollection(Collection<CctvQuotationInfo> cctvQuotationInfoCollection) {
-        this.cctvQuotationInfoCollection = cctvQuotationInfoCollection;
     }
     
 }

@@ -12,6 +12,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../../template/header.jsp"%>
 <%@include file="../../template/sidebar.jsp"%>
+<script>
+    function sendData(){
+      
+        var serviceid = document.getElementById('service').value;
+//        alert(serviceid);
+        
+        window.location = 'Quotation?action=ViewQuotation&service=' + serviceid ;
+    }
+    
+</script>
 <%
     List<Service> slist = (List<Service>) request.getAttribute("serList");
     
@@ -39,7 +49,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="Quotation?action=ViewQuotation" method="GET" class="form-horizontal form-label-left" validate>
+                    <form action="" method="get" class="form-horizontal form-label-left" validate>
                         <span class="section"></span>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Service</label>
@@ -59,7 +69,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4 col-lg-offset-4">
                                 <!--                                <button type="submit" class="btn btn-primary">Cancel</button>-->
-                                <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                <button id="send" type="button" onclick="sendData()" class="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </form>

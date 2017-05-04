@@ -26,6 +26,7 @@ import com.vertec.hibe.model.QuotationHasFeatures;
 import com.vertec.hibe.model.QuotationHasPackages;
 import com.vertec.hibe.model.QuotationStatus;
 import com.vertec.hibe.model.Service;
+import com.vertec.hibe.model.SoftwareAdvanceDetails;
 import com.vertec.hibe.model.SoftwareQuotation;
 import com.vertec.hibe.model.SysUser;
 import com.vertec.util.VertecConstants;
@@ -371,6 +372,27 @@ public class QuotationController extends HttpServlet {
                     String indes = request.getParameter("indes");
                     String qt = request.getParameter("qty");
                     String inamount = request.getParameter("inamount");
+                    
+                    //----------------------------------------------------------
+                    String ftpat = request.getParameter("fspay");
+                    String sdpay = request.getParameter("sdpay");
+                    String tdpay = request.getParameter("tdpay");
+                    String install = request.getParameter("installment");
+                    String maintenance = request.getParameter("maintenance");
+                    String extra = request.getParameter("extra");
+                    String prepare = request.getParameter("prepareby");
+                    String design = request.getParameter("designation");
+                   
+                    System.out.println("....ftpat......."+ftpat);
+                    System.out.println("....sdpay......."+sdpay);
+                    System.out.println("....tdpay......."+tdpay);
+                    System.out.println("....install......."+install);
+                    System.out.println("....maintenance......."+maintenance);
+                    System.out.println("....extra......."+extra);
+                    System.out.println("....prepare......."+prepare);
+                    System.out.println("....design......."+design);
+                    
+                    //----------------------------------------------------------
 
                     String[] featurearr = feature.split(",");
                     String[] parr = packagename.split(",");
@@ -393,7 +415,18 @@ public class QuotationController extends HttpServlet {
                     
                     String result = quotationDAO.saveQuotation(q);
 //                    int phf = quotationDAO.getpackHasFeatureId(0, 0);
-                    
+                    SoftwareAdvanceDetails s = new SoftwareAdvanceDetails();
+                    s.setFirstPayment(Double.parseDouble(ftpat));
+                    s.setSecondPayment(Double.parseDouble(sdpay));
+                    s.setThirdPayment(Double.parseDouble(tdpay));
+                    s.setInstallment(Double.parseDouble(install));
+                    s.setMaintenace(Double.parseDouble(maintenance));
+                    s.setPlusMaintenace(Double.parseDouble(extra));
+                    s.setPreparedBy(prepare);
+                    s.setDesignatioa(design);
+                    s.setQuotationId(q);
+                    String result1 = quotationDAO.saveSoftwareAdvanceDetails(s);
+                    System.out.println("....saveSoftwareAdvanceDetails......."+result1);
                     
                     System.out.println("lllll"+result);
                     for (int i =0; i<featurearr.length; i++){
@@ -572,10 +605,10 @@ public class QuotationController extends HttpServlet {
                     HardwareQuotation hq = new HardwareQuotation();
                     hq.setDate(new Date());
                     hq.setAmount(tot);
-                    hq.setCustomerId(new Customer(Integer.parseInt(cid)));
+                    hq.setProjectProposalId(new ProjectProposal(Integer.parseInt(cid)));
                     hq.setQuotationStatusId(new QuotationStatus(1));
                     String result1 = quotationDAO.saveHardwareQuotation(hq);
-                    
+                    System.out.println("......save hardware..."+result1);
                     
                     for(int i =0; i<decarr.length; i++){
                         HardwareItem hi = new HardwareItem();
@@ -594,13 +627,13 @@ public class QuotationController extends HttpServlet {
                 }
                 
                 // load hardware quotation page
-                case "viewHardware": {
-                    List<Customer> customer = quotationDAO.loadCustomer();
-                    request.setAttribute("cus", customer);
-                    requestDispatcher = request.getRequestDispatcher("app/quotation/HardwareQuotation.jsp");
-                    requestDispatcher.forward(request, response);
-                    break;
-                }
+//                case "viewHardware": {
+//                    List<Customer> customer = quotationDAO.loadCustomer();
+//                    request.setAttribute("cus", customer);
+//                    requestDispatcher = request.getRequestDispatcher("app/quotation/HardwareQuotation.jsp");
+//                    requestDispatcher.forward(request, response);
+//                    break;
+//                }
                 // load all hardware quotation
 //                case "viewHardwareQuotation": {
 //                    List<HardwareQuotation> hqList = quotationDAO.loadHardwareQuotation();
@@ -703,7 +736,7 @@ public class QuotationController extends HttpServlet {
                     q.setSysUserSysuserId(user1);
 //                    q.setTotal(Double.parseDouble(tot));
                     q.setTotal(Double.parseDouble(grand));
-                    q.setCustomerId(new Customer(Integer.parseInt(cid)));
+                    q.setProjectProposalId(new ProjectProposal(Integer.parseInt(cid)));
                     q.setQuotationStatusId(new QuotationStatus(1));
                     String result = VertecConstants.SUCCESS;
                     result = quotationDAO.saveCCTV(q);
@@ -761,11 +794,17 @@ public class QuotationController extends HttpServlet {
                 // print cctv quotaion
                 case "viewCctvItem": {
                     String hitem = request.getParameter("hidden");
+                    System.out.println("......qid......"+hitem);
                     List<CctvQuotationItems> info = quotationDAO.loadCctvQuotationItems(Integer.parseInt(hitem));
+                    for (CctvQuotationItems c : info) {
+                        System.out.println("..CctvQuotationItems...."+c.getId());
+                    }
                     request.setAttribute("info", info);
                     CctvQuotationInfo cq = quotationDAO.viewCctvQuotation(Integer.parseInt(hitem));
+                    System.out.println("...CctvQuotationInfo..."+cq.getTotal());
                     request.setAttribute("cq", cq);
                     CctvWarranty cc = quotationDAO.loadCCTVWarrenty(Integer.parseInt(hitem));
+                    System.out.println("...CctvWarranty..."+cc.getCamera());
                     request.setAttribute("ccwarrenty", cc);
                     requestDispatcher = request.getRequestDispatcher("app/quotation/design/Cctv.jsp");
                     requestDispatcher.forward(request, response);
@@ -797,6 +836,8 @@ public class QuotationController extends HttpServlet {
                         request.setAttribute("proposal", pp);
                         List<com.vertec.hibe.model.Package> p = quotationDAO.loadPackage("1", serviceId);
                         request.setAttribute("packages", p);
+                        String serviceid = sid;
+                        request.setAttribute("serviceid", serviceid);
                         requestDispatcher = request.getRequestDispatcher("app/quotation/CreateQuotation.jsp");
                         requestDispatcher.forward(request, response);
                         
@@ -804,8 +845,8 @@ public class QuotationController extends HttpServlet {
 //                        System.out.println("..............CCTV................"+serviceId);
                         List<CctvCategory> category = cctvDAO.loadItemCategory();
                         request.setAttribute("category", category);
-                        List<Customer> customer = quotationDAO.loadCustomer();
-                        request.setAttribute("customer", customer);
+                        List<ProjectProposal> project = quotationDAO.loadCCTVProject();
+                        request.setAttribute("project", project);
                     
                         requestDispatcher = request.getRequestDispatcher("app/quotation/cctvQuotation.jsp");
                         requestDispatcher.forward(request, response);
@@ -816,13 +857,15 @@ public class QuotationController extends HttpServlet {
                         request.setAttribute("proposal", pp);
                         List<com.vertec.hibe.model.Package> p = quotationDAO.loadPackage("1", serviceId);
                         request.setAttribute("packages", p);
+                        String serviceid = sid;
+                        request.setAttribute("serviceid", serviceid);
                         requestDispatcher = request.getRequestDispatcher("app/quotation/CreateQuotation.jsp");
                         requestDispatcher.forward(request, response);
                         
                     }else if(serviceId == 5){
 //                        System.out.println("..............Hardware................"+serviceId);
-                        List<Customer> customer = quotationDAO.loadCustomer();
-                        request.setAttribute("cus", customer);
+                        List<ProjectProposal> pp = quotationDAO.loadProjectProposalsByServiceId(serviceId);
+                        request.setAttribute("proposal", pp);
                         requestDispatcher = request.getRequestDispatcher("app/quotation/HardwareQuotation.jsp");
                         requestDispatcher.forward(request, response);
                     }else if(serviceId == 6){
@@ -841,7 +884,7 @@ public class QuotationController extends HttpServlet {
                 }
                 case "ViewQuotation": {
                     System.out.println("...calling.....");
-                    String sid = request.getParameter("service").trim();
+                    String sid = request.getParameter("service");
                     System.out.println(">>>>>>>>>>>>>>> "+sid);
                     int serviceId = Integer.parseInt(sid);
                     
@@ -887,7 +930,7 @@ public class QuotationController extends HttpServlet {
                 case "NewviewSoftware": {
                     String qid = request.getParameter("hidden");
                     
-                    System.out.println("Quotation ID.........."+qid);
+//                    System.out.println("Quotation ID.........."+qid);
                     
                    
                     List<QuotationHasFeatures> list = quotationDAO.getWebsite(Integer.parseInt(qid));
@@ -907,6 +950,8 @@ public class QuotationController extends HttpServlet {
 //                    double totAmt = quotationDAO.getTotAmount(Integer.parseInt(qid));
                     
                     request.setAttribute("tAmt", totAmt);
+                    SoftwareAdvanceDetails sList = quotationDAO.getSoftwareAdvanceDetails(Integer.parseInt(qid));
+                    request.setAttribute("softAdvanceList", sList);
                     
                         requestDispatcher = request.getRequestDispatcher("app/quotation/design/Software.jsp");
                         requestDispatcher.forward(request, response);
@@ -945,26 +990,134 @@ public class QuotationController extends HttpServlet {
                     break;
                 }
                 case "changeStatus": {
-                    System.out.println("...............////////////////////...............................");
+                    System.out.println("...............change status...............................");
                     String qid = request.getParameter("hidden").trim();
                     String type = request.getParameter("type").trim();
+                    String serviceid = request.getParameter("service").trim();
+                    String proposal = request.getParameter("proposal").trim();
                     
-                    System.out.println("...........qid.."+qid);
+                    System.out.println("...........serviceid.."+serviceid);
                     System.out.println("...........type.."+type);
-                    
-                    String result = quotationDAO.changeStatus(Integer.parseInt(qid), Integer.parseInt(type));
-                    System.out.println("........result..."+result);    
-                    if (result.equals(VertecConstants.SUCCESS)) {
-                            request.getSession().removeAttribute("Success_Message");
-
-                            request.getSession().setAttribute("Success_Message", "Successfully Changed");
-                            response.sendRedirect("Quotation?action=ViewQuotation");
-                        } else {
-                            request.getSession().removeAttribute("Error_Message");
-
-                            request.getSession().setAttribute("Error_Message", "Not Changed,Please Tri again");
-                            response.sendRedirect("Quotation?action=ViewQuotation");
+                    if(serviceid.equals("1")|| serviceid.equals("2")||serviceid.equals("4")){
+                        boolean check = false;
+                        if(type.equals("1")){
+                            String re = quotationDAO.ApproveProject(Integer.parseInt(proposal));
+                            System.out.println("...........approved project.."+re);
+                            String result = quotationDAO.changeStatus(Integer.parseInt(qid), Integer.parseInt(type));
+                            if(re.equals(VertecConstants.SUCCESS) && result.equals(VertecConstants.SUCCESS)){
+                                check=true;
+                            }
+                        }else{
+                            String result = quotationDAO.changeStatus(Integer.parseInt(qid), Integer.parseInt(type));
+                            
+                            if(result.equals(VertecConstants.SUCCESS)){
+                                check=true;
+                            }
                         }
+                        
+//                        System.out.println("........result..."+result);    
+                        if (check) {
+                                request.getSession().removeAttribute("Success_Message");
+
+                                request.getSession().setAttribute("Success_Message", "Successfully Changed");
+                                if(serviceid.equals("1")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=1");
+                                }else if(serviceid.equals("2")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=2");
+                                }else if(serviceid.equals("4")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=4");
+                                }
+                            } else {
+                                request.getSession().removeAttribute("Error_Message");
+
+                                request.getSession().setAttribute("Error_Message", "Not Changed,Please Tri again");
+                                if(serviceid.equals("1")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=1");
+                                }else if(serviceid.equals("2")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=2");
+                                }else if(serviceid.equals("4")){
+                                    response.sendRedirect("Quotation?action=ViewQuotation&service=4");
+                                }
+                            }
+                    }else if(serviceid.equals("3")){
+                        System.out.println("............calling CCTV.............");
+                        String result  = quotationDAO.changeStatusOfCctv(Integer.parseInt(qid),Integer.parseInt(type));
+                        if (result.equals(VertecConstants.SUCCESS)) {
+                                request.getSession().removeAttribute("Success_Message");
+
+                                request.getSession().setAttribute("Success_Message", "Successfully Changed");
+                                response.sendRedirect("Quotation?action=ViewQuotation&service=3");
+                            } else {
+                                request.getSession().removeAttribute("Error_Message");
+
+                                request.getSession().setAttribute("Error_Message", "Not Changed,Please Tri again");
+                                response.sendRedirect("Quotation?action=ViewQuotation&service=3");
+                                
+                        }
+                        
+                    }else if(serviceid.equals("5")){
+                        System.out.println("............calling Hardware.............");
+                        String result = quotationDAO.changeStatusOfHardware(Integer.parseInt(qid),Integer.parseInt(type));
+                        if (result.equals(VertecConstants.SUCCESS)) {
+                                request.getSession().removeAttribute("Success_Message");
+
+                                request.getSession().setAttribute("Success_Message", "Successfully Changed");
+                                response.sendRedirect("Quotation?action=ViewQuotation&service=5");
+                            } else {
+                                request.getSession().removeAttribute("Error_Message");
+
+                                request.getSession().setAttribute("Error_Message", "Not Changed,Please Tri again");
+                                response.sendRedirect("Quotation?action=ViewQuotation&service=5");
+                                
+                        }
+                    }
+                    
+                    break;
+                }
+                
+                case "viewMarkedQuatation": {
+                    List<Service> serList = quotationDAO.NewgetServices();
+                    request.setAttribute("serList", serList);
+                    
+                    requestDispatcher = request.getRequestDispatcher("app/quotation/ViewStatusedQuotation.jsp");
+                    requestDispatcher.forward(request, response);
+                    
+                    
+                    break;
+                }
+                
+                case "ViewAllMarkedQuatation": {
+                    System.out.println("....view calli...");
+                    String serviceId = request.getParameter("service");
+                    String status = request.getParameter("status");
+//                    System.out.println("......."+serviceId);
+//                    System.out.println("......."+status);
+                    if(serviceId.equals("1") || serviceId.equals("2") || serviceId.equals("4")){
+                        List<Quotation> quoList = quotationDAO.viewAllMarkedQuotation(Integer.parseInt(serviceId),Integer.parseInt(status));
+                        request.setAttribute("quoList", quoList);
+
+                        Service service = quotationDAO.getServicebyID(Integer.parseInt(serviceId));
+                        request.setAttribute("service", service);
+                        request.setAttribute("status", status);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllMarkedQuotation.jsp");
+                        requestDispatcher.forward(request, response);
+                    }else if(serviceId.equals("3")){
+                        List<CctvQuotationInfo> obj = quotationDAO.viewAllMarkedCCTV(Integer.parseInt(status));
+                        request.setAttribute("quoList", obj);
+                        
+                        request.setAttribute("status", status);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllMarkedCctv.jsp");
+                        requestDispatcher.forward(request, response);
+                    }else{
+                        List<HardwareQuotation> obj = quotationDAO.viewAllMarkedHardware(Integer.parseInt(status));
+                        request.setAttribute("quoList", obj);
+                        
+                        request.setAttribute("status", status);
+                        requestDispatcher = request.getRequestDispatcher("app/quotation/viewAllMarkedHardware.jsp");
+                        requestDispatcher.forward(request, response);
+                    }
+                    
+                    
                     break;
                 }
                 

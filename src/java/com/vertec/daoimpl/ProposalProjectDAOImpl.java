@@ -73,8 +73,8 @@ public class ProposalProjectDAOImpl {
 
         if (session != null) {
             try {
-                Query query = session.createQuery("SELECT p FROM ProjectProposal p where p.id NOT IN (SELECT pd.projectProposalId.id FROM ProjectDetails pd)");
-
+                Query query = session.createQuery("SELECT p FROM ProjectProposal p where p.id NOT IN (SELECT pd.projectProposalId.id FROM ProjectDetails pd) AND p.quotationStatusId.id=:status");
+                query.setParameter("status", 2);
                 List<ProjectProposal> prList = query.list();
                 return prList;
 
