@@ -115,7 +115,7 @@ public class EstimateCostController extends HttpServlet {
             case "addestimatecost": {
                     List<Employee> e = estimatecostDAO.loadAllEmployees();
                     request.setAttribute("employee", e);
-                    List<ProjectProposal> p = proposalDAO.loadAllProject();
+                    List<ProjectProposal> p = proposalDAO.loadAllApprovedProject();
                     request.setAttribute("proposal", p);
                     
                     requestDispatcher = request.getRequestDispatcher("app/estimateCost/AddEstimateCost.jsp");

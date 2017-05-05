@@ -323,7 +323,7 @@ calculation1();
                     </div> 
                     <div class="clearfix"></div>
                     <div class="x_title">
-                        <h2>Add CCTV Warronty <small></small></h2>
+                        <h2>Add CCTV Additional Details & Warronty <small></small></h2>
                         
                         <div class="clearfix"></div>
                     </div>
@@ -366,42 +366,42 @@ calculation1();
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Additional cable(per meter)</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="cable" name="cable" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                                <input id="cable" name="cable" class="form-control col-md-7 col-xs-12" placeholder="Enter Price" type="number">
                             </div>
                     </div>
                     <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">1 st Payment</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">1 st Payment(%)</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="1st" name="1st" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                                <input id="1st" name="1st" class="form-control col-md-7 col-xs-12" placeholder="Enter payment percentage" type="number">
                             </div>
                     </div>
                     <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">2 st Payment</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">2 st Payment(%)</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="2nd" name="2nd" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                                <input id="2nd" name="2nd" class="form-control col-md-7 col-xs-12" placeholder="Enter payment percentage" type="number">
                             </div>
                     </div>
                     <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">3 rd Payment</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">3 rd Payment(%)</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="3rd" name="3rd" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="number">
+                                <input id="3rd" name="3rd" class="form-control col-md-7 col-xs-12" placeholder="Enter payment percentage" type="number">
                             </div>
                     </div>
                     <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Prepared By</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="prepare" name="prepare" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="text">
+                                <input id="prepare" name="prepare" class="form-control col-md-7 col-xs-12" placeholder="Enter name" type="text">
                             </div>
                     </div>
                     <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Designation</label>
                             
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="desgnation" name="desgnation" class="form-control col-md-7 col-xs-12" placeholder="Enter warronty" type="text">
+                                <input id="desgnation" name="desgnation" class="form-control col-md-7 col-xs-12" placeholder="Enter Designation" type="text">
                             </div>
                     </div>
                     <div class="item form-group">

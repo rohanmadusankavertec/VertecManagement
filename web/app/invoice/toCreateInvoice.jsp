@@ -18,7 +18,9 @@
 <script src="app/js/notAlert.js"></script>
 <script type="text/javascript">
     function ChangeFilter() { // show and hide the feild according to payment type
+//        alert("hello");
         var reportType = document.getElementById('business').value;
+//        alert("........"+reportType);
         if (reportType === "2") {
             document.getElementById('ser').className = 'hidden';
             document.getElementById('installment').className = 'hidden';
@@ -30,7 +32,7 @@
         }
     }
 
-    function SendData() { send data to controller calss
+    function SendData() { //send data to controller calss
         var business = document.getElementById('business').value;
         var project = document.getElementById('project').value;
         var installment = document.getElementById('instal').value;
@@ -39,7 +41,8 @@
     }
     
     
-    function loadInstallments() { load installment to select elemet
+    function loadInstallments() { //load installment to select elemet
+//        alert("..........");
         $("#instal").empty();
         var project = document.getElementById("project").value;
         $.ajax({
@@ -48,7 +51,7 @@
             success: function(msg) {
                 var reply = eval('(' + msg + ')');
                 var arrLn1 = reply.installments;
-
+//                alert(arrLn1);
 
                 var feature = document.getElementById("instal");
                 var ihtml = "";

@@ -546,21 +546,21 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">First Payment
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">First Payment(%)
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="fspay" class="form-control col-md-7 col-xs-12" placeholder="Enter First Payment" type="number">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Second Payment
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Second Payment(%)
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="sdpay" class="form-control col-md-7 col-xs-12" placeholder="Enter Second Payment" type="number">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Third Payment
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Third Payment(%)
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="tdpay" class="form-control col-md-7 col-xs-12" placeholder="Enter third Payment" type="number">

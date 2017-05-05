@@ -994,13 +994,15 @@ public class QuotationController extends HttpServlet {
                     String qid = request.getParameter("hidden").trim();
                     String type = request.getParameter("type").trim();
                     String serviceid = request.getParameter("service").trim();
-                    String proposal = request.getParameter("proposal").trim();
+                    
+                    
                     
                     System.out.println("...........serviceid.."+serviceid);
                     System.out.println("...........type.."+type);
                     if(serviceid.equals("1")|| serviceid.equals("2")||serviceid.equals("4")){
                         boolean check = false;
                         if(type.equals("1")){
+                            String proposal = request.getParameter("proposal").trim();
                             String re = quotationDAO.ApproveProject(Integer.parseInt(proposal));
                             System.out.println("...........approved project.."+re);
                             String result = quotationDAO.changeStatus(Integer.parseInt(qid), Integer.parseInt(type));

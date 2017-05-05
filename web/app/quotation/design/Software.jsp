@@ -110,6 +110,15 @@
         double st = sAd.getFirstPayment();
         double sd = sAd.getSecondPayment();
         double td = sAd.getThirdPayment();
+        double maintenance = sAd.getMaintenace();
+        double extra = sAd.getPlusMaintenace();
+        double ins = sAd.getInstallment();
+        int first = (int)st;
+        int second = (int)sd;
+        int third = (int)td;
+        int main = (int)maintenance;
+        int extraMain =(int)extra;
+        int installment =(int)ins;
 
     %>
 
@@ -211,12 +220,12 @@
     <p><strong>Reinstallations</strong></p>
 
 
-    <p>Reinstallations in a hardware failure will be done free of charge during the warranty period. (if the hardware is taken through Vertec Software Solutions Only). If not the company will charge Rs:<%=sAd.getInstallment() %>/= per machine to reinstall and setups.  								
+    <p>Reinstallations in a hardware failure will be done free of charge during the warranty period. (if the hardware is taken through Vertec Software Solutions Only). If not the company will charge Rs:<%=installment %>/= per machine to reinstall and setups.  								
 
     </p>
 
     <p><strong>Advance payment</strong></p>
-    <p>Advance payment of <%=sAd.getFirstPayment() %>% should be made and 2nd payment of <%=sAd.getSecondPayment() %>% should be made at the Final structure Confirmation. Balance <%=sAd.getThirdPayment() %>% to be paid at the final installation. Testing period is One month only								
+    <p>Advance payment of <%=first %>% should be made and 2nd payment of <%=second %>% should be made at the Final structure Confirmation. Balance <%=third %>% to be paid at the final installation. Testing period is One month only								
     </p>
     <p><strong>Training</strong></p>
     <p>A Free of charge training will be given to operate the system smoothly. It is necessary to arrange at least 2 operators for these training sessions. The training sessions will be carried out in the customer location.								
@@ -224,7 +233,7 @@
 
     <p><strong>Maintenance Support (Troubleshooting)</strong></p>
     <p>1st year- free of charge. After testing period Online  troubleshooting- free of Charge .</p>
-    <p><b>Colombo, Kaluthara : Rs.<%=sAd.getMaintenace() %> other + Rs:<%=sAd.getPlusMaintenace() %>/=  Per 1 km</b> </p>
+    <p><b>Colombo, Kaluthara : Rs.<%=main %> other + Rs:<%=extraMain %>/=  Per 1 km</b> </p>
     <p><b>Period of Validity: This Quotation is valid for 7 days only.</b></p>
 
 
