@@ -65,13 +65,14 @@ public class InvoiceController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             HttpSession httpSession = request.getSession();
+           
             SysUser user1 = (SysUser) httpSession.getAttribute("user");
             RequestDispatcher requestDispatcher;
 
             switch (action) {
                 // load invoice page to create invoice
                 case "createInvoice": {
-                    List<ProjectProposal> s = quotationDAO.loadProjectProposals();
+                    List<ProjectProposal> s = quotationDAO.loadAllApprovedProject();
                     request.setAttribute("project", s);
                     List<Customer> c = CustomerDAO.getListOfCustomer();
                     request.setAttribute("customer", c);
@@ -107,9 +108,9 @@ public class InvoiceController extends HttpServlet {
                     JSONObject job1 = null;
                     for (Object[] object : o) {
                         job1 = new JSONObject();
-                        job1.put("id", object[0]);
-                        job1.put("description", object[1]);
-                        job1.put("amount", object[2]);
+                        job1.put("id", object[0].toString());
+                        job1.put("description", object[1].toString());
+                        job1.put("amount", object[2].toString());
                         jar1.add(job1);
                     }
                     jOB.put("installments", jar1);

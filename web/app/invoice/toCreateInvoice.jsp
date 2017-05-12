@@ -42,16 +42,17 @@
     
     
     function loadInstallments() { //load installment to select elemet
-//        alert("..........");
+        alert("..........");
         $("#instal").empty();
         var project = document.getElementById("project").value;
         $.ajax({
             type: "POST",
             url: "Invoice?action=LoadInstallments&project="+project,
             success: function(msg) {
+                alert(msg);
                 var reply = eval('(' + msg + ')');
                 var arrLn1 = reply.installments;
-//                alert(arrLn1);
+                alert(arrLn1);
 
                 var feature = document.getElementById("instal");
                 var ihtml = "";

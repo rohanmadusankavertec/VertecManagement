@@ -32,7 +32,9 @@ public class InvoiceDaoImpl {
 
         if (session != null) {
             try {
-                Query query = session.createSQLQuery("SELECT i.id,i.description,i.amount FROM quotation q INNER JOIN installment i ON i.quotation_id=q.id WHERE i.outstanding>0 AND q.project_proposal_id='" + project + "'");
+                Query query = session.createSQLQuery("SELECT i.id,i.description,i.amount FROM quotation q INNER JOIN installment i ON i.quotation_id=q.id WHERE q.project_proposal_id='" + project + "'");
+//                Query query = session.createSQLQuery("SELECT i.id,i.description,i.amount FROM quotation q INNER JOIN installment i ON i.quotation_id=q.id WHERE i.outstanding>0 AND q.project_proposal_id='" + project + "'");
+//                Query query = session.createSQLQuery("SELECT i.id,i.description,i.amount From quotation q INNER JOIN installment i on i.quotation_id=q.id WHERE q.project_proposal_id='"+project+"'");
 
                 List<Object[]> csList = query.list();
 
